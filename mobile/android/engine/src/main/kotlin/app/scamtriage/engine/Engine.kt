@@ -52,11 +52,11 @@ class Engine private constructor(
         val typeProbabilities: Map<String, Double>,
     )
 
-    // Python's re is Unicode-aware for \w \d \b \s; Java matches that with UNICODE_CHARACTER_CLASS.
+    // Python's re is Unicode-aware for \w \d \b \s. On the JVM that needs UNICODE_CHARACTER_CLASS;
+    // Android's ICU-backed regex is Unicode-aware by default and rejects that flag.
     private fun py(src: String, ignoreCase: Boolean = false): Pattern {
-        var flags = Pattern.UNICODE_CHARACTER_CLASS
-        if (ignoreCase) flags = flags or Pattern.CASE_INSENSITIVE or Pattern.UNICODE_CASE
-        return Pattern.compile(src.removePrefix("(?u)"), flags)
+        val base = if (ignoreCase) Pattern.CASE_INSENSITIVE or Pattern.UNICODE_CASE else 0
+        return Pattern.compile(src.removePrefix("(?u)"), base or unicodeFlag)
     }
 
     private val rx = m.obj("regex")
@@ -318,6 +318,8 @@ class Engine private constructor(
     }
 
     companion object {
+        private val unicodeFlag: Int = runCatching { Pattern.compile("\\w", Pattern.UNICODE_CHARACTER_CLASS); Pattern.UNICODE_CHARACTER_CLASS }.getOrDefault(0)
+
         /** Load from the four files written by scripts/export_mobile.py. */
         fun load(modelJson: String, vocabWord: InputStream, vocabChar: InputStream, weights: ByteArray): Engine {
             val m = Json.parseToJsonElement(modelJson).jsonObject

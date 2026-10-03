@@ -13,6 +13,7 @@ android {
         targetSdk = 36
         versionCode = 1
         versionName = "0.1.0"
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     // Release signing comes from ~/.gradle/gradle.properties (never committed):
@@ -43,6 +44,7 @@ android {
     buildFeatures { compose = true; buildConfig = true }
     // The model files are shared with iOS and the parity tests: mobile/shared/model
     sourceSets.getByName("main").assets.srcDir("../../shared/model")
+    sourceSets.getByName("androidTest").assets.srcDir("../../shared/golden")
     androidResources { noCompress += listOf("bin", "txt", "json") }
 }
 
@@ -56,4 +58,6 @@ dependencies {
     implementation("androidx.compose.material3:material3")
     implementation("androidx.compose.ui:ui-tooling-preview")
     debugImplementation("androidx.compose.ui:ui-tooling")
+    androidTestImplementation("androidx.test.ext:junit:1.3.0")
+    androidTestImplementation("androidx.test:runner:1.7.0")
 }

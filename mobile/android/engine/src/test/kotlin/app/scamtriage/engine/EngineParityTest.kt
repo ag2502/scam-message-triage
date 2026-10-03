@@ -16,7 +16,7 @@ import kotlin.test.assertTrue
 class EngineParityTest {
     private val shared = File(System.getProperty("sharedDir"))
     private val engine = Engine.load(File(shared, "model"))
-    private val golden: List<JsonObject> = File(shared, "golden.jsonl").readLines().filter { it.isNotBlank() }
+    private val golden: List<JsonObject> = File(shared, "golden/golden.jsonl").readLines().filter { it.isNotBlank() }
         .map { Json.parseToJsonElement(it).jsonObject }
 
     private fun JsonObject.strings(key: String) = this[key]!!.jsonArray.map { it.jsonPrimitive.content }

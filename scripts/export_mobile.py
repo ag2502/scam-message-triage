@@ -1,7 +1,7 @@
 """Export the model in a compact format for the native apps, plus a golden file for parity tests.
 
     python scripts/export_mobile.py   # -> mobile/shared/model/{model.json,vocab_word.txt,vocab_char.txt,weights.bin}
-                                       #    mobile/shared/golden.jsonl
+                                       #    mobile/shared/golden/golden.jsonl
 
 weights.bin layout (little-endian, no header; sizes are in model.json):
     float64[n_word]           word idf
@@ -77,7 +77,8 @@ def main() -> None:
     (model_dir / "weights.bin").write_bytes(blob)
     assert len(blob) == 8 * (len(words) + len(chars) + n_feat) + 4 * meta["sizes"]["n_classes"] * n_feat
 
-    with (OUT / "golden.jsonl").open("w", encoding="utf-8") as g:
+    (OUT / "golden").mkdir(parents=True, exist_ok=True)
+    with (OUT / "golden" / "golden.jsonl").open("w", encoding="utf-8") as g:
         for text in golden_texts():
             r = triage(text).to_dict()
             g.write(json.dumps({
