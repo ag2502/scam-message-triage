@@ -66,5 +66,8 @@ export function initTypes({ state, loadEngine }) {
       return () => { root.classList.remove("is-pinned"); tween.scrollTrigger?.kill(); tween.kill(); };
     });
     window.ScrollTrigger.refresh();
+    // Pins add scroll spacing after load, so a #section link from page load needs re-applying.
+    const id = location.hash.slice(1);
+    if (id && /^[\w-]+$/.test(id)) document.getElementById(id)?.scrollIntoView();
   }).catch(() => {});
 }

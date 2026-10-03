@@ -37,6 +37,7 @@
       </a>
       <nav class="nav__links" aria-label="Sections">
         <a href="#check">Try it</a>
+        <a href="#game">Game</a>
         <a href="#demo">Demo</a>
         <a href="#channels">Get it</a>
         <a href="#story">How it works</a>
@@ -316,6 +317,33 @@
             <h2 class="title">Ten scams, one move: rush you into paying.</h2>
             <p class="sub">Every type the model knows, how to spot it, and an example you can send straight to the chat.</p>
           </header>
+        </div>
+      </div>
+    </section>
+
+    <!-- GAME -->
+    <section class="section game" id="game" data-game>
+      <div class="wrap game__grid">
+        <div class="game__side">
+          <span class="kao game__kao" aria-hidden="true" data-game-kao>(ง •̀_•́)ง</span>
+          <h2 class="title">Spot the scam. Beat the model.</h2>
+          <p class="sub">Ten real-looking messages. Swipe right if it's a scam, left if it's real. You have 15 seconds each, because scammers count on you rushing.</p>
+          <div class="hud" aria-live="polite">
+            <div class="hud__cell"><span class="hud__num" data-hud-you>0</span><span class="hud__label">You</span></div>
+            <div class="hud__vs">vs</div>
+            <div class="hud__cell"><span class="hud__num" data-hud-model>0</span><span class="hud__label">Model</span></div>
+            <div class="hud__cell hud__cell--streak"><span class="hud__num" data-hud-streak>0</span><span class="hud__label">Streak</span></div>
+          </div>
+          <p class="fine" data-hud-best></p>
+        </div>
+        <div class="arena" data-arena>
+          <div class="arena__stack" data-stack></div>
+          <div class="arena__timer" aria-hidden="true"><span data-timer></span></div>
+          <div class="arena__controls" data-controls hidden>
+            <button class="btn btn--ghost arena__real" type="button" data-pick="real"><i class="ph ph-arrow-left"></i>Real</button>
+            <button class="btn btn--ghost arena__scam" type="button" data-pick="scam">Scam<i class="ph ph-arrow-right"></i></button>
+          </div>
+          <p class="help arena__hint" data-hint>Drag the card, use the buttons, or press ← / →</p>
         </div>
       </div>
     </section>
