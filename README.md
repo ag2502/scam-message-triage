@@ -69,8 +69,9 @@ tuned on the evaluation data.
   gives 93% precision. Re-weighted to 10% scam prevalence it would be 78%, and at 1% prevalence 25%. A checker that
   people forward *suspicious* messages to should see a high prevalence. The bot's wording ("can be wrong, verify
   through a channel you trust") reflects the remaining risk.
-- The *high* threshold targets 1% FPR but lands at 2.7% on held-out templates. Almost all of that comes from one
-  legitimate template: outgoing bank-transfer confirmations. Real UCI messages scored 0.0% at *high*.
+- The *high* threshold targets 1% FPR but lands at 2.7% on held-out templates: 32 of the 40 false positives come from
+  one legitimate template (outgoing bank-transfer confirmations) and the other 8 from a second one. Real UCI
+  messages had 0.0% false positives at *high*.
 - Known misses: relationship-starter scams ("sorry, wrong number… do you invest?") and some cash-courier scripts.
   Single-message triage can't see where a conversation is heading.
 - Training data is synthetic. Each challenge set was committed **before** the changes it evaluates, so the git
