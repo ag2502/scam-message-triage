@@ -93,6 +93,20 @@ python scripts/record_demo.py     # renders site/film.html + synthesized soundtr
 python -m http.server -d site     # preview at http://localhost:8000
 ```
 
+## Mobile apps
+
+The model is exported once (`python scripts/export_mobile.py` → `mobile/shared/`) and re-implemented natively. Both
+engines are tested against the same 547 golden Python outputs.
+
+- **Android** ([mobile/android](mobile/android)): auto-check of incoming WhatsApp/SMS/Telegram/Signal notifications
+  (on-device, after the user grants notification access), "Check for scam" in the share sheet and the text-selection
+  menu. Beta APK: [scam-message-triage.vercel.app/downloads](https://scam-message-triage.vercel.app/#channels).
+  `cd mobile/android && ./gradlew :engine:test :app:assembleRelease` (JDK 17+, Android SDK 37);
+  `:app:connectedDebugAndroidTest` re-runs the parity test on a device or emulator.
+- **iPhone** (in progress): SMS filter for unknown senders, share extension and Siri.
+- **No install:** the website installs as an app on Android and appears in the share sheet; on iPhone a
+  "Check for Scam" Shortcut does the same.
+
 ## Quickstart
 
 ```bash

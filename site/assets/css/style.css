@@ -821,3 +821,7 @@ input[type="range"] { width: 100%; accent-color: var(--accent); height: 28px; cu
 .player__play small { font-weight: 500; opacity: 0.8; font-size: 0.85rem; }
 
 @media (max-width: 900px) { .nav__install span { display: none; } .nav__install { width: 40px; padding: 0; } }
+
+.apk-help { font-size: 0.86rem; }
+.apk-help summary { cursor: pointer; color: var(--accent); font-weight: 560; }
+.apk-help code { font-family: var(--mono); font-size: 0.72rem; word-break: break-all; }
