@@ -10,6 +10,8 @@ that check: an explainable classifier, a WhatsApp bot and an HTTP API.
 
 The engine is **rail-agnostic** and **language-pluggable**. English ships first; PT-BR and ES are next.
 
+**Try it live: [scam-message-triage.vercel.app](https://scam-message-triage.vercel.app)**. The model runs in your browser, so nothing you paste is uploaded. A demo video shows the WhatsApp flow.
+
 ```
 $ scam-triage "Hi mum, I dropped my phone, this is my new number. Can you send R\$800 by Pix? Urgent, can't talk"
 🔴 HIGH RISK (100%)
@@ -76,6 +78,19 @@ tuned on the evaluation data.
   Single-message triage can't see where a conversation is heading.
 - Training data is synthetic. Each challenge set was committed **before** the changes it evaluates, so the git
   history shows it wasn't tuned on. See the [dataset card](data/en/DATASET_CARD.md).
+
+## Website
+
+[site/](site/) is a static site with no build step, deployed on Vercel ([vercel.json](vercel.json)). The model is exported to
+JSON and re-implemented in [site/assets/js/engine.js](site/assets/js/engine.js), so checks run on-device. Its output
+matches Python exactly on 549 messages ([tests/test_web_parity.py](tests/test_web_parity.py)).
+
+```bash
+uv pip install -e ".[web]" && playwright install chromium
+python scripts/export_web.py      # model + eval scores -> site/assets/{model,data}
+python scripts/record_demo.py     # renders site/demo.html -> site/assets/video/demo.{mp4,webm}
+python -m http.server -d site     # preview at http://localhost:8000
+```
 
 ## Quickstart
 

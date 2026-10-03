@@ -10,3 +10,8 @@ build/
 
 # Downloaded third-party corpora (fetched by scripts/, not redistributed here)
 data/external/
+
+# Vercel CLI project link and pulled env files (.env.local holds a token)
+.vercel/
+.env*
+!.env.example
