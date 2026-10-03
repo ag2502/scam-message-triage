@@ -95,7 +95,9 @@ class TriageModel:
 
     # ---- training -------------------------------------------------------
     @classmethod
-    def train(cls, train: list[dict], val: list[dict], lang: str = "en", c_grid=(0.3, 1.0, 3.0, 10.0)) -> "TriageModel":
+    def train(
+        cls, train: list[dict], val: list[dict], lang: str = "en", c_grid=(0.3, 1.0, 3.0, 10.0), type_c_grid=None
+    ) -> "TriageModel":
         feat = Featurizer(lang)
         X_tr = feat.fit_transform([r["text"] for r in train])
         X_va = feat.transform([r["text"] for r in val])
@@ -112,7 +114,7 @@ class TriageModel:
         t_tr = np.array([train[i]["label"] for i in scam_tr])
         t_va = np.array([val[i]["label"] for i in scam_va])
         best_type = max(
-            (LogisticRegression(C=c, max_iter=3000).fit(X_tr[scam_tr], t_tr) for c in c_grid),
+            (LogisticRegression(C=c, max_iter=3000).fit(X_tr[scam_tr], t_tr) for c in (type_c_grid or c_grid)),
             key=lambda m: f1_score(t_va, m.predict(X_va[scam_va]), average="macro"),
         )
 
