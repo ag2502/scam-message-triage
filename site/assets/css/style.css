@@ -813,3 +813,5 @@ input[type="range"] { width: 100%; accent-color: var(--accent); height: 28px; cu
 .player__play span { display: grid; place-items: center; width: 84px; height: 84px; border-radius: 50%; background: var(--accent); color: #fff; font-size: 2rem; box-shadow: 0 16px 40px -10px rgb(0 0 0 / 0.6); transition: transform 0.25s var(--ease); }
 .player__play:hover span { transform: scale(1.08); }
 .player__play small { font-weight: 500; opacity: 0.8; font-size: 0.85rem; }
+
+@media (max-width: 900px) { .nav__install span { display: none; } .nav__install { width: 40px; padding: 0; } }

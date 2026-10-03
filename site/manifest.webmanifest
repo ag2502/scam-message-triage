@@ -1,0 +1,27 @@
+{
+  "id": "/",
+  "name": "Scam Triage",
+  "short_name": "Scam Triage",
+  "description": "Check a WhatsApp or SMS message for scams before you pay. Runs on your device.",
+  "start_url": "/?source=app",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f2f3f5",
+  "theme_color": "#2c4fd6",
+  "categories": ["security", "utilities", "finance"],
+  "icons": [
+    { "src": "/assets/img/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/assets/img/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/assets/img/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "share_target": {
+    "action": "/",
+    "method": "GET",
+    "params": { "title": "title", "text": "text", "url": "url" }
+  },
+  "shortcuts": [
+    { "name": "Check a message", "url": "/#chat", "icons": [{ "src": "/assets/img/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Spot the scam game", "url": "/#game", "icons": [{ "src": "/assets/img/icon-192.png", "sizes": "192x192" }] }
+  ]
+}

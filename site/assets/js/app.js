@@ -10,6 +10,7 @@ import { initGame } from "./game.js";
 import { initOS } from "./os.js";
 import { initXray } from "./xray.js";
 import { initApi, initTerminal } from "./apps.js";
+import { initPWA } from "./pwa.js";
 import { initResults } from "./results.js";
 import { initVideo } from "./video.js";
 
@@ -101,7 +102,7 @@ initTheme();
 initNav();
 initReveal();
 
-const modules = [initOS, initChat, initStory, initTypes, initGame, initChecker, initXray, initApi, initTerminal, initChannels, initResults, initVideo];
+const modules = [initOS, initChat, initStory, initTypes, initGame, initChecker, initXray, initApi, initTerminal, initChannels, initResults, initVideo, initPWA];
 modules.forEach((init) => {
   try { init({ state, loadEngine }); } catch (err) { console.error(err); }
 });

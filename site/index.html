@@ -14,6 +14,11 @@
   <meta name="twitter:card" content="summary_large_image">
   <link rel="canonical" href="https://scam-message-triage.vercel.app/">
   <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Scam Triage">
   <link rel="preload" href="assets/fonts/geist.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="assets/vendor/phosphor/regular.css">
   <link rel="stylesheet" href="assets/vendor/phosphor/fill.css">
@@ -45,6 +50,7 @@
         <a href="#faq">FAQ</a>
       </nav>
       <div class="nav__actions">
+        <button class="btn btn--primary btn--sm nav__install" type="button" data-install hidden><i class="ph ph-download-simple"></i><span>Install app</span></button>
         <button class="icon-btn" type="button" data-theme-toggle aria-label="Toggle dark mode">
           <i class="ph ph-moon" data-theme-icon></i>
         </button>
@@ -438,6 +444,8 @@
               <li><i class="ph ph-lightning"></i><span><b>Milliseconds</b> per check, on your device</span></li>
               <li><i class="ph ph-link-simple"></i><span><b>One link</b> to share a check with family</span></li>
             </ul>
+            <button class="btn btn--primary btn--sm tile__cta" type="button" data-install hidden><i class="ph ph-download-simple"></i>Install the app</button>
+            <p class="fine" data-ios-install hidden><i class="ph ph-export"></i> On iPhone: tap <b>Share</b>, then <b>Add to Home Screen</b>.</p>
           </article>
 
           <article class="tile tile--api reveal" style="--d: 120ms">
