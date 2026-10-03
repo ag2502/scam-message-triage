@@ -103,6 +103,12 @@ public final class Engine: @unchecked Sendable { // immutable after init
 
     public enum EngineError: Error { case badModel(String) }
 
+    /// The model folder bundled as a resource ("model") in the app or an extension.
+    public static func bundled(in bundle: Bundle = .main, withTypeModel: Bool = true) throws -> Engine {
+        guard let dir = bundle.url(forResource: "model", withExtension: nil) else { throw EngineError.badModel("model folder missing from \(bundle.bundlePath)") }
+        return try Engine(directory: dir, withTypeModel: withTypeModel)
+    }
+
     // Python's re is Unicode-aware for \w \d \b \s; ICU (NSRegularExpression) is too.
     private static func py(_ src: String, ignoreCase: Bool = false) throws -> NSRegularExpression {
         let s = src.hasPrefix("(?u)") ? String(src.dropFirst(4)) : src

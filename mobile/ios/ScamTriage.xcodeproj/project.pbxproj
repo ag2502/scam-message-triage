@@ -1,0 +1,669 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0541304C613F738FEFBCF332 /* model in Resources */ = {isa = PBXBuildFile; fileRef = F6586DC0F7685FECC0C70637 /* model */; };
+		0801754C378D1B6689BABB1E /* EngineProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B012E0CBA39C6BEEACBB8EAF /* EngineProvider.swift */; };
+		2ED139C910A0249F3A121FA2 /* VerdictView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32B15A53584B0D1E94FE8565 /* VerdictView.swift */; };
+		3CC02FB199055E0FFDECCA4F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE3CFE2AF513410AA66D91E /* ContentView.swift */; };
+		41F63674E9AFC473018C9927 /* MessageFilterExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF6FBCC2767292B284725EE /* MessageFilterExtension.swift */; };
+		661B3AE33D701DC07B712F64 /* ShareExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 8491AC7E93A655E935A9F482 /* ShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		66D3E3F1F7B261D6C6D4D924 /* MessageFilter.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = AAE9C9A09B59F5C9635D4B82 /* MessageFilter.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		71B16F87D7E7EA2411D4E742 /* model in Resources */ = {isa = PBXBuildFile; fileRef = F6586DC0F7685FECC0C70637 /* model */; };
+		723CBF225D0534A56A7F1A33 /* ScamTriageApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4336C3E292B8D07777569ED4 /* ScamTriageApp.swift */; };
+		7ADF4ABABCB09177C3CCDAB0 /* ScamTriageKit in Frameworks */ = {isa = PBXBuildFile; productRef = 70909766BEAE563022BFA1F7 /* ScamTriageKit */; };
+		8C99B9045E58489EA6C75BCB /* EngineProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B012E0CBA39C6BEEACBB8EAF /* EngineProvider.swift */; };
+		8DAF1BF393940B89CA503037 /* ScamTriageKit in Frameworks */ = {isa = PBXBuildFile; productRef = 1BA1C2E4F92C3D9169339CE0 /* ScamTriageKit */; };
+		9526EC06CF4100DD084E8B5E /* VerdictView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32B15A53584B0D1E94FE8565 /* VerdictView.swift */; };
+		B6F189AB9463A353DB7BCECE /* model in Resources */ = {isa = PBXBuildFile; fileRef = F6586DC0F7685FECC0C70637 /* model */; };
+		BD3EE071CCEF8099FBE2471C /* CheckMessageIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724397239EF04817CCED74DB /* CheckMessageIntent.swift */; };
+		C0B950D459BB107176CA915D /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9E8AB7143483C8185518E6 /* ShareViewController.swift */; };
+		D10BF79930F4E4360C4735FA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C927AB8A936E5167DF0CCF2C /* Assets.xcassets */; };
+		F8E6040A9E301E7E8DF2C46D /* ScamTriageKit in Frameworks */ = {isa = PBXBuildFile; productRef = B8F63F022698E2CD3546004A /* ScamTriageKit */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		92973F1C00B7793C660CE1BE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D7599D0B1A06875827C1D77F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B4E8B1DCD953BA3235B5FA2D;
+			remoteInfo = ShareExtension;
+		};
+		C4F92CDB4AA8609B954D58D0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D7599D0B1A06875827C1D77F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1D9881D671990B0C339390A2;
+			remoteInfo = MessageFilter;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		897FD3256247B4E4FA57CCE1 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				661B3AE33D701DC07B712F64 /* ShareExtension.appex in Embed Foundation Extensions */,
+				66D3E3F1F7B261D6C6D4D924 /* MessageFilter.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		0B9381507A0AA99A7E4AF6C8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		2AF6FBCC2767292B284725EE /* MessageFilterExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageFilterExtension.swift; sourceTree = "<group>"; };
+		32B15A53584B0D1E94FE8565 /* VerdictView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerdictView.swift; sourceTree = "<group>"; };
+		4336C3E292B8D07777569ED4 /* ScamTriageApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScamTriageApp.swift; sourceTree = "<group>"; };
+		4A9E8AB7143483C8185518E6 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
+		724397239EF04817CCED74DB /* CheckMessageIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckMessageIntent.swift; sourceTree = "<group>"; };
+		7664CC80FCA14EA40DED196C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		7E8D78CA90A8DD969561306F /* ScamTriageKit */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ScamTriageKit; path = ScamTriageKit; sourceTree = SOURCE_ROOT; };
+		7FE3CFE2AF513410AA66D91E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		8491AC7E93A655E935A9F482 /* ShareExtension.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = ShareExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		88A6D40A68D9A1BD1E9F81E8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		AAE9C9A09B59F5C9635D4B82 /* MessageFilter.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = MessageFilter.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		B012E0CBA39C6BEEACBB8EAF /* EngineProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EngineProvider.swift; sourceTree = "<group>"; };
+		C927AB8A936E5167DF0CCF2C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		DF1F46DABAE62365AF424C6E /* ScamTriage.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = ScamTriage.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F6586DC0F7685FECC0C70637 /* model */ = {isa = PBXFileReference; lastKnownFileType = folder; name = model; path = ../shared/model; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		5704AB9600CBC33FBBF633B4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F8E6040A9E301E7E8DF2C46D /* ScamTriageKit in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8DAE341F36BD8C73CD01F5A5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8DAF1BF393940B89CA503037 /* ScamTriageKit in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E2159BDEC2CBE23695294475 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7ADF4ABABCB09177C3CCDAB0 /* ScamTriageKit in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2E3C0F3104C70255621FFA8B /* mobile */ = {
+			isa = PBXGroup;
+			children = (
+				CAFE21B6952D548968E573A5 /* shared */,
+			);
+			name = mobile;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		56D7C3CE0BA47ABD97F3BCC2 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				B012E0CBA39C6BEEACBB8EAF /* EngineProvider.swift */,
+				32B15A53584B0D1E94FE8565 /* VerdictView.swift */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		73C9FA425602C00BD0AB1905 /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				7E8D78CA90A8DD969561306F /* ScamTriageKit */,
+			);
+			name = Packages;
+			sourceTree = "<group>";
+		};
+		7BBF2CA5772F07B779A99DD0 /* MessageFilter */ = {
+			isa = PBXGroup;
+			children = (
+				88A6D40A68D9A1BD1E9F81E8 /* Info.plist */,
+				2AF6FBCC2767292B284725EE /* MessageFilterExtension.swift */,
+			);
+			path = MessageFilter;
+			sourceTree = "<group>";
+		};
+		A047B648090CD5EBC6956D33 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AAE9C9A09B59F5C9635D4B82 /* MessageFilter.appex */,
+				DF1F46DABAE62365AF424C6E /* ScamTriage.app */,
+				8491AC7E93A655E935A9F482 /* ShareExtension.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A105426657708754D300B2A7 = {
+			isa = PBXGroup;
+			children = (
+				CB44079098E35CBA49284956 /* App */,
+				7BBF2CA5772F07B779A99DD0 /* MessageFilter */,
+				2E3C0F3104C70255621FFA8B /* mobile */,
+				73C9FA425602C00BD0AB1905 /* Packages */,
+				56D7C3CE0BA47ABD97F3BCC2 /* Shared */,
+				B9CF5065E03352FBBFD9C669 /* ShareExtension */,
+				A047B648090CD5EBC6956D33 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		B9CF5065E03352FBBFD9C669 /* ShareExtension */ = {
+			isa = PBXGroup;
+			children = (
+				7664CC80FCA14EA40DED196C /* Info.plist */,
+				4A9E8AB7143483C8185518E6 /* ShareViewController.swift */,
+			);
+			path = ShareExtension;
+			sourceTree = "<group>";
+		};
+		CAFE21B6952D548968E573A5 /* shared */ = {
+			isa = PBXGroup;
+			children = (
+				F6586DC0F7685FECC0C70637 /* model */,
+			);
+			path = shared;
+			sourceTree = "<group>";
+		};
+		CB44079098E35CBA49284956 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				C927AB8A936E5167DF0CCF2C /* Assets.xcassets */,
+				724397239EF04817CCED74DB /* CheckMessageIntent.swift */,
+				7FE3CFE2AF513410AA66D91E /* ContentView.swift */,
+				0B9381507A0AA99A7E4AF6C8 /* Info.plist */,
+				4336C3E292B8D07777569ED4 /* ScamTriageApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1D9881D671990B0C339390A2 /* MessageFilter */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C619FED2B0700AB914FFAB66 /* Build configuration list for PBXNativeTarget "MessageFilter" */;
+			buildPhases = (
+				ABD16134A8DF9D1042DA3015 /* Sources */,
+				45AE435B891C3133F86997C4 /* Resources */,
+				8DAE341F36BD8C73CD01F5A5 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MessageFilter;
+			packageProductDependencies = (
+				1BA1C2E4F92C3D9169339CE0 /* ScamTriageKit */,
+			);
+			productName = MessageFilter;
+			productReference = AAE9C9A09B59F5C9635D4B82 /* MessageFilter.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		444D3E5BB79357FF0C38B044 /* ScamTriage */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 16261A229663AB32E13866EB /* Build configuration list for PBXNativeTarget "ScamTriage" */;
+			buildPhases = (
+				4C42BEF0D3D1F0C85C5909D4 /* Sources */,
+				243A5E25EEDEE3FAF095B7D0 /* Resources */,
+				5704AB9600CBC33FBBF633B4 /* Frameworks */,
+				897FD3256247B4E4FA57CCE1 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				844747F296B4C96D810DE78A /* PBXTargetDependency */,
+				E8B3E47A8BA6D3898C100416 /* PBXTargetDependency */,
+			);
+			name = ScamTriage;
+			packageProductDependencies = (
+				B8F63F022698E2CD3546004A /* ScamTriageKit */,
+			);
+			productName = ScamTriage;
+			productReference = DF1F46DABAE62365AF424C6E /* ScamTriage.app */;
+			productType = "com.apple.product-type.application";
+		};
+		B4E8B1DCD953BA3235B5FA2D /* ShareExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8E17C7AA315EEAAEBF800DC3 /* Build configuration list for PBXNativeTarget "ShareExtension" */;
+			buildPhases = (
+				76F16DBB267567503E5FEAB3 /* Sources */,
+				FA83582F348D65B3A0A5199B /* Resources */,
+				E2159BDEC2CBE23695294475 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ShareExtension;
+			packageProductDependencies = (
+				70909766BEAE563022BFA1F7 /* ScamTriageKit */,
+			);
+			productName = ShareExtension;
+			productReference = 8491AC7E93A655E935A9F482 /* ShareExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D7599D0B1A06875827C1D77F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					1D9881D671990B0C339390A2 = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Automatic;
+					};
+					444D3E5BB79357FF0C38B044 = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Automatic;
+					};
+					B4E8B1DCD953BA3235B5FA2D = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 5A0D9D0F8D82A093F7B5EC9E /* Build configuration list for PBXProject "ScamTriage" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = A105426657708754D300B2A7;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				D67D49B74E5A079C58DBFC2A /* XCLocalSwiftPackageReference "ScamTriageKit" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = A047B648090CD5EBC6956D33 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				444D3E5BB79357FF0C38B044 /* ScamTriage */,
+				B4E8B1DCD953BA3235B5FA2D /* ShareExtension */,
+				1D9881D671990B0C339390A2 /* MessageFilter */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		243A5E25EEDEE3FAF095B7D0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D10BF79930F4E4360C4735FA /* Assets.xcassets in Resources */,
+				0541304C613F738FEFBCF332 /* model in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		45AE435B891C3133F86997C4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B6F189AB9463A353DB7BCECE /* model in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FA83582F348D65B3A0A5199B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				71B16F87D7E7EA2411D4E742 /* model in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		4C42BEF0D3D1F0C85C5909D4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BD3EE071CCEF8099FBE2471C /* CheckMessageIntent.swift in Sources */,
+				3CC02FB199055E0FFDECCA4F /* ContentView.swift in Sources */,
+				8C99B9045E58489EA6C75BCB /* EngineProvider.swift in Sources */,
+				723CBF225D0534A56A7F1A33 /* ScamTriageApp.swift in Sources */,
+				9526EC06CF4100DD084E8B5E /* VerdictView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		76F16DBB267567503E5FEAB3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0801754C378D1B6689BABB1E /* EngineProvider.swift in Sources */,
+				C0B950D459BB107176CA915D /* ShareViewController.swift in Sources */,
+				2ED139C910A0249F3A121FA2 /* VerdictView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ABD16134A8DF9D1042DA3015 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				41F63674E9AFC473018C9927 /* MessageFilterExtension.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		844747F296B4C96D810DE78A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B4E8B1DCD953BA3235B5FA2D /* ShareExtension */;
+			targetProxy = 92973F1C00B7793C660CE1BE /* PBXContainerItemProxy */;
+		};
+		E8B3E47A8BA6D3898C100416 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1D9881D671990B0C339390A2 /* MessageFilter */;
+			targetProxy = C4F92CDB4AA8609B954D58D0 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		1E8824449AF8DC08A96B2075 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = App/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = io.github.ag2502.scamtriage;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		21B5FDD125DE6FF9DB0B9937 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = App/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = io.github.ag2502.scamtriage;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		23A14D0FFCE7DE84C8F23601 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = ShareExtension/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = io.github.ag2502.scamtriage.share;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		270D3F06596D0B2E5975A0FE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = MessageFilter/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = io.github.ag2502.scamtriage.messagefilter;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		9FA3FE7C7437EB506E9EB8D6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = ShareExtension/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = io.github.ag2502.scamtriage.share;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		BACA1144B18BE28A8E0AEA0F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 0.1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		E1E1EBB1A8E9CAC4489612D0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 0.1.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		F274D41829ED8B9AF16B2859 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = MessageFilter/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = io.github.ag2502.scamtriage.messagefilter;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		16261A229663AB32E13866EB /* Build configuration list for PBXNativeTarget "ScamTriage" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				21B5FDD125DE6FF9DB0B9937 /* Debug */,
+				1E8824449AF8DC08A96B2075 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		5A0D9D0F8D82A093F7B5EC9E /* Build configuration list for PBXProject "ScamTriage" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BACA1144B18BE28A8E0AEA0F /* Debug */,
+				E1E1EBB1A8E9CAC4489612D0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		8E17C7AA315EEAAEBF800DC3 /* Build configuration list for PBXNativeTarget "ShareExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9FA3FE7C7437EB506E9EB8D6 /* Debug */,
+				23A14D0FFCE7DE84C8F23601 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		C619FED2B0700AB914FFAB66 /* Build configuration list for PBXNativeTarget "MessageFilter" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				270D3F06596D0B2E5975A0FE /* Debug */,
+				F274D41829ED8B9AF16B2859 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		D67D49B74E5A079C58DBFC2A /* XCLocalSwiftPackageReference "ScamTriageKit" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ScamTriageKit;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		1BA1C2E4F92C3D9169339CE0 /* ScamTriageKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ScamTriageKit;
+		};
+		70909766BEAE563022BFA1F7 /* ScamTriageKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ScamTriageKit;
+		};
+		B8F63F022698E2CD3546004A /* ScamTriageKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ScamTriageKit;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = D7599D0B1A06875827C1D77F /* Project object */;
+}

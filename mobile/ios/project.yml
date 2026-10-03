@@ -1,0 +1,91 @@
+# XcodeGen spec for the iOS app. Regenerate the project with: xcodegen generate
+name: ScamTriage
+options:
+  bundleIdPrefix: io.github.ag2502
+  deploymentTarget:
+    iOS: "17.0"
+  createIntermediateGroups: true
+packages:
+  ScamTriageKit:
+    path: ScamTriageKit
+settings:
+  base:
+    MARKETING_VERSION: "0.1.0"
+    CURRENT_PROJECT_VERSION: "1"
+    SWIFT_VERSION: "5.0"
+    DEVELOPMENT_TEAM: ""   # set your Apple team ID (Xcode > Signing & Capabilities)
+    CODE_SIGN_STYLE: Automatic
+targets:
+  ScamTriage:
+    type: application
+    platform: iOS
+    sources:
+      - App
+      - Shared
+      - path: ../shared/model
+        type: folder
+        buildPhase: resources
+    dependencies:
+      - package: ScamTriageKit
+      - target: ShareExtension
+      - target: MessageFilter
+    info:
+      path: App/Info.plist
+      properties:
+        CFBundleDisplayName: Scam Triage
+        UILaunchScreen: {}
+        UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
+        ITSAppUsesNonExemptEncryption: false
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: io.github.ag2502.scamtriage
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+        TARGETED_DEVICE_FAMILY: "1"
+  ShareExtension:
+    type: app-extension
+    platform: iOS
+    sources:
+      - ShareExtension
+      - Shared
+      - path: ../shared/model
+        type: folder
+        buildPhase: resources
+    dependencies:
+      - package: ScamTriageKit
+    info:
+      path: ShareExtension/Info.plist
+      properties:
+        CFBundleDisplayName: Check for Scam
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.share-services
+          NSExtensionPrincipalClass: $(PRODUCT_MODULE_NAME).ShareViewController
+          NSExtensionAttributes:
+            NSExtensionActivationRule:
+              NSExtensionActivationSupportsText: true
+              NSExtensionActivationSupportsWebURLWithMaxCount: 1
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: io.github.ag2502.scamtriage.share
+        TARGETED_DEVICE_FAMILY: "1"
+  MessageFilter:
+    type: app-extension
+    platform: iOS
+    sources:
+      - MessageFilter
+      - path: ../shared/model
+        type: folder
+        buildPhase: resources
+    dependencies:
+      - package: ScamTriageKit
+    info:
+      path: MessageFilter/Info.plist
+      properties:
+        CFBundleDisplayName: Scam Triage
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.identitylookup.message-filter
+          NSExtensionPrincipalClass: $(PRODUCT_MODULE_NAME).MessageFilterExtension
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: io.github.ag2502.scamtriage.messagefilter
+        TARGETED_DEVICE_FAMILY: "1"
