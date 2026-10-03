@@ -1,0 +1,12 @@
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+dist/
+build/
+.env
+.DS_Store
+
+# Downloaded third-party corpora (fetched by scripts/, not redistributed here)
+data/external/
