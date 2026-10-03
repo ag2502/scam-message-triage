@@ -17,7 +17,10 @@ export async function initVideo() {
   list.addEventListener("click", (e) => {
     const b = e.target.closest("[data-ch]");
     if (!b) return;
-    video.currentTime = chapters[+b.dataset.ch].t;
+    const t = chapters[+b.dataset.ch].t;
+    // Setting currentTime before metadata has loaded is ignored, so wait for it if needed.
+    if (video.readyState >= 1) video.currentTime = t;
+    else video.addEventListener("loadedmetadata", () => (video.currentTime = t), { once: true });
     video.play().catch(() => {});
   });
   const sync = () => {
