@@ -110,7 +110,7 @@ export function initChecker({ state, loadEngine }) {
   const form = $("[data-check-form]", root);
   const msg = $("[data-msg]", root);
   const btn = $("[data-check-btn]", root);
-  const status = $("[data-model-status]", root);
+  const status = $("[data-model-status]"); // lives in the window title bar
   const views = { empty: $("[data-empty]", root), skeleton: $("[data-skeleton]", root), error: $("[data-error]", root), result: $("[data-result]", root) };
   const show = (name) => Object.entries(views).forEach(([k, el]) => (el.hidden = k !== name));
   let examples = [];
@@ -145,7 +145,7 @@ export function initChecker({ state, loadEngine }) {
     const r = engine.triage(text);
     views.result.innerHTML = renderResult(text, r, engine.m.taxonomy);
     show("result");
-    if (window.innerWidth < 900) views.result.scrollIntoView({ behavior: "smooth", block: "start" });
+    if (window.innerWidth < 900) views.result.scrollIntoView({ behavior: "smooth", block: "nearest" });
     requestAnimationFrame(() => {
       const arc = views.result.querySelector(".gauge__value");
       if (arc) requestAnimationFrame(() => (arc.style.strokeDashoffset = arc.dataset.target));
@@ -158,7 +158,11 @@ export function initChecker({ state, loadEngine }) {
     });
     state.publish(text, r);
   }
-  state.runCheck = (text) => { run(text); document.getElementById("check").scrollIntoView({ behavior: "smooth" }); };
+  state.runCheck = (text) => {
+    document.getElementById("toolbox").scrollIntoView({ behavior: "smooth" });
+    state.openWindow?.("checker");
+    run(text);
+  };
 
   form.addEventListener("submit", (e) => { e.preventDefault(); samples.querySelectorAll(".chip").forEach((c) => c.setAttribute("aria-pressed", "false")); run(); });
   msg.addEventListener("keydown", (e) => { if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) { e.preventDefault(); run(); } });

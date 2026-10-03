@@ -65,7 +65,8 @@ export function initChannels({ loadEngine }) {
   const payBtn = $("[data-pay-btn]");
   let lastLevel = "low";
 
-  whenNear(code, async () => {
+  // The code block and bank sheet live inside toolbox windows (possibly hidden), so watch the section.
+  whenNear(document.getElementById("toolbox") || code, async () => {
     let engine;
     try { engine = await loadEngine(); } catch { return; }
     const r = engine.triage(API_TEXT);

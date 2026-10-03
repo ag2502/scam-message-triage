@@ -1,4 +1,4 @@
-// "What happens to your message": a scroll-driven walkthrough of the pipeline on a real message.
+// X-ray window: the five pipeline steps run on the last checked message (auto-advances until clicked).
 import { $, $$, esc, formatReply, waMarkup } from "./ui.js";
 import { signalName } from "./checker.js";
 
@@ -43,26 +43,38 @@ function render(step, text, r, engine) {
 }
 
 export function initXray({ state, loadEngine }) {
-  const body = $("[data-xray-body]");
-  const title = $("[data-xray-title]");
-  const steps = $$(".step");
-  if (!body) return;
-  let active = 0, engine = null, text = DEFAULT_TEXT, result = null;
+  const root = $("[data-xray]");
+  if (!root) return;
+  const body = $("[data-xray-body]", root);
+  const steps = $("[data-xray-steps]", root);
+  const src = $("[data-xray-src]", root);
+  const win = root.closest(".oswin");
+  let active = 0, engine = null, text = DEFAULT_TEXT, result = null, timer = 0, userPicked = false;
 
+  steps.innerHTML = TITLES.map((t, i) => `<button type="button" role="tab" class="chip" data-step-btn="${i}" aria-selected="${i === 0}" aria-pressed="${i === 0}">${i + 1}. ${esc(t)}</button>`).join("");
   const paint = () => {
     if (!engine) return;
     result = result || engine.triage(text);
-    title.textContent = `step ${active + 1} of 5: ${TITLES[active]}`;
     body.innerHTML = render(active, text, result, engine);
-    steps.forEach((s, i) => s.classList.toggle("is-active", i === active));
+    $$("[data-step-btn]", steps).forEach((b, i) => { b.setAttribute("aria-selected", i === active); b.setAttribute("aria-pressed", i === active); });
+    src.textContent = text === DEFAULT_TEXT ? "Showing an example. Check any message in the chat or Checker and it appears here." : "Showing the last message you checked.";
   };
-
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach((e) => { if (e.isIntersecting) { active = +e.target.dataset.step; paint(); } });
-  }, { rootMargin: "-40% 0px -55% 0px" });
-  steps.forEach((s) => io.observe(s));
-  steps[0].classList.add("is-active");
-
-  state.onResult((t, r) => { text = t; result = r; paint(); });
-  loadEngine().then((e) => { engine = e; paint(); }).catch(() => (body.innerHTML = '<p class="help">The model did not load. Refresh to try again.</p>'));
+  steps.addEventListener("click", (e) => {
+    const b = e.target.closest("[data-step-btn]");
+    if (!b) return;
+    userPicked = true;
+    active = +b.dataset.stepBtn;
+    paint();
+  });
+  // Auto-advance through the steps while the window is visible, until the user picks one.
+  const loop = () => {
+    clearInterval(timer);
+    timer = setInterval(() => {
+      if (userPicked || win?.hidden || document.hidden) return;
+      active = (active + 1) % TITLES.length;
+      paint();
+    }, 3800);
+  };
+  state.onResult((t, r) => { text = t; result = r; active = 0; paint(); });
+  loadEngine().then((e) => { engine = e; paint(); loop(); }).catch(() => (body.innerHTML = '<p class="help">The model did not load. Refresh to try again.</p>'));
 }

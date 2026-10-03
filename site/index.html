@@ -27,7 +27,7 @@
   <script type="module" src="assets/js/app.js"></script>
 </head>
 <body>
-  <a class="skip" href="#check">Skip to the checker</a>
+  <a class="skip" href="#chat">Skip to the chat</a>
 
   <header class="nav" data-nav>
     <div class="nav__inner">
@@ -36,12 +36,12 @@
         <span class="brand__name">Scam Triage</span>
       </a>
       <nav class="nav__links" aria-label="Sections">
-        <a href="#check">Try it</a>
+        <a href="#chat">Try it</a>
         <a href="#game">Game</a>
         <a href="#demo">Demo</a>
         <a href="#channels">Get it</a>
         <a href="#story">How it works</a>
-        <a href="#results">Results</a>
+        <a href="#toolbox">Toolbox</a>
         <a href="#faq">FAQ</a>
       </nav>
       <div class="nav__actions">
@@ -115,23 +115,57 @@
       </div>
     </section>
 
-    <!-- CHECKER -->
-    <section class="section" id="check">
+    <!-- DEMO VIDEO -->
+    <section class="section section--tint" id="demo">
+      <div class="wrap">
+        <header class="section__head section__head--center reveal">
+          <h2 class="title">Forward. Wait a second. Know.</h2>
+          <p class="sub">How it works on WhatsApp, start to finish. Every reply in the video is the real model's output.</p>
+        </header>
+        <div class="player reveal">
+          <div class="window player__window">
+            <div class="window__bar">
+              <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+              <span class="window__title">demo.mp4</span>
+              <span class="window__meta" data-video-time>0:00</span>
+            </div>
+            <div class="player__media">
+              <video data-video playsinline preload="metadata" poster="assets/video/poster.jpg" controls>
+                <source src="assets/video/demo.webm" type="video/webm">
+                <source src="assets/video/demo.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+          <ol class="chapters" data-chapters aria-label="Video chapters"></ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- TOOLBOX (desktop OS) -->
+    <section class="section toolbox" id="toolbox">
       <div class="wrap">
         <header class="section__head reveal">
-          <p class="eyebrow"><i class="ph ph-lock-simple"></i> Runs on your device</p>
-          <h2 class="title">Paste it. See exactly why.</h2>
-          <p class="sub">The model runs in your browser, so nothing you paste is sent anywhere. Every verdict shows the words and patterns behind it.</p>
+          <p class="eyebrow"><i class="ph ph-app-window"></i> Toolbox</p>
+          <h2 class="title">Open it up. Every tool, live.</h2>
+          <p class="sub">Open any tool from the dock. On a laptop, drag and resize the windows like a desktop. Everything runs on this page.</p>
         </header>
-
-        <div class="window checker reveal" data-checker>
-          <div class="window__bar">
-            <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
-            <span class="window__title">scam check, on-device</span>
-            <span class="window__meta" data-model-status>loading model</span>
+        <div class="os" data-os>
+          <div class="os__menubar">
+            <span class="os__apple"><i class="ph-fill ph-shield-check"></i></span>
+            <strong data-os-active>Scam Triage</strong>
+            <span class="os__menubar-right" aria-hidden="true"><i class="ph ph-wifi-high"></i><i class="ph-fill ph-battery-full"></i><span data-os-clock>9:41</span></span>
           </div>
+          <div class="os__desk" data-os-desk>
+            <div class="os__icons" aria-label="Desktop">
+              <button type="button" class="os__icon" data-open="about"><i class="ph-fill ph-file-text"></i><span>README.md</span></button>
+              <button type="button" class="os__icon" data-open="results"><i class="ph-fill ph-chart-scatter"></i><span>Results</span></button>
+              <button type="button" class="os__icon" data-open="terminal"><i class="ph-fill ph-terminal-window"></i><span>Terminal</span></button>
+            </div>
 
-          <div class="checker__grid">
+            <section class="oswin" data-win="checker" data-title="Checker" data-icon="ph-magnifying-glass" data-geo="24,20,700,540" aria-label="Checker window">
+              <div class="oswin__bar"><span class="oswin__lights"><button type="button" data-win-close aria-label="Close"></button><button type="button" data-win-min aria-label="Minimize"></button><button type="button" data-win-max aria-label="Maximize"></button></span><span class="oswin__title">Checker</span><span class="window__meta" data-model-status>loading model</span></div>
+              <div class="oswin__body checker" data-checker id="check">
+                <div class="checker__grid">
             <form class="checker__input" data-check-form>
               <label for="msg" class="label">Message</label>
               <textarea id="msg" name="msg" rows="7" maxlength="4000" data-msg
@@ -163,33 +197,137 @@
               </div>
               <div class="result" data-result hidden></div>
             </div>
+          
+              </div>
+              <span class="oswin__grip" data-win-grip aria-hidden="true"></span>
+            </section>
+
+            <section class="oswin" data-win="xray" data-title="X-ray" data-icon="ph-scan" data-geo="680,52,500,460" aria-label="X-ray window">
+              <div class="oswin__bar"><span class="oswin__lights"><button type="button" data-win-close aria-label="Close"></button><button type="button" data-win-min aria-label="Minimize"></button><button type="button" data-win-max aria-label="Maximize"></button></span><span class="oswin__title">X-ray</span></div>
+              <div class="oswin__body xraywin" data-xray>
+                <div class="xraywin__steps" role="tablist" aria-label="Pipeline steps" data-xray-steps></div>
+                <div class="xray__body" data-xray-body aria-live="polite"><p class="help">Loading the model...</p></div>
+                <p class="help xraywin__src" data-xray-src></p>
+              </div>
+              <span class="oswin__grip" data-win-grip aria-hidden="true"></span>
+            </section>
+
+            <section class="oswin" data-win="api" data-title="API console" data-icon="ph-brackets-curly" data-geo="230,120,640,500" aria-label="API console window">
+              <div class="oswin__bar"><span class="oswin__lights"><button type="button" data-win-close aria-label="Close"></button><button type="button" data-win-min aria-label="Minimize"></button><button type="button" data-win-max aria-label="Maximize"></button></span><span class="oswin__title">API console</span></div>
+              <div class="oswin__body apicon" data-api>
+                <form class="apicon__req" data-api-form>
+                  <div class="apicon__line"><span class="apicon__method">POST</span><code>/v1/triage</code><button class="btn btn--primary btn--sm" type="submit"><i class="ph-fill ph-paper-plane-right"></i>Send</button></div>
+                  <label class="label" for="api-body">Request body</label>
+                  <textarea id="api-body" rows="5" spellcheck="false" data-api-body></textarea>
+                </form>
+                <div class="apicon__res">
+                  <div class="apicon__status" data-api-status>Press Send to call the endpoint (simulated locally with the same model).</div>
+                  <pre class="apicon__json"><code data-api-out></code></pre>
+                </div>
+                <details class="apicon__snips"><summary>Call it from your code</summary>
+                  <div class="code" data-code>
+              <div class="tabs" role="tablist" aria-label="Request examples">
+                <button role="tab" aria-selected="true" data-tab="curl">cURL</button>
+                <button role="tab" aria-selected="false" data-tab="python">Python</button>
+                <button role="tab" aria-selected="false" data-tab="js">JavaScript</button>
+                <button role="tab" aria-selected="false" data-tab="response">Response</button>
+              </div>
+              <pre><code data-code-body></code></pre>
+              <button class="icon-btn code__copy" type="button" data-copy-code aria-label="Copy code"><i class="ph ph-copy"></i></button>
+            </div>
+                </details>
+              </div>
+              <span class="oswin__grip" data-win-grip aria-hidden="true"></span>
+            </section>
+
+            <section class="oswin" data-win="terminal" data-title="Terminal" data-icon="ph-terminal-window" data-geo="420,300,560,330" aria-label="Terminal window">
+              <div class="oswin__bar oswin__bar--dark"><span class="oswin__lights"><button type="button" data-win-close aria-label="Close"></button><button type="button" data-win-min aria-label="Minimize"></button><button type="button" data-win-max aria-label="Maximize"></button></span><span class="oswin__title">scam-triage, zsh</span></div>
+              <div class="oswin__body term" data-term>
+                <div class="term__out" data-term-out aria-live="polite"></div>
+                <form class="term__line" data-term-form><span class="term__ps1">~ %</span><label class="sr" for="term-in">Terminal command</label><input id="term-in" autocomplete="off" spellcheck="false" data-term-in></form>
+              </div>
+              <span class="oswin__grip" data-win-grip aria-hidden="true"></span>
+            </section>
+
+            <section class="oswin" data-win="bank" data-title="Bank app" data-icon="ph-bank" data-geo="820,80,380,520" aria-label="Bank app window" hidden>
+              <div class="oswin__bar"><span class="oswin__lights"><button type="button" data-win-close aria-label="Close"></button><button type="button" data-win-min aria-label="Minimize"></button><button type="button" data-win-max aria-label="Maximize"></button></span><span class="oswin__title">Bank app: check before you pay</span></div>
+              <div class="oswin__body bankapp">
+                <div class="paysheet" data-paysheet>
+              <div class="paysheet__row"><span>Pix to</span><strong>Unknown key ···8821</strong></div>
+              <div class="paysheet__row"><span>Amount</span><strong>R$ 800,00</strong></div>
+              <label class="label" for="pay-why">Message that asked you to pay</label>
+              <textarea id="pay-why" rows="2" data-pay-msg>Mum it's me, new number. Need R$800 by Pix for rent, today please, can't call</textarea>
+              <div class="paysheet__verdict" data-pay-verdict aria-live="polite"></div>
+              <button class="btn btn--primary btn--block" type="button" data-pay-btn>Confirm payment</button>
+            </div>
+              </div>
+              <span class="oswin__grip" data-win-grip aria-hidden="true"></span>
+            </section>
+
+            <section class="oswin" data-win="results" data-title="Results" data-icon="ph-chart-scatter" data-geo="40,30,1110,600" aria-label="Results window" hidden>
+              <div class="oswin__bar"><span class="oswin__lights"><button type="button" data-win-close aria-label="Close"></button><button type="button" data-win-min aria-label="Minimize"></button><button type="button" data-win-max aria-label="Maximize"></button></span><span class="oswin__title">Results: honest numbers, misses included</span></div>
+              <div class="oswin__body resultswin" id="results">
+                <div class="explorer" data-explorer>
+          <div class="explorer__controls">
+            <div class="seg" role="radiogroup" aria-label="Evaluation set" data-sets></div>
+            <label class="label" for="thr">Threshold <output data-thr-out>0.55</output></label>
+            <input id="thr" type="range" min="0" max="1" step="0.005" data-thr>
+            <div class="explorer__presets">
+              <button type="button" class="chip" data-preset="medium">Medium level</button>
+              <button type="button" class="chip" data-preset="high">High level</button>
+            </div>
+            <label class="label" for="prev">Share of forwarded messages that are scams <output data-prev-out>10%</output></label>
+            <input id="prev" type="range" min="1" max="60" step="1" value="10" data-prev>
+          </div>
+
+          <div class="explorer__stats" data-stats></div>
+
+          <figure class="explorer__chart">
+            <div class="strip" data-strip role="img" aria-label="Scores of scam and legitimate messages with the current threshold"></div>
+            <figcaption class="help" data-strip-caption></figcaption>
+          </figure>
+        </div>
+
+        
+                <div class="notes">
+          <div class="note">
+            <h3>Where it misses</h3>
+            <p>Conversation starters like "sorry, wrong number... do you invest?" carry no scam content yet. Single-message triage can't see where a chat is heading.</p>
+          </div>
+          <div class="note">
+            <h3>Where it over-warns</h3>
+            <p>Outgoing bank-transfer confirmations still score too high in held-out tests. That is the main source of false alarms.</p>
+          </div>
+          <div class="note">
+            <h3>What would fix it</h3>
+            <p>Consented, labelled messages that people forward to the bot. The data is synthetic today, and the dataset card says so.</p>
           </div>
         </div>
-      </div>
-    </section>
 
-    <!-- DEMO VIDEO -->
-    <section class="section section--tint" id="demo">
-      <div class="wrap">
-        <header class="section__head section__head--center reveal">
-          <h2 class="title">Forward. Wait a second. Know.</h2>
-          <p class="sub">How it works on WhatsApp, start to finish. Every reply in the video is the real model's output.</p>
-        </header>
-        <div class="player reveal">
-          <div class="window player__window">
-            <div class="window__bar">
-              <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
-              <span class="window__title">demo.mp4</span>
-              <span class="window__meta" data-video-time>0:00</span>
-            </div>
-            <div class="player__media">
-              <video data-video playsinline preload="metadata" poster="assets/video/poster.jpg" controls>
-                <source src="assets/video/demo.webm" type="video/webm">
-                <source src="assets/video/demo.mp4" type="video/mp4">
-              </video>
-            </div>
+              </div>
+              <span class="oswin__grip" data-win-grip aria-hidden="true"></span>
+            </section>
+
+            <section class="oswin" data-win="about" data-title="README.md" data-icon="ph-file-text" data-geo="160,60,520,440" aria-label="README window" hidden>
+              <div class="oswin__bar"><span class="oswin__lights"><button type="button" data-win-close aria-label="Close"></button><button type="button" data-win-min aria-label="Minimize"></button><button type="button" data-win-max aria-label="Maximize"></button></span><span class="oswin__title">README.md</span></div>
+              <div class="oswin__body readme">
+                <h3># Scam Triage</h3>
+                <p>An explainable scam checker for instant-payment fraud: Pix, UPI, Zelle, SPEI, wallets, gift cards and crypto.</p>
+                <h4>## How it works</h4>
+                <p>24 readable warning signals plus word and character n-grams feed two small linear models: one scores risk, one names the scam type. Thresholds are set for 1% and 5% false alarms.</p>
+                <h4>## Honest limits</h4>
+                <p>Trained on synthetic English data plus real legitimate SMS. It misses conversation-starter scams and still over-warns on some bank-transfer receipts.</p>
+                <h4>## Links</h4>
+                <ul>
+                  <li><a href="https://github.com/ag2502/scam-message-triage" target="_blank" rel="noopener">Source code (MIT)</a></li>
+                  <li><a href="https://github.com/ag2502/scam-message-triage/blob/main/data/en/DATASET_CARD.md" target="_blank" rel="noopener">Dataset card (CC BY 4.0)</a></li>
+                  <li><a href="https://github.com/ag2502/scam-message-triage/blob/main/reports/en/EVALUATION.md" target="_blank" rel="noopener">Evaluation report</a></li>
+                </ul>
+              </div>
+              <span class="oswin__grip" data-win-grip aria-hidden="true"></span>
+            </section>
           </div>
-          <ol class="chapters" data-chapters aria-label="Video chapters"></ol>
+          <nav class="os__dock" data-os-dock aria-label="Dock"></nav>
         </div>
       </div>
     </section>
@@ -216,6 +354,7 @@
               <li><i class="ph ph-chat-circle-text"></i><span>Reply in ~1 s</span></li>
             </ol>
             <p class="fine">Webhook, signature checks and retries are built. A public number needs Meta business verification.</p>
+            <a class="btn btn--ghost btn--sm tile__cta" href="#chat"><i class="ph ph-chat-circle-text"></i>Chat with the bot</a>
           </article>
 
           <article class="tile tile--web reveal" style="--d: 60ms">
@@ -240,16 +379,7 @@
             </div>
             <h3>API for banks and fintechs</h3>
             <p>One POST call. The response includes a ready-to-send reply in plain language.</p>
-            <div class="code" data-code>
-              <div class="tabs" role="tablist" aria-label="Request examples">
-                <button role="tab" aria-selected="true" data-tab="curl">cURL</button>
-                <button role="tab" aria-selected="false" data-tab="python">Python</button>
-                <button role="tab" aria-selected="false" data-tab="js">JavaScript</button>
-                <button role="tab" aria-selected="false" data-tab="response">Response</button>
-              </div>
-              <pre><code data-code-body></code></pre>
-              <button class="icon-btn code__copy" type="button" data-copy-code aria-label="Copy code"><i class="ph ph-copy"></i></button>
-            </div>
+            <button class="btn btn--ghost btn--sm tile__cta" type="button" data-open="api"><i class="ph ph-terminal-window"></i>Open the API console</button>
           </article>
 
           <article class="tile tile--bank reveal" style="--d: 60ms">
@@ -259,14 +389,7 @@
             </div>
             <h3>"Check before you pay" in banking apps</h3>
             <p>A step inside the payment flow: paste the message that asked you to pay, and the app warns you before the money leaves.</p>
-            <div class="paysheet" data-paysheet>
-              <div class="paysheet__row"><span>Pix to</span><strong>Unknown key ···8821</strong></div>
-              <div class="paysheet__row"><span>Amount</span><strong>R$ 800,00</strong></div>
-              <label class="label" for="pay-why">Message that asked you to pay</label>
-              <textarea id="pay-why" rows="2" data-pay-msg>Mum it's me, new number. Need R$800 by Pix for rent, today please, can't call</textarea>
-              <div class="paysheet__verdict" data-pay-verdict aria-live="polite"></div>
-              <button class="btn btn--primary btn--block" type="button" data-pay-btn>Confirm payment</button>
-            </div>
+            <button class="btn btn--ghost btn--sm tile__cta" type="button" data-open="bank"><i class="ph ph-bank"></i>Try the bank flow</button>
           </article>
 
           <article class="tile tile--widget reveal" style="--d: 120ms">
@@ -344,53 +467,6 @@
             <button class="btn btn--ghost arena__scam" type="button" data-pick="scam">Scam<i class="ph ph-arrow-right"></i></button>
           </div>
           <p class="help arena__hint" data-hint>Drag the card, use the buttons, or press ← / →</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- RESULTS -->
-    <section class="section section--tint" id="results">
-      <div class="wrap">
-        <header class="section__head reveal">
-          <p class="eyebrow"><i class="ph ph-sliders-horizontal"></i> Evaluation</p>
-          <h2 class="title">Honest numbers, misses included.</h2>
-          <p class="sub">Move the threshold and watch the trade-off. Each test set was committed to git before the model changes it measures.</p>
-        </header>
-
-        <div class="explorer reveal" data-explorer>
-          <div class="explorer__controls">
-            <div class="seg" role="radiogroup" aria-label="Evaluation set" data-sets></div>
-            <label class="label" for="thr">Threshold <output data-thr-out>0.55</output></label>
-            <input id="thr" type="range" min="0" max="1" step="0.005" data-thr>
-            <div class="explorer__presets">
-              <button type="button" class="chip" data-preset="medium">Medium level</button>
-              <button type="button" class="chip" data-preset="high">High level</button>
-            </div>
-            <label class="label" for="prev">Share of forwarded messages that are scams <output data-prev-out>10%</output></label>
-            <input id="prev" type="range" min="1" max="60" step="1" value="10" data-prev>
-          </div>
-
-          <div class="explorer__stats" data-stats></div>
-
-          <figure class="explorer__chart">
-            <div class="strip" data-strip role="img" aria-label="Scores of scam and legitimate messages with the current threshold"></div>
-            <figcaption class="help" data-strip-caption></figcaption>
-          </figure>
-        </div>
-
-        <div class="notes reveal">
-          <div class="note">
-            <h3>Where it misses</h3>
-            <p>Conversation starters like "sorry, wrong number... do you invest?" carry no scam content yet. Single-message triage can't see where a chat is heading.</p>
-          </div>
-          <div class="note">
-            <h3>Where it over-warns</h3>
-            <p>Outgoing bank-transfer confirmations still score too high in held-out tests. That is the main source of false alarms.</p>
-          </div>
-          <div class="note">
-            <h3>What would fix it</h3>
-            <p>Consented, labelled messages that people forward to the bot. The data is synthetic today, and the dataset card says so.</p>
-          </div>
         </div>
       </div>
     </section>
