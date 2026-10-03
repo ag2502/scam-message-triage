@@ -1,0 +1,443 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Scam Triage: check a message before you pay</title>
+  <meta name="description" content="Paste or forward a suspicious WhatsApp or SMS message. Get a risk score, the scam type and what to do next. Runs in your browser.">
+  <meta name="theme-color" content="#f2f3f5" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0d0f12" media="(prefers-color-scheme: dark)">
+  <meta property="og:title" content="Scam Triage: check a message before you pay">
+  <meta property="og:description" content="Explainable scam checks for Pix, UPI, Zelle and bank-transfer scams. Runs in your browser.">
+  <meta property="og:image" content="assets/video/poster.jpg">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/fonts/geist.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/vendor/phosphor/regular.css">
+  <link rel="stylesheet" href="assets/vendor/phosphor/fill.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script>
+    // Apply the saved theme before first paint to avoid a flash.
+    try { const t = localStorage.getItem("theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+  </script>
+  <script type="module" src="assets/js/app.js"></script>
+</head>
+<body>
+  <a class="skip" href="#check">Skip to the checker</a>
+
+  <header class="nav" data-nav>
+    <div class="nav__inner">
+      <a class="brand" href="#top" aria-label="Scam Triage home">
+        <span class="brand__mark"><i class="ph-fill ph-shield-check"></i></span>
+        <span class="brand__name">Scam Triage</span>
+      </a>
+      <nav class="nav__links" aria-label="Sections">
+        <a href="#check">Try it</a>
+        <a href="#demo">Demo</a>
+        <a href="#channels">Get it</a>
+        <a href="#how">How it works</a>
+        <a href="#results">Results</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <div class="nav__actions">
+        <button class="icon-btn" type="button" data-theme-toggle aria-label="Toggle dark mode">
+          <i class="ph ph-moon" data-theme-icon></i>
+        </button>
+        <a class="btn btn--ghost btn--sm" href="https://github.com/ag2502/scam-message-triage" target="_blank" rel="noopener">
+          <i class="ph ph-github-logo"></i><span>GitHub</span>
+        </a>
+        <button class="icon-btn nav__menu" type="button" data-menu-toggle aria-label="Open menu" aria-expanded="false">
+          <i class="ph ph-list"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="wrap hero__grid">
+        <div class="hero__copy reveal">
+          <h1 class="display">Asked to send money? <span class="hl">Check it first.</span></h1>
+          <p class="lede">Paste or forward a suspicious WhatsApp or SMS. Get a risk score, the scam type and what to do next.</p>
+          <div class="cta-row">
+            <a class="btn btn--primary" href="#check"><i class="ph ph-magnifying-glass"></i>Check a message</a>
+            <a class="btn btn--ghost" href="#demo"><i class="ph-fill ph-play"></i>Watch the demo</a>
+          </div>
+        </div>
+
+        <div class="hero__stage reveal" style="--d: 120ms">
+          <div class="sticker sticker--a" aria-hidden="true">(¬_¬) new number, huh?</div>
+          <div class="sticker sticker--b" aria-hidden="true">(ಠ_ಠ) a "safe account"??</div>
+          <div class="sticker sticker--c" aria-hidden="true">( •̀ᴗ•́ )و checked</div>
+          <div class="phone" data-hero-phone aria-label="Animated example: messages forwarded to the Scam Triage bot and its replies" role="img">
+            <div class="phone__notch"></div>
+            <div class="chat">
+              <div class="chat__head">
+                <span class="chat__avatar"><i class="ph-fill ph-shield-check"></i></span>
+                <div>
+                  <strong>Scam Triage</strong>
+                  <small data-hero-status>online</small>
+                </div>
+              </div>
+              <div class="chat__body" data-hero-body></div>
+              <div class="chat__input"><span>Message</span><i class="ph-fill ph-paper-plane-tilt"></i></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="rails" aria-label="Works with any instant-payment rail">
+        <div class="rails__track">
+          <span>Pix</span><span>UPI</span><span>Zelle</span><span>SPEI</span><span>Faster Payments</span><span>Venmo</span>
+          <span>Cash App</span><span>PayPal</span><span>Bre-B</span><span>Google Pay</span><span>PhonePe</span><span>Gift cards</span>
+          <span>USDT</span><span>Wire transfer</span>
+          <span aria-hidden="true">Pix</span><span aria-hidden="true">UPI</span><span aria-hidden="true">Zelle</span><span aria-hidden="true">SPEI</span>
+          <span aria-hidden="true">Faster Payments</span><span aria-hidden="true">Venmo</span><span aria-hidden="true">Cash App</span>
+          <span aria-hidden="true">PayPal</span><span aria-hidden="true">Bre-B</span><span aria-hidden="true">Google Pay</span>
+          <span aria-hidden="true">PhonePe</span><span aria-hidden="true">Gift cards</span><span aria-hidden="true">USDT</span><span aria-hidden="true">Wire transfer</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- CHECKER -->
+    <section class="section" id="check">
+      <div class="wrap">
+        <header class="section__head reveal">
+          <p class="eyebrow"><i class="ph ph-lock-simple"></i> Runs on your device</p>
+          <h2 class="title">Paste it. See exactly why.</h2>
+          <p class="sub">The model runs in your browser, so nothing you paste is sent anywhere. Every verdict shows the words and patterns behind it.</p>
+        </header>
+
+        <div class="window checker reveal" data-checker>
+          <div class="window__bar">
+            <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span class="window__title">scam check, on-device</span>
+            <span class="window__meta" data-model-status>loading model</span>
+          </div>
+
+          <div class="checker__grid">
+            <form class="checker__input" data-check-form>
+              <label for="msg" class="label">Message</label>
+              <textarea id="msg" name="msg" rows="7" maxlength="4000" data-msg
+                aria-describedby="msg-help" placeholder="e.g. Hi Mum, this is my new number. Can you send R$800 by Pix?"></textarea>
+              <p id="msg-help" class="help">Tip: press <kbd>Ctrl</kbd> + <kbd>Enter</kbd> to check. Up to 4,000 characters.</p>
+
+              <div class="samples" role="group" aria-label="Example messages" data-samples></div>
+
+              <div class="checker__actions">
+                <button class="btn btn--primary" type="submit" data-check-btn disabled><i class="ph ph-magnifying-glass"></i>Check message</button>
+                <button class="btn btn--ghost" type="button" data-random><i class="ph ph-shuffle"></i>Random real example</button>
+                <button class="icon-btn" type="button" data-clear aria-label="Clear message"><i class="ph ph-trash"></i></button>
+              </div>
+            </form>
+
+            <div class="checker__output" aria-live="polite" data-output>
+              <div class="empty" data-empty>
+                <span class="kao" aria-hidden="true">(・_・?)</span>
+                <p><strong>Nothing checked yet.</strong> Paste a message or pick an example on the left.</p>
+              </div>
+              <div class="skeleton" data-skeleton hidden>
+                <span class="sk sk--round"></span><span class="sk sk--line"></span><span class="sk sk--line w60"></span>
+                <span class="sk sk--block"></span>
+                <p class="help" data-load-msg>Downloading the model once (about 750 KB). After that, checks are instant.</p>
+              </div>
+              <div class="error" data-error hidden>
+                <i class="ph ph-warning"></i>
+                <p><strong>The model didn't load.</strong> <span data-error-msg></span> <button type="button" class="link" data-retry>Try again</button></p>
+              </div>
+              <div class="result" data-result hidden></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DEMO VIDEO -->
+    <section class="section section--tint" id="demo">
+      <div class="wrap">
+        <header class="section__head section__head--center reveal">
+          <h2 class="title">Forward. Wait a second. Know.</h2>
+          <p class="sub">How it works on WhatsApp, start to finish. Every reply in the video is the real model's output.</p>
+        </header>
+        <div class="player reveal">
+          <div class="window player__window">
+            <div class="window__bar">
+              <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+              <span class="window__title">demo.mp4</span>
+              <span class="window__meta" data-video-time>0:00</span>
+            </div>
+            <div class="player__media">
+              <video data-video playsinline preload="metadata" poster="assets/video/poster.jpg" controls>
+                <source src="assets/video/demo.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+          <ol class="chapters" data-chapters aria-label="Video chapters"></ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- CHANNELS -->
+    <section class="section" id="channels">
+      <div class="wrap">
+        <header class="section__head reveal">
+          <h2 class="title">The check goes where the scam lands.</h2>
+          <p class="sub">One engine, several ways to reach people. Each card says honestly where it stands today.</p>
+        </header>
+
+        <div class="bento">
+          <article class="tile tile--wa reveal">
+            <div class="tile__top">
+              <span class="tile__icon"><i class="ph ph-whatsapp-logo"></i></span>
+              <span class="status status--ready">Code ready</span>
+            </div>
+            <h3>WhatsApp bot</h3>
+            <p>Long-press the message, forward it to the bot, get the verdict as a reply. No app, no sign-up.</p>
+            <ol class="flow" aria-label="How the WhatsApp bot works">
+              <li><i class="ph ph-hand-pointing"></i><span>Long-press</span></li>
+              <li><i class="ph ph-share-fat"></i><span>Forward</span></li>
+              <li><i class="ph ph-chat-circle-text"></i><span>Reply in ~1 s</span></li>
+            </ol>
+            <p class="fine">Webhook, signature checks and retries are built. A public number needs Meta business verification.</p>
+          </article>
+
+          <article class="tile tile--web reveal" style="--d: 60ms">
+            <div class="tile__top">
+              <span class="tile__icon"><i class="ph ph-device-mobile"></i></span>
+              <span class="status status--live">Live</span>
+            </div>
+            <h3>This page</h3>
+            <p>Works in any phone browser. Nothing to install, nothing to sign up for.</p>
+            <ul class="facts">
+              <li><i class="ph ph-download-simple"></i><span><b>~750 KB</b> model, downloaded once</span></li>
+              <li><i class="ph ph-lock-simple"></i><span><b>0 bytes</b> of your message sent anywhere</span></li>
+              <li><i class="ph ph-lightning"></i><span><b>Milliseconds</b> per check, on your device</span></li>
+              <li><i class="ph ph-link-simple"></i><span><b>One link</b> to share a check with family</span></li>
+            </ul>
+          </article>
+
+          <article class="tile tile--api reveal" style="--d: 120ms">
+            <div class="tile__top">
+              <span class="tile__icon"><i class="ph ph-code"></i></span>
+              <span class="status status--ready">Self-host</span>
+            </div>
+            <h3>API for banks and fintechs</h3>
+            <p>One POST call. The response includes a ready-to-send reply in plain language.</p>
+            <div class="code" data-code>
+              <div class="tabs" role="tablist" aria-label="Request examples">
+                <button role="tab" aria-selected="true" data-tab="curl">cURL</button>
+                <button role="tab" aria-selected="false" data-tab="python">Python</button>
+                <button role="tab" aria-selected="false" data-tab="js">JavaScript</button>
+                <button role="tab" aria-selected="false" data-tab="response">Response</button>
+              </div>
+              <pre><code data-code-body></code></pre>
+              <button class="icon-btn code__copy" type="button" data-copy-code aria-label="Copy code"><i class="ph ph-copy"></i></button>
+            </div>
+          </article>
+
+          <article class="tile tile--bank reveal" style="--d: 60ms">
+            <div class="tile__top">
+              <span class="tile__icon"><i class="ph ph-bank"></i></span>
+              <span class="status status--planned">With partners</span>
+            </div>
+            <h3>"Check before you pay" in banking apps</h3>
+            <p>A step inside the payment flow: paste the message that asked you to pay, and the app warns you before the money leaves.</p>
+            <div class="paysheet" data-paysheet>
+              <div class="paysheet__row"><span>Pix to</span><strong>Unknown key ···8821</strong></div>
+              <div class="paysheet__row"><span>Amount</span><strong>R$ 800,00</strong></div>
+              <label class="label" for="pay-why">Message that asked you to pay</label>
+              <textarea id="pay-why" rows="2" data-pay-msg>Mum it's me, new number. Need R$800 by Pix for rent, today please, can't call</textarea>
+              <div class="paysheet__verdict" data-pay-verdict aria-live="polite"></div>
+              <button class="btn btn--primary btn--block" type="button" data-pay-btn>Confirm payment</button>
+            </div>
+          </article>
+
+          <article class="tile tile--widget reveal" style="--d: 120ms">
+            <div class="tile__top">
+              <span class="tile__icon"><i class="ph ph-globe"></i></span>
+              <span class="status status--planned">Planned</span>
+            </div>
+            <h3>Widget for consumer-protection sites</h3>
+            <p>A drop-in checker for fraud-advice pages, so the advice comes with a way to test the message.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS (X-RAY) -->
+    <section class="section section--tint" id="how">
+      <div class="wrap xray">
+        <div class="xray__steps">
+          <header class="section__head">
+            <p class="eyebrow"><i class="ph ph-scan"></i> Under the hood</p>
+            <h2 class="title">What happens to your message.</h2>
+            <p class="sub">Scroll through the five steps. The panel shows them running on the message in the checker.</p>
+          </header>
+          <article class="step" data-step="0">
+            <h3><i class="ph ph-broom"></i>Clean and mask</h3>
+            <p>Unicode tricks and invisible characters are normalized. Links, phone numbers, amounts and digits become placeholders, so the model learns patterns rather than specific values.</p>
+          </article>
+          <article class="step" data-step="1">
+            <h3><i class="ph ph-flag"></i>Look for warning signs</h3>
+            <p>24 readable signals: "new number", "move money to a safe account", "share the code", look-alike links. Negations like "never share this code" are respected.</p>
+          </article>
+          <article class="step" data-step="2">
+            <h3><i class="ph ph-puzzle-piece"></i>Turn words into features</h3>
+            <p>Word pairs and character fragments are weighted by how telling they are. Character fragments survive typos like "deliveyr" and spacing tricks.</p>
+          </article>
+          <article class="step" data-step="3">
+            <h3><i class="ph ph-scales"></i>Two small models decide</h3>
+            <p>One scores the risk, one names the scam type. Both are linear, so every verdict breaks down into the exact phrases and signals behind it.</p>
+          </article>
+          <article class="step" data-step="4">
+            <h3><i class="ph ph-chat-circle-text"></i>Plain-language reply</h3>
+            <p>Thresholds are set for 1% and 5% false alarms. The reply names the scam, says why, and gives two or three concrete next steps.</p>
+          </article>
+        </div>
+        <div class="xray__panel">
+          <div class="window xray__window">
+            <div class="window__bar">
+              <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+              <span class="window__title" data-xray-title>step 1 of 5</span>
+            </div>
+            <div class="xray__body" data-xray-body aria-live="polite">
+              <p class="help">Loading the model...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FIELD GUIDE -->
+    <section class="section" id="guide">
+      <div class="wrap">
+        <header class="section__head reveal">
+          <h2 class="title">Ten scams, one move: rush you into paying.</h2>
+          <p class="sub">The types the model knows, how to spot them, and an example you can test.</p>
+        </header>
+      </div>
+      <div class="rail" data-guide tabindex="0" aria-label="Scam types, scroll horizontally"></div>
+      <div class="wrap rail__controls">
+        <button class="icon-btn" type="button" data-guide-prev aria-label="Previous scam types"><i class="ph ph-arrow-left"></i></button>
+        <button class="icon-btn" type="button" data-guide-next aria-label="Next scam types"><i class="ph ph-arrow-right"></i></button>
+      </div>
+    </section>
+
+    <!-- RESULTS -->
+    <section class="section section--tint" id="results">
+      <div class="wrap">
+        <header class="section__head reveal">
+          <p class="eyebrow"><i class="ph ph-sliders-horizontal"></i> Evaluation</p>
+          <h2 class="title">Honest numbers, misses included.</h2>
+          <p class="sub">Move the threshold and watch the trade-off. Each test set was committed to git before the model changes it measures.</p>
+        </header>
+
+        <div class="explorer reveal" data-explorer>
+          <div class="explorer__controls">
+            <div class="seg" role="radiogroup" aria-label="Evaluation set" data-sets></div>
+            <label class="label" for="thr">Threshold <output data-thr-out>0.55</output></label>
+            <input id="thr" type="range" min="0" max="1" step="0.005" data-thr>
+            <div class="explorer__presets">
+              <button type="button" class="chip" data-preset="medium">Medium level</button>
+              <button type="button" class="chip" data-preset="high">High level</button>
+            </div>
+            <label class="label" for="prev">Share of forwarded messages that are scams <output data-prev-out>10%</output></label>
+            <input id="prev" type="range" min="1" max="60" step="1" value="10" data-prev>
+          </div>
+
+          <div class="explorer__stats" data-stats></div>
+
+          <figure class="explorer__chart">
+            <div class="strip" data-strip role="img" aria-label="Scores of scam and legitimate messages with the current threshold"></div>
+            <figcaption class="help" data-strip-caption></figcaption>
+          </figure>
+        </div>
+
+        <div class="notes reveal">
+          <div class="note">
+            <h3>Where it misses</h3>
+            <p>Conversation starters like "sorry, wrong number... do you invest?" carry no scam content yet. Single-message triage can't see where a chat is heading.</p>
+          </div>
+          <div class="note">
+            <h3>Where it over-warns</h3>
+            <p>Outgoing bank-transfer confirmations still score too high in held-out tests. That is the main source of false alarms.</p>
+          </div>
+          <div class="note">
+            <h3>What would fix it</h3>
+            <p>Consented, labelled messages that people forward to the bot. The data is synthetic today, and the dataset card says so.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section" id="faq">
+      <div class="wrap faq">
+        <header class="section__head">
+          <h2 class="title"><span class="kao" aria-hidden="true">(・_・?)</span> Reasonable questions</h2>
+        </header>
+        <div class="faq__list">
+          <details>
+            <summary>Is my message sent anywhere?<i class="ph ph-plus"></i></summary>
+            <p>Not on this page. The model downloads once and runs in your browser, and nothing you paste leaves your device. The WhatsApp bot does receive the messages you forward to it, and it never logs their text.</p>
+          </details>
+          <details>
+            <summary>Can it be wrong?<i class="ph ph-plus"></i></summary>
+            <p>Yes. On the blind test set it caught about 87% of scams at the high level with no false alarms, and 93% at the medium level. Treat it as a second opinion, then check through a channel you already trust.</p>
+          </details>
+          <details>
+            <summary>Which languages and countries does it support?<i class="ph ph-plus"></i></summary>
+            <p>English today, with examples from Brazil, India, the US, the UK, Mexico and Europe. Brazilian Portuguese is next, then Spanish. Word lists and examples live in per-language modules, so adding a language changes no code.</p>
+          </details>
+          <details>
+            <summary>Is the WhatsApp bot live?<i class="ph ph-plus"></i></summary>
+            <p>The code is finished and tested: webhook, signature checks, retries and quoted replies. Running it on a public number needs a Meta business account and verification. Until then, you can host it yourself with the steps in the README.</p>
+          </details>
+          <details>
+            <summary>How would a bank or fintech use it?<i class="ph ph-plus"></i></summary>
+            <p>Call the API from a "check before you pay" step, or show the warning when a new payee is added. The response includes a ready-to-show reply, and the model is small enough to run inside the app.</p>
+          </details>
+          <details>
+            <summary>Why not just ask a chatbot?<i class="ph ph-plus"></i></summary>
+            <p>A small linear model is fast, free to run, works offline and explains itself by pointing at exact phrases. Its false-alarm rate is measured and fixed. A language model is a possible future layer, kept only if it beats this one when false alarms must stay low.</p>
+          </details>
+          <details>
+            <summary>Can scammers learn to beat it?<i class="ph ph-plus"></i></summary>
+            <p>Some will try. Character fragments make simple tricks such as typos, extra spaces and look-alike letters less effective, and the hard requests stay the same whatever the wording: send money, share a code, move your savings.</p>
+          </details>
+          <details>
+            <summary>Is it free and open source?<i class="ph ph-plus"></i></summary>
+            <p>Yes. The code is MIT-licensed and the dataset is CC BY 4.0. Everything is on GitHub, including the evaluation history.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="final">
+      <div class="wrap final__inner reveal">
+        <h2 class="display display--sm">Next time someone needs a quick transfer, check first.</h2>
+        <a class="btn btn--primary" href="#check"><i class="ph ph-magnifying-glass"></i>Check a message</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer__grid">
+      <div>
+        <a class="brand" href="#top"><span class="brand__mark"><i class="ph-fill ph-shield-check"></i></span><span class="brand__name">Scam Triage</span></a>
+        <p class="fine">An automated aid, not financial or legal advice. It can miss scams and flag real messages. Always verify through a channel you already trust.</p>
+      </div>
+      <nav aria-label="Footer">
+        <a href="https://github.com/ag2502/scam-message-triage" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://github.com/ag2502/scam-message-triage/blob/main/data/en/DATASET_CARD.md" target="_blank" rel="noopener">Dataset card</a>
+        <a href="https://github.com/ag2502/scam-message-triage/blob/main/reports/en/EVALUATION.md" target="_blank" rel="noopener">Evaluation report</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <p class="fine">Built by Amogh Gaikwad. Code MIT, data CC BY 4.0.</p>
+    </div>
+  </footer>
+
+  <div class="toast" role="status" aria-live="polite" data-toast></div>
+</body>
+</html>

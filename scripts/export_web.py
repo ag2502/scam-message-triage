@@ -100,6 +100,8 @@ def export_eval(lang: str) -> dict:
             "s": [round(float(s), 5) for s in scores],
             "src": [r["source"] for r in rows],
         }
+        if name.startswith("challenge"):  # small, hand-written: include text for hover tooltips
+            out["sets"][name]["t"] = [r["text"] for r in rows]
     # Readable examples for the site (blind v3 set, which is already public in the repo).
     v3 = read_jsonl(DATA_DIR / lang / "challenge_v3.jsonl")
     out["examples"] = [{"text": r["text"], "label": r["label"]} for r in v3]
