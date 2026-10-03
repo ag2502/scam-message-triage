@@ -37,11 +37,11 @@
       </a>
       <nav class="nav__links" aria-label="Sections">
         <a href="#chat">Try it</a>
+        <a href="#story">How it works</a>
         <a href="#game">Game</a>
         <a href="#demo">Film</a>
-        <a href="#channels">Get it</a>
-        <a href="#story">How it works</a>
         <a href="#toolbox">Toolbox</a>
+        <a href="#channels">Get it</a>
         <a href="#faq">FAQ</a>
       </nav>
       <div class="nav__actions">
@@ -111,6 +111,73 @@
           <span aria-hidden="true">Faster Payments</span><span aria-hidden="true">Venmo</span><span aria-hidden="true">Cash App</span>
           <span aria-hidden="true">PayPal</span><span aria-hidden="true">Bre-B</span><span aria-hidden="true">Google Pay</span>
           <span aria-hidden="true">PhonePe</span><span aria-hidden="true">Gift cards</span><span aria-hidden="true">USDT</span><span aria-hidden="true">Wire transfer</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCROLL CINEMA -->
+    <section class="story" id="story" data-story>
+      <div class="story__stage" data-story-stage>
+        <div class="story__top wrap">
+          <div class="story__caps" aria-live="polite">
+            <p class="story__cap" data-cap="0"><b>A message arrives.</b> New number, a familiar name, money needed now.</p>
+            <p class="story__cap" data-cap="1"><b>Warning signs light up.</b> These are the phrases the model actually reacts to.</p>
+            <p class="story__cap" data-cap="2"><b>They become signals.</b> Each one carries a learned weight.</p>
+            <p class="story__cap" data-cap="3"><b>The model weighs them.</b> Weights add up to a risk score.</p>
+            <p class="story__cap" data-cap="4"><b>A verdict, with reasons.</b> Named, explained, and what to do next.</p>
+          </div>
+          <div class="seg story__tabs" role="tablist" aria-label="Choose the message for the story" data-story-tabs></div>
+        </div>
+        <div class="story__grid wrap">
+          <div class="story__msg" data-story-msg aria-hidden="true"></div>
+          <div class="story__side">
+            <ol class="story__slots" data-story-slots aria-label="Signals found"></ol>
+            <div class="story__meter">
+              <div class="gauge story__gauge" data-story-gauge></div>
+              <div class="story__verdict" data-story-verdict></div>
+            </div>
+          </div>
+        </div>
+        <div class="story__progress" data-story-progress></div>
+        <p class="sr" data-story-sr></p>
+      </div>
+    </section>
+
+    <!-- SCAM TYPES (horizontal pan) -->
+    <section class="types" id="types" data-types>
+      <div class="types__pin" data-types-pin>
+        <div class="types__track" data-types-track>
+          <header class="types__intro">
+            <h2 class="title">Ten scams, one move: rush you into paying.</h2>
+            <p class="sub">Every type the model knows, how to spot it, and an example you can send straight to the chat.</p>
+          </header>
+        </div>
+      </div>
+    </section>
+
+    <!-- GAME -->
+    <section class="section game" id="game" data-game>
+      <div class="wrap game__grid">
+        <div class="game__side">
+          <span class="kao game__kao" aria-hidden="true" data-game-kao>(ง •̀_•́)ง</span>
+          <h2 class="title">Spot the scam. Beat the model.</h2>
+          <p class="sub">Ten real-looking messages. Swipe right if it's a scam, left if it's real. You have 15 seconds each, because scammers count on you rushing.</p>
+          <div class="hud" aria-live="polite">
+            <div class="hud__cell"><span class="hud__num" data-hud-you>0</span><span class="hud__label">You</span></div>
+            <div class="hud__vs">vs</div>
+            <div class="hud__cell"><span class="hud__num" data-hud-model>0</span><span class="hud__label">Model</span></div>
+            <div class="hud__cell hud__cell--streak"><span class="hud__num" data-hud-streak>0</span><span class="hud__label">Streak</span></div>
+          </div>
+          <p class="fine" data-hud-best></p>
+        </div>
+        <div class="arena" data-arena>
+          <div class="arena__stack" data-stack></div>
+          <div class="arena__timer" aria-hidden="true"><span data-timer></span></div>
+          <div class="arena__controls" data-controls hidden>
+            <button class="btn btn--ghost arena__real" type="button" data-pick="real"><i class="ph ph-arrow-left"></i>Real</button>
+            <button class="btn btn--ghost arena__scam" type="button" data-pick="scam">Scam<i class="ph ph-arrow-right"></i></button>
+          </div>
+          <p class="help arena__hint" data-hint>Drag the card, use the buttons, or press ← / →</p>
         </div>
       </div>
     </section>
@@ -334,7 +401,7 @@
     </section>
 
     <!-- CHANNELS -->
-    <section class="section" id="channels">
+    <section class="section section--tint" id="channels">
       <div class="wrap">
         <header class="section__head reveal">
           <h2 class="title">The check goes where the scam lands.</h2>
@@ -405,73 +472,6 @@
       </div>
     </section>
 
-    <!-- SCROLL CINEMA -->
-    <section class="story" id="story" data-story>
-      <div class="story__stage" data-story-stage>
-        <div class="story__top wrap">
-          <div class="story__caps" aria-live="polite">
-            <p class="story__cap" data-cap="0"><b>A message arrives.</b> New number, a familiar name, money needed now.</p>
-            <p class="story__cap" data-cap="1"><b>Warning signs light up.</b> These are the phrases the model actually reacts to.</p>
-            <p class="story__cap" data-cap="2"><b>They become signals.</b> Each one carries a learned weight.</p>
-            <p class="story__cap" data-cap="3"><b>The model weighs them.</b> Weights add up to a risk score.</p>
-            <p class="story__cap" data-cap="4"><b>A verdict, with reasons.</b> Named, explained, and what to do next.</p>
-          </div>
-          <div class="seg story__tabs" role="tablist" aria-label="Choose the message for the story" data-story-tabs></div>
-        </div>
-        <div class="story__grid wrap">
-          <div class="story__msg" data-story-msg aria-hidden="true"></div>
-          <div class="story__side">
-            <ol class="story__slots" data-story-slots aria-label="Signals found"></ol>
-            <div class="story__meter">
-              <div class="gauge story__gauge" data-story-gauge></div>
-              <div class="story__verdict" data-story-verdict></div>
-            </div>
-          </div>
-        </div>
-        <div class="story__progress" data-story-progress></div>
-        <p class="sr" data-story-sr></p>
-      </div>
-    </section>
-
-    <!-- SCAM TYPES (horizontal pan) -->
-    <section class="types" id="types" data-types>
-      <div class="types__pin" data-types-pin>
-        <div class="types__track" data-types-track>
-          <header class="types__intro">
-            <h2 class="title">Ten scams, one move: rush you into paying.</h2>
-            <p class="sub">Every type the model knows, how to spot it, and an example you can send straight to the chat.</p>
-          </header>
-        </div>
-      </div>
-    </section>
-
-    <!-- GAME -->
-    <section class="section game" id="game" data-game>
-      <div class="wrap game__grid">
-        <div class="game__side">
-          <span class="kao game__kao" aria-hidden="true" data-game-kao>(ง •̀_•́)ง</span>
-          <h2 class="title">Spot the scam. Beat the model.</h2>
-          <p class="sub">Ten real-looking messages. Swipe right if it's a scam, left if it's real. You have 15 seconds each, because scammers count on you rushing.</p>
-          <div class="hud" aria-live="polite">
-            <div class="hud__cell"><span class="hud__num" data-hud-you>0</span><span class="hud__label">You</span></div>
-            <div class="hud__vs">vs</div>
-            <div class="hud__cell"><span class="hud__num" data-hud-model>0</span><span class="hud__label">Model</span></div>
-            <div class="hud__cell hud__cell--streak"><span class="hud__num" data-hud-streak>0</span><span class="hud__label">Streak</span></div>
-          </div>
-          <p class="fine" data-hud-best></p>
-        </div>
-        <div class="arena" data-arena>
-          <div class="arena__stack" data-stack></div>
-          <div class="arena__timer" aria-hidden="true"><span data-timer></span></div>
-          <div class="arena__controls" data-controls hidden>
-            <button class="btn btn--ghost arena__real" type="button" data-pick="real"><i class="ph ph-arrow-left"></i>Real</button>
-            <button class="btn btn--ghost arena__scam" type="button" data-pick="scam">Scam<i class="ph ph-arrow-right"></i></button>
-          </div>
-          <p class="help arena__hint" data-hint>Drag the card, use the buttons, or press ← / →</p>
-        </div>
-      </div>
-    </section>
-
     <!-- FAQ -->
     <section class="section" id="faq">
       <div class="wrap faq">
@@ -519,7 +519,7 @@
     <section class="final">
       <div class="wrap final__inner reveal">
         <h2 class="display display--sm">Next time someone needs a quick transfer, check first.</h2>
-        <a class="btn btn--primary" href="#check"><i class="ph ph-magnifying-glass"></i>Check a message</a>
+        <a class="btn btn--primary" href="#chat"><i class="ph ph-chat-circle-text"></i>Try the chat</a>
       </div>
     </section>
   </main>
