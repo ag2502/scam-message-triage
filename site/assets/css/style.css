@@ -324,7 +324,7 @@ details.hood summary i { transition: rotate 0.25s var(--ease); }
 @media (max-width: 560px) { .chapters { grid-template-columns: 1fr; } }
 
 /* ---------- bento ---------- */
-.bento { display: grid; grid-template-columns: 7fr 5fr; grid-template-areas: "wa web" "api bank" "widget bank"; gap: 16px; }
+.bento { display: grid; grid-template-columns: 7fr 5fr; grid-template-areas: "wa web" "ios native" "api bank"; gap: 16px; }
 .tile { position: relative; padding: 26px; border-radius: var(--r-card); background: var(--surface); border: 1px solid var(--line); display: flex; flex-direction: column; gap: 10px; overflow: hidden; }
 .tile h3 { margin: 6px 0 0; font-size: 1.25rem; letter-spacing: -0.02em; line-height: 1.25; }
 .tile p { margin: 0; color: var(--muted); }
@@ -338,8 +338,14 @@ details.hood summary i { transition: rotate 0.25s var(--ease); }
 .facts b { display: block; color: var(--ink); font-family: var(--mono); font-size: 1rem; font-weight: 600; }
 .tile--api { grid-area: api; }
 .tile--bank { grid-area: bank; background: linear-gradient(180deg, var(--surface-2), var(--surface)); }
-.tile--widget { grid-area: widget; }
-@media (max-width: 960px) { .bento { grid-template-columns: 1fr; grid-template-areas: "wa" "web" "api" "bank" "widget"; } }
+.tile--ios { grid-area: ios; }
+.tile--native { grid-area: native; background: radial-gradient(120% 140% at 0% 100%, var(--high-soft), transparent 55%), var(--surface); }
+.howto { margin: 4px 0 0; padding-left: 20px; display: grid; gap: 6px; font-size: 0.9rem; color: var(--ink-2); }
+.howto code { font-family: var(--mono); font-size: 0.8rem; padding: 1px 6px; border-radius: 6px; background: var(--surface-2); border: 1px solid var(--line); word-break: break-all; }
+.native { list-style: none; margin: 4px 0 0; padding: 0; display: grid; gap: 10px; }
+.native li { display: grid; grid-template-columns: 22px 1fr; gap: 10px; font-size: 0.92rem; color: var(--ink-2); }
+.native i { font-size: 1.2rem; color: var(--accent); margin-top: 2px; }
+@media (max-width: 960px) { .bento { grid-template-columns: 1fr; grid-template-areas: "wa" "web" "ios" "native" "api" "bank"; } }
 .status { font-size: 0.76rem; font-weight: 600; padding: 4px 10px; border-radius: 999px; border: 1px solid currentColor; }
 .status--live { color: var(--low); } .status--ready { color: var(--accent); } .status--planned { color: var(--muted); }
 .flow { list-style: none; margin: 8px 0 4px; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }

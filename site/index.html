@@ -436,8 +436,8 @@
               <span class="tile__icon"><i class="ph ph-device-mobile"></i></span>
               <span class="status status--live">Live</span>
             </div>
-            <h3>This page</h3>
-            <p>Works in any phone browser. Nothing to install, nothing to sign up for.</p>
+            <h3>Android: install it from this page</h3>
+            <p>Tap <b>Install the app</b> (or Chrome menu, then Install). Scam Triage then appears when you share any message from WhatsApp or Messages.</p>
             <ul class="facts">
               <li><i class="ph ph-download-simple"></i><span><b>~700 KB</b> model, downloaded once</span></li>
               <li><i class="ph ph-lock-simple"></i><span><b>0 bytes</b> of your message sent anywhere</span></li>
@@ -468,13 +468,32 @@
             <button class="btn btn--ghost btn--sm tile__cta" type="button" data-open="bank"><i class="ph ph-bank"></i>Try the bank flow</button>
           </article>
 
-          <article class="tile tile--widget reveal" style="--d: 120ms">
+          <article class="tile tile--ios reveal" style="--d: 60ms">
             <div class="tile__top">
-              <span class="tile__icon"><i class="ph ph-globe"></i></span>
-              <span class="status status--planned">Planned</span>
+              <span class="tile__icon"><i class="ph ph-device-mobile-speaker"></i></span>
+              <span class="status status--live">Live, 1-minute setup</span>
             </div>
-            <h3>Widget for consumer-protection sites</h3>
-            <p>A drop-in checker for fraud-advice pages, so the advice comes with a way to test the message.</p>
+            <h3>iPhone: "Check for Scam" in the share sheet</h3>
+            <p>Long-press any message, tap Share, then Check for Scam. It opens the chat with the message already checked.</p>
+            <ol class="howto" aria-label="Set up the Shortcut">
+              <li>Open <b>Shortcuts</b>, tap <b>+</b>, name it <b>Check for Scam</b>.</li>
+              <li>Tap <i class="ph ph-info"></i> and turn on <b>Show in Share Sheet</b>.</li>
+              <li>Add <b>URL Encode</b> with <b>Shortcut Input</b>.</li>
+              <li>Add <b>Open URLs</b> with <code>scam-message-triage.vercel.app/?text=</code> followed by <b>URL Encoded Text</b>.</li>
+            </ol>
+          </article>
+
+          <article class="tile tile--native reveal" style="--d: 120ms">
+            <div class="tile__top">
+              <span class="tile__icon"><i class="ph ph-shield-warning"></i></span>
+              <span class="status status--ready">In development</span>
+            </div>
+            <h3>Native apps: warnings that find you</h3>
+            <ul class="native">
+              <li><i class="ph ph-android-logo"></i><span><b>Android:</b> warns you the moment a scam arrives in WhatsApp, Messages or Telegram, plus "Check for scam" when you select any text.</span></li>
+              <li><i class="ph ph-apple-logo"></i><span><b>iPhone:</b> moves scam SMS from unknown numbers to Junk, plus Share and Siri for WhatsApp and iMessage.</span></li>
+            </ul>
+            <p class="fine">Same on-device model. Nothing leaves your phone.</p>
           </article>
         </div>
       </div>
