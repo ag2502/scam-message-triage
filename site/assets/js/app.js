@@ -1,7 +1,7 @@
 // Site bootstrap: theme, nav, reveal-on-scroll, and the shared model loader.
 import { Engine } from "./engine.js";
 import { $, $$ } from "./ui.js";
-import { initHero } from "./hero.js";
+import { initChat } from "./chat.js";
 import { initChecker } from "./checker.js";
 import { initChannels } from "./channels.js";
 import { initXray } from "./xray.js";
@@ -97,7 +97,7 @@ initTheme();
 initNav();
 initReveal();
 
-const modules = [initHero, initChecker, initChannels, initXray, initGuide, initResults, initVideo];
+const modules = [initChat, initChecker, initChannels, initXray, initGuide, initResults, initVideo];
 modules.forEach((init) => {
   try { init({ state, loadEngine }); } catch (err) { console.error(err); }
 });

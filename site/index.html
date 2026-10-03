@@ -61,7 +61,7 @@
       <div class="wrap hero__grid">
         <div class="hero__copy reveal">
           <h1 class="display">Asked to send money? <span class="hl">Check it first.</span></h1>
-          <p class="lede">Paste or forward a suspicious WhatsApp or SMS. Get a risk score, the scam type and what to do next.</p>
+          <p class="lede">Paste any suspicious WhatsApp or SMS into the chat. The bot replies in a second, right on your device.</p>
           <div class="cta-row">
             <a class="btn btn--primary" href="#check"><i class="ph ph-magnifying-glass"></i>Check a message</a>
             <a class="btn btn--ghost" href="#demo"><i class="ph-fill ph-play"></i>Watch the demo</a>
@@ -69,21 +69,31 @@
         </div>
 
         <div class="hero__stage reveal" style="--d: 120ms">
-          <div class="sticker sticker--a" aria-hidden="true">(¬_¬) new number, huh?</div>
-          <div class="sticker sticker--b" aria-hidden="true">(ಠ_ಠ) a "safe account"??</div>
-          <div class="sticker sticker--c" aria-hidden="true">( •̀ᴗ•́ )و checked</div>
-          <div class="phone" data-hero-phone aria-label="Animated example: messages forwarded to the Scam Triage bot and its replies" role="img">
+          <div class="phone phone--live" id="chat">
             <div class="phone__notch"></div>
-            <div class="chat">
-              <div class="chat__head">
+            <div class="wa" data-chat>
+              <div class="wa__status" aria-hidden="true"><span data-clock>9:41</span><span><i class="ph-fill ph-cell-signal-full"></i><i class="ph ph-wifi-high"></i><i class="ph-fill ph-battery-full"></i></span></div>
+              <div class="wa__head">
+                <i class="ph ph-caret-left" aria-hidden="true"></i>
                 <span class="chat__avatar"><i class="ph-fill ph-shield-check"></i></span>
-                <div>
-                  <strong>Scam Triage</strong>
-                  <small data-hero-status>online</small>
-                </div>
+                <div class="wa__who"><strong>Scam Triage</strong><small data-chat-status>online</small></div>
+                <span class="wa__tools" aria-hidden="true"><i class="ph ph-video-camera"></i><i class="ph ph-phone"></i><i class="ph ph-dots-three-vertical"></i></span>
               </div>
-              <div class="chat__body" data-hero-body></div>
-              <div class="chat__input"><span>Message</span><i class="ph-fill ph-paper-plane-tilt"></i></div>
+              <div class="wa__body" data-chat-body role="log" aria-live="polite" aria-label="Chat with the Scam Triage bot" tabindex="0"></div>
+              <button class="wa__jump" type="button" data-chat-jump aria-label="Scroll to latest message" hidden><i class="ph ph-arrow-down"></i></button>
+              <div class="wa__chips" data-chat-chips role="group" aria-label="Try an example"></div>
+              <div class="wa__emoji" data-chat-emoji hidden></div>
+              <form class="wa__bar" data-chat-form>
+                <div class="wa__field">
+                  <button type="button" class="wa__icon" data-chat-emoji-btn aria-label="Emoji"><i class="ph ph-smiley"></i></button>
+                  <label class="sr" for="chat-input">Message</label>
+                  <textarea id="chat-input" rows="1" maxlength="4000" placeholder="Paste a message here" data-chat-input></textarea>
+                  <button type="button" class="wa__icon" data-chat-attach aria-label="Attach a photo"><i class="ph ph-paperclip"></i></button>
+                  <input type="file" accept="image/*" data-chat-file hidden>
+                </div>
+                <div class="wa__rec" data-chat-rec hidden><i class="ph-fill ph-microphone"></i><span data-chat-rec-time>0:00</span><small>Simulated: no audio is captured</small></div>
+                <button class="wa__send" type="submit" data-chat-send aria-label="Hold to record a voice note"><i class="ph-fill ph-microphone" data-chat-send-icon></i></button>
+              </form>
             </div>
           </div>
         </div>
