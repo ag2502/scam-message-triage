@@ -13,6 +13,19 @@ from scam_triage.dataset import DATA_DIR, ROOT, load_split, read_jsonl
 from scam_triage.evaluate import evaluate_split, grouped_cv, val_thresholds
 from scam_triage.model import TriageModel
 
+CHALLENGE_NOTES = {
+    "challenge": (
+        "Hand-written challenge set v1",
+        "90 messages written independently of the generator, modelled on real reported scams and tricky legit texts. "
+        "**Not blind:** its errors were inspected after v0.1 to find data gaps, so treat these numbers as optimistic.",
+    ),
+    "challenge_v2": (
+        "Hand-written challenge set v2 (blind)",
+        "80 new messages written and committed *before* the v0.2 data/lexicon fixes and never used for tuning. "
+        "This is the most honest number here. Small, so each message moves recall by ~2.5 points.",
+    ),
+}
+
 
 def main() -> None:
     ap = argparse.ArgumentParser()
@@ -28,9 +41,8 @@ def main() -> None:
         "thresholds_from_val": thresholds,
         "test": evaluate_split(model, test, thresholds),
     }
-    challenge_path = DATA_DIR / args.lang / "challenge.jsonl"
-    if challenge_path.exists():
-        report["challenge"] = evaluate_split(model, read_jsonl(challenge_path), thresholds)
+    for path in sorted((DATA_DIR / args.lang).glob("challenge*.jsonl")):
+        report[path.stem] = evaluate_split(model, read_jsonl(path), thresholds)
     if not args.no_cv:
         rows = load_split("train", args.lang) + val + test
         report["grouped_cv"] = grouped_cv(rows, args.lang, C=model.risk_clf.C, type_C=model.type_clf.C)
@@ -40,9 +52,9 @@ def main() -> None:
     (out_dir / "eval.json").write_text(json.dumps(report, indent=2, ensure_ascii=False))
     (out_dir / "EVALUATION.md").write_text(render_markdown(report, args.lang))
     print(f"wrote {out_dir}/eval.json and EVALUATION.md")
-    print(summary_line("test", report["test"]))
-    if "challenge" in report:
-        print(summary_line("challenge", report["challenge"]))
+    for name in ("test", *CHALLENGE_NOTES):
+        if name in report:
+            print(summary_line(name, report[name]))
 
 
 def summary_line(name: str, rep: dict) -> str:
@@ -134,10 +146,9 @@ among messages people forward to a checker is unknown.
 """]
     parts.append(section("Held-out test set (unseen templates + real UCI ham)", report["test"],
                          "Synthetic messages from templates never seen in training, plus a random 15% of UCI SMS ham."))
-    if "challenge" in report:
-        parts.append(section("Hand-written challenge set", report["challenge"],
-                             "Messages written independently of the generator, modelled on real reported scams and tricky legit texts. "
-                             "Small, so each message moves recall by ~2 points; read the examples, not just the numbers."))
+    for name, (title, note) in CHALLENGE_NOTES.items():
+        if name in report:
+            parts.append(section(title, report[name], note))
     if "grouped_cv" in report:
         cv = report["grouped_cv"]
         rows = "\n".join(f"| {k} | {v['mean']:.3f} ± {v['std']:.3f} |" for k, v in cv.items() if isinstance(v, dict))
@@ -152,7 +163,9 @@ Each fold holds out whole templates. {cv['note']}.
     parts.append("""## Caveats
 
 - The training data is synthetic. Held-out-template scores measure generalization to new *phrasings* of known scam
-  patterns, not to new scam *types*. The challenge set is the better (but small) signal.
+  patterns, not to new scam *types*. The blind challenge set is the better (but small) signal.
+- Conversation-starter scams ("sorry, wrong number… where are you from?") carry no scam content in the first
+  message; single-message triage cannot reliably catch them.
 - Real legit negatives come from the UCI SMS corpus (UK/Singapore SMS, 2000s), whose style differs from modern
   WhatsApp chat. FPR on today's messages may differ.
 - Next: collect consented, labelled forwarded messages from the bot to replace synthetic test data.

@@ -65,7 +65,7 @@ def split_templates(n: int, rng: random.Random, test_frac: float = 0.2, val_frac
     return {i: ("test" if k < n_test else "val" if k < n_test + n_val else "train") for k, i in enumerate(idx)}
 
 
-def generate(lang: str = "en", seed: int = 13, scam_per_label: int = 360, legit_total: int = 3000) -> list[dict]:
+def generate(lang: str = "en", seed: int = 13, scam_per_label: int = 360, legit_total: int = 4000) -> list[dict]:
     """Generate a de-duplicated, template-split synthetic corpus."""
     mod = load_templates(lang)
     rng = random.Random(seed)

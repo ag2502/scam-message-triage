@@ -58,3 +58,19 @@ def test_vector_matches_ids():
 def test_every_signal_has_a_reason():
     for sid in signal_ids():
         assert sid in en.REASONS
+
+
+def test_code_request_after_code_mention():
+    assert "code_request" in fired("I'm trying to log in and the code went to your phone. Can you send it to me?")
+    assert "code_request" in fired("What's the code you just got?")
+
+
+def test_task_scam_and_crypto_doubling_patterns():
+    assert "fee_to_unlock" in fired("To withdraw your 2,340 USDT you need to recharge 650 USDT")
+    assert "guaranteed_return" in fired("Send 0.1 BTC and receive 0.2 BTC back instantly")
+    assert "guaranteed_return" in fired("Guaranteed 5% daily returns on our staking platform")
+
+
+def test_authority_and_cash_courier_patterns():
+    assert "authority" in fired("You are under digital arrest in a money laundering case")
+    assert "safe_account" in fired("Withdraw your savings and buy gold, a courier will collect it")

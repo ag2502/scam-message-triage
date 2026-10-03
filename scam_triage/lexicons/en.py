@@ -51,6 +51,9 @@ PATTERNS: dict[str, list[str]] = {
         r"\b(code|otp)\b.{0,30}\b(by mistake|by accident|accidentally|wrong number)\b",
         r"\b\d-?digit code\b.{0,40}\b(send|share|forward|reply)\b",
         r"\breply with (the|your) (code|otp|pin)\b",
+        r"\b(code|otp)\b.{0,60}\b(send|forward|share|give)\b (it|that|them)\b",
+        r"\bwhat'?s the (code|otp)\b", r"\b(code|otp) (that )?(you )?(just )?(got|received)\b",
+        r"\b(code|otp) (goes|went|will go|is going|will come|is coming) to (you|your)\b",
     ],
     "credential_request": [
         r"\b(enter|confirm|verify|update|provide|send)\b.{0,30}\b(password|card number|cvv|cvc|pin|login|security questions?|card details|bank details)\b",
@@ -63,7 +66,9 @@ PATTERNS: dict[str, list[str]] = {
     ],
     "safe_account": [
         r"\bsafe account\b", r"\bsecure account\b", r"\bprotected account\b", r"\bholding account\b",
-        r"\bmove (your|the|all) (money|funds|savings|balance)\b", r"\btransfer (your|all) (funds|savings|money) to\b",
+        r"\bmove (your|the|all) (money|funds|savings|balance)\b", r"\btransfer (your|all) (funds|savings|money|balance) to\b",
+        r"\bbuy gold\b", r"\bcourier will collect\b", r"\bkeep (them|it|your (money|savings|funds)) safe\b",
+        r"\bwithdraw (your|all) (savings|cash|money)\b",
     ],
     "remote_access": [
         r"\banydesk\b", r"\bteamviewer\b", r"\bquick ?support\b", r"\brustdesk\b",
@@ -84,16 +89,19 @@ PATTERNS: dict[str, list[str]] = {
         r"\b(small|processing|handling|release|customs|redelivery|delivery|clearance|activation|unlock|withdrawal|shipping) fee\b",
         r"\bpay (a|the) fee\b", r"\b(deposit|top up|recharge)\b.{0,30}\b(unlock|withdraw|release|continue|activate)\b",
         r"\bto (unlock|release|withdraw) (your|the) (funds|earnings|commission|prize|money)\b",
+        r"\bwithdraw\b.{0,40}\b(recharge|deposit|top up)\b", r"\bpay\b[^.]{0,20}\b(gst|duty|registration charges?)\b",
     ],
     "easy_income": [
         r"\bwork from home\b", r"\bearn (up to )?(\$|£|€|r\$|₹)?\d", r"\bper (day|hour)\b.{0,20}\b(earn|income|salary|pay)\b",
         r"\b(daily|weekly) (income|salary|earnings|commission)\b", r"\b(like|rate|review) (videos|products|hotels|posts)\b",
         r"\bsimple (online )?tasks?\b", r"\bpart[- ]time (job|position|work)\b.{0,40}\b(earn|\$|£|€|₹)",
-        r"\bno experience (needed|required)\b",
+        r"\bno experience (needed|required)\b", r"\bcommission\b", r"\b(combo|merge|lucky) (task|order)s?\b",
+        r"\b(boost|increase) (app )?(downloads|ratings|sales)\b",
     ],
     "guaranteed_return": [
         r"\bguaranteed\b.{0,30}\b(profit|returns?|income)\b", r"\bdouble your\b", r"\brisk[- ]free\b",
-        r"\b\d{2,4} ?% (daily|weekly|monthly|profit|returns?)\b", r"\b(daily|weekly) (profit|returns?)\b",
+        r"\b\d{1,4}(\.\d+)? ?% (daily|weekly|monthly|profit|returns?)\b",
+        r"\bsend\b.{0,30}\b(receive|get)\b.{0,25}\b(back|double)\b", r"\b(daily|weekly) (profit|returns?)\b",
         r"\bx\d{1,3} (your )?(money|investment)\b", r"\btrading (signals?|mentor|group|platform)\b",
         r"\binvest(ment)? opportunity\b",
     ],
@@ -102,6 +110,8 @@ PATTERNS: dict[str, list[str]] = {
         r"\btoll (services?|road|charges?|balance)\b", r"\be-?z ?pass\b", r"\bfastrak\b", r"\bsunpass\b", r"\bdmv\b",
         r"\btraffic (fine|violation|ticket)\b", r"\bparking (fine|ticket|penalty)\b", r"\bcourt\b", r"\bpolice\b",
         r"\barrest warrant\b", r"\bpenalty\b", r"\bgovernment\b", r"\bsocial security\b",
+        r"\bdigital arrest\b", r"\bmoney laundering\b", r"\bcbi\b", r"\bcustoms (officer|department)\b",
+        r"\bnarcotics\b", r"\bcyber (cell|crime)\b",
     ],
     "delivery": [
         r"\b(parcel|package|shipment|delivery|courier)\b", r"\busps\b", r"\bdhl\b", r"\bfedex\b", r"\bups\b",

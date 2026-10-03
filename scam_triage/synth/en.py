@@ -41,9 +41,22 @@ LOTTERIES = ["Mega Millions", "National Lottery", "Global Promo Draw", "Coca-Col
 JOBS = ["nurse", "designer", "engineer", "fashion buyer", "doctor", "lawyer"]
 DAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "tomorrow", "next week"]
 MONTHS = ["January", "March", "May", "July", "September", "November"]
+WALLET_APPS = ["Google Pay", "PhonePe", "Paytm", "Venmo", "Cash App", "PicPay", "Mercado Pago", "Revolut", "Monzo"]
+UTILITIES = ["electricity", "water", "broadband", "gas", "phone"]
+HOTELS = ["Ibis", "Hilton", "Airbnb", "Marriott", "Holiday Inn", "Booking.com"]
+AIRLINES = ["LATAM", "British Airways", "IndiGo", "United", "Azul", "Ryanair"]
+BANK_SITES = {
+    "Chase": "chase.com", "Wells Fargo": "wellsfargo.com", "Bank of America": "bankofamerica.com", "HSBC": "hsbc.co.uk",
+    "Barclays": "barclays.co.uk", "Lloyds": "lloydsbank.com", "Santander": "santander.com", "Monzo": "monzo.com",
+    "Nubank": "nubank.com.br", "Itaú": "itau.com.br", "Banco Inter": "bancointer.com.br", "Bradesco": "bradesco.com.br",
+    "SBI": "onlinesbi.sbi", "HDFC Bank": "hdfcbank.com", "ICICI Bank": "icicibank.com", "BBVA": "bbva.mx",
+    "Citibank": "citi.com", "NatWest": "natwest.com", "Revolut": "revolut.com",
+}
 GOOD_URLS = [
     "https://www.amazon.com/your-orders", "https://www.usps.com/tracking", "https://www.royalmail.com/track",
     "https://www.dhl.com/track", "https://www.netflix.com/account", "https://www.gov.uk", "https://www.irs.gov",
+    "amazon.com/your-orders", "fedex.com", "ups.com", "evri.com", "correios.com.br/rastreamento", "indiapost.gov.in",
+    "https://www.booking.com/mytrips", "ikea.com/orders", "https://www.target.com/orders", "flipkart.com/account/orders",
 ]
 
 _CURRENCIES = [("$", 1.0), ("£", 0.8), ("€", 0.9), ("R$", 5.0), ("₹", 80.0), ("MXN $", 18.0)]
@@ -54,9 +67,13 @@ _LURE_WORDS = ["verify", "secure", "redelivery", "update", "pay", "track", "help
 _message_currency: list[tuple[str, float]] = []
 
 
+_message_bank: list[str] = []
+
+
 def begin_message(rng: random.Random) -> None:
-    """Called by the generator before each message so all amounts in it share one currency."""
+    """Called by the generator before each message so amounts share one currency and bank/site agree."""
     _message_currency[:] = [rng.choice(_CURRENCIES)]
+    _message_bank[:] = [rng.choice(BANKS)]
 
 
 def _amount(rng: random.Random, lo: float, hi: float) -> str:
@@ -124,7 +141,9 @@ def _time2(rng: random.Random) -> str:
 
 SLOTS: dict[str, object] = {
     "name": NAMES, "name2": NAMES, "kid_name": NAMES, "relation": RELATIONS, "kid": KIDS, "rail": RAILS,
-    "bank": BANKS, "courier": COURIERS, "service": SERVICES, "toll": TOLLS, "taxauth": TAX_AUTHS, "dmv": DMVS,
+    "bank": lambda r: _message_bank[0] if _message_bank else r.choice(BANKS),
+    "bank_site": lambda r: BANK_SITES[_message_bank[0] if _message_bank else r.choice(BANKS)],
+    "wallet_app": WALLET_APPS, "utility": UTILITIES, "hotel": HOTELS, "airline": AIRLINES, "courier": COURIERS, "service": SERVICES, "toll": TOLLS, "taxauth": TAX_AUTHS, "dmv": DMVS,
     "store": STORES, "merchant": MERCHANTS, "city": CITIES, "place": PLACES, "item": ITEMS, "company": COMPANIES,
     "group": GROUPS, "crypto": CRYPTO, "exchange": EXCHANGES, "lottery": LOTTERIES, "job": JOBS, "day": DAYS,
     "month": MONTHS, "good_url": GOOD_URLS,
@@ -148,6 +167,10 @@ SLOTS: dict[str, object] = {
     "gate": lambda r: r.choice("ABCD") + str(r.randint(1, 40)),
     "pharmacy": ["Boots", "CVS", "Walgreens", "Drogasil", "Apollo Pharmacy"],
     "broke": ["broke", "dropped", "lost", "smashed"],
+    "order": lambda r: f"{r.randint(100, 999)}-{r.randint(1000000, 9999999)}",
+    "points": lambda r: f"{r.randint(2, 90) * 100:,}",
+    "pnr": lambda r: "".join(r.choices(string.ascii_uppercase + string.digits, k=6)),
+    "device": ["iPhone", "Android phone", "Windows PC", "Mac", "iPad", "Chrome on Windows"],
 }
 
 TEMPLATES: dict[str, list[str]] = {
@@ -192,6 +215,7 @@ TEMPLATES: dict[str, list[str]] = {
         "URGENT from {bank}: your debit card ending {last4} is restricted. Confirm your card number and PIN at {bad_url} to restore access",
         "We have tried to reach you. This is {bank} customer protection. Please call back on {phone} about a suspicious payment, reference {txn}",
         "Good afternoon, I'm calling from {bank}. As discussed, read me the 6-digit code you received so I can block the fraudulent transfer",
+        "{bank} investigations: staff at your branch are under investigation. Withdraw your savings in cash and a courier will collect them for safekeeping",
     ],
     "delivery_fee": [
         "{courier}: Your package could not be delivered due to an incomplete address. Update your details at {bad_url} within 24 hours",
@@ -220,6 +244,8 @@ TEMPLATES: dict[str, list[str]] = {
         "{toll}: Our records show your vehicle has unpaid tolls. Pay {small_amount} within 12 hours to avoid DMV penalties. {bad_url}",
         "Court summons: you missed jury duty. Pay the {amount} fine using gift cards to avoid a warrant. Call {phone}",
         "{dmv} reminder: your vehicle registration has an unpaid fee of {small_amount}. Your plate will be blocked. Pay at {bad_url}",
+        "Customs department: a parcel in your name contains illegal items. To avoid a money laundering case you must verify your funds by transferring {amount} to the official account",
+        "Your mobile number will be disconnected in 2 hours by the telecom authority due to illegal use. Press 9 or call {phone} to speak to the officer",
     ],
     "account_phishing": [
         "{service}: Your account has been suspended due to a billing problem. Update your payment details at {bad_url}",
@@ -276,6 +302,7 @@ TEMPLATES: dict[str, list[str]] = {
         "Job offer: data entry from home, {amount}/week. A starter kit costs {small_amount}, payable via {rail}, refunded with your first salary",
         "You've been shortlisted for a remote assistant role. Please pay {small_amount} for the training materials to begin",
         "Earn extra income! Just like and share posts, {small_amount} per task, paid instantly to your {rail}. Join here {bad_url}",
+        "Hi, our platform pays commission for every set of product orders you complete. Today you got a lucky order, top up {amount} to finish it and withdraw everything",
     ],
     "investment_crypto": [
         "Invest {small_amount} today and receive {amount} in 7 days, guaranteed profit with our AI trading bot",
@@ -302,9 +329,31 @@ TEMPLATES: dict[str, list[str]] = {
         "{bank}: Your statement for {month} is ready to view in the app.",
         "Your {rail} payment of {amount} to {name} was successful. Ref {txn}.",
         "{bank}: Your new card has been dispatched and should arrive within 5 working days.",
+        "{bank}: You sent {amount} to {name} with {rail}. Ref {txn}. Questions? Visit {bank_site}",
+        "{wallet_app}: you received {amount} from {name}.",
+        "{wallet_app}: {name} paid you {small_amount}.",
+        "{wallet_app}: payment of {small_amount} to {merchant} successful. Ref {txn}.",
+        "{bank}: Pix received {amount} from {name}.",
+        "{bank}: Payment of {amount} to {merchant} approved on your card ending {last4}.",
+        "{bank}: Your salary of {amount} has been credited to your account ending {last4}.",
+        "{bank}: Your {rail} transfer of {amount} to {name} is complete.",
+        "{bank}: You've frozen your card ending {last4} in the app. You can unfreeze it any time.",
+        "{bank}: We declined a payment of {amount} at {merchant}. If it was you, approve it in the app and try again.",
+        "{bank}: Your payment of {amount} to {name} has been scheduled for {date}.",
+        "{bank}: Your code to approve the {rail} of {amount} to {name} is {code}. Never share it. {bank} will never call to ask for it.",
+        "{store}: Your order #{order} of {amount} is confirmed. We'll let you know when it ships.",
+        "{store}: your refund of {small_amount} has been processed and will appear in 3-5 business days.",
+        "{store} Rewards: you've earned {points} points. Your {small_amount} voucher is ready to use in store or online.",
+        "Your {store} gift card balance is {small_amount}.",
+        "{service}: a new sign-in to your account on a {device}. If this was you, you don't need to do anything.",
+        "{service}: your payment of {small_amount} was successful. Thanks for subscribing.",
+        "Your {service} free trial ends on {date}. You won't be charged if you cancel before then.",
+        "Your {utility} bill of {amount} is ready and will be collected by direct debit on {date}.",
+        "Hi {name}, your booking at {hotel} is confirmed for {date}. Total paid: {amount}.",
+        "{airline}: your booking {pnr} is confirmed. Manage it in the {airline} app.",
         "{service}: your password was changed. If this wasn't you, open the app and go to Settings > Security.",
         "{bank}: Spotted something odd? Always check alerts in our official app. We never send links by text.",
-        "Your {service} order of {amount} has been confirmed. View the details in the app.",
+        "Your {store} order of {amount} has been confirmed. View the details in the app.",
         "Thanks for your payment of {amount}. Your account is up to date.",
         # Real deliveries
         "{store}: Your order has shipped and will arrive {day}. Track it in your account on our app.",
@@ -312,6 +361,10 @@ TEMPLATES: dict[str, list[str]] = {
         "Your package was delivered to your front door at {time1}. Thanks for shopping with {store}!",
         "{courier}: we missed you today. Your parcel is at the {place} pickup point, bring ID to collect it.",
         "Your package from {store} is out for delivery. Track: {good_url}",
+        "Your {store} order #{order} has been delivered. View it at {good_url}",
+        "{courier}: parcel {tracking} delivered and signed for by {name}.",
+        "{courier}: track your parcel {tracking} at {good_url}",
+        "{store}: your order is ready to collect from the store. Bring your order number {order}.",
         # Personal chat (hard negatives: money between people who know each other)
         "Hey {name}, running 10 min late, save me a seat!",
         "Mom can you send me {small_amount} for lunch? I'll pay you back on Friday ❤️",
@@ -333,6 +386,11 @@ TEMPLATES: dict[str, list[str]] = {
         "Congratulations on the new job!! So proud of you 🎉",
         "Hey, I'll transfer you the {amount} for the trip tonight, what's your {rail} again?",
         "Hi {name}, it's {name2} from the gym, just checking you're still coming to the 6pm class?",
+        "Hey {name}, I just sent the {amount} for the Airbnb, check your {rail}",
+        "Got your {rail}, thanks! 🙌",
+        "Can you {rail} me your share of dinner? It was {small_amount} each",
+        "Hi {relation}, my train is delayed, I'll be home late. Don't wait up for dinner",
+        "Hi {name}, I'm a recruiter at {company}. I came across your profile and think you'd be a great fit for a {job} role. Open to a call this week?",
         # Work, appointments, public services
         "Hi {name}, can we move our 1:1 to {day} afternoon? Something came up.",
         "Reminder: team meeting at {time1} in the main conference room.",
