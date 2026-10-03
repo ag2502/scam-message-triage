@@ -13,4 +13,4 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "ScamTriage"
-include(":engine")
+include(":engine", ":app")

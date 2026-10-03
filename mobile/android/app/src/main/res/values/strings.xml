@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Scam Triage</string>
+    <string name="check_for_scam">Check for scam</string>
+    <string name="watcher_label">Scam Triage auto-check</string>
+    <string name="channel_warnings">Scam warnings</string>
+    <string name="channel_warnings_desc">Alerts when an incoming message looks like a scam.</string>
+</resources>
