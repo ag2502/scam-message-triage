@@ -7,10 +7,14 @@ export async function initVideo() {
   const video = $("[data-video]");
   const list = $("[data-chapters]");
   const time = $("[data-video-time]");
+  const play = $("[data-video-play]");
   if (!video) return;
+  // Big "play with sound" overlay: a click is a user gesture, so audio is allowed.
+  play?.addEventListener("click", () => { video.muted = false; video.play().catch(() => {}); });
+  video.addEventListener("play", () => play && (play.hidden = true));
 
   let chapters = [];
-  try { chapters = await (await fetch(new URL("../video/chapters.json", import.meta.url))).json(); } catch { return; }
+  try { chapters = await (await fetch(new URL("../video/film-chapters.json", import.meta.url))).json(); } catch { return; }
   list.innerHTML = chapters.map((c, i) => `<li><button type="button" data-ch="${i}"><time>${fmt(c.t)}</time><span>${esc(c.title)}</span></button></li>`).join("");
   const buttons = [...list.querySelectorAll("button")];
 

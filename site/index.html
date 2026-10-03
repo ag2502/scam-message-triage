@@ -9,7 +9,7 @@
   <meta name="theme-color" content="#0d0f12" media="(prefers-color-scheme: dark)">
   <meta property="og:title" content="Scam Triage: check a message before you pay">
   <meta property="og:description" content="Explainable scam checks for Pix, UPI, Zelle and bank-transfer scams. Runs in your browser.">
-  <meta property="og:image" content="https://scam-message-triage.vercel.app/assets/video/poster.jpg">
+  <meta property="og:image" content="https://scam-message-triage.vercel.app/assets/video/film-poster.jpg">
   <meta property="og:url" content="https://scam-message-triage.vercel.app/">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="canonical" href="https://scam-message-triage.vercel.app/">
@@ -38,7 +38,7 @@
       <nav class="nav__links" aria-label="Sections">
         <a href="#chat">Try it</a>
         <a href="#game">Game</a>
-        <a href="#demo">Demo</a>
+        <a href="#demo">Film</a>
         <a href="#channels">Get it</a>
         <a href="#story">How it works</a>
         <a href="#toolbox">Toolbox</a>
@@ -66,8 +66,8 @@
           <h1 class="display">Asked to send money? <span class="hl">Check it first.</span></h1>
           <p class="lede">Paste any suspicious WhatsApp or SMS into the chat. The bot replies in a second, right on your device.</p>
           <div class="cta-row">
-            <a class="btn btn--primary" href="#check"><i class="ph ph-magnifying-glass"></i>Check a message</a>
-            <a class="btn btn--ghost" href="#demo"><i class="ph-fill ph-play"></i>Watch the demo</a>
+            <a class="btn btn--primary" href="#game"><i class="ph ph-game-controller"></i>Play spot the scam</a>
+            <a class="btn btn--ghost" href="#demo"><i class="ph-fill ph-play"></i>Watch the film</a>
           </div>
         </div>
 
@@ -119,21 +119,22 @@
     <section class="section section--tint" id="demo">
       <div class="wrap">
         <header class="section__head section__head--center reveal">
-          <h2 class="title">Forward. Wait a second. Know.</h2>
-          <p class="sub">How it works on WhatsApp, start to finish. Every reply in the video is the real model's output.</p>
+          <h2 class="title">The 72-second film.</h2>
+          <p class="sub">From a "new number" at 9:41 to a verdict in plain words. Every score and reply in it is the real model's output.</p>
         </header>
         <div class="player reveal">
           <div class="window player__window">
             <div class="window__bar">
               <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
-              <span class="window__title">demo.mp4</span>
+              <span class="window__title">scam-triage-film.mp4</span>
               <span class="window__meta" data-video-time>0:00</span>
             </div>
             <div class="player__media">
-              <video data-video playsinline preload="metadata" poster="assets/video/poster.jpg" controls>
-                <source src="assets/video/demo.webm" type="video/webm">
-                <source src="assets/video/demo.mp4" type="video/mp4">
+              <video data-video playsinline preload="metadata" poster="assets/video/film-poster.jpg" controls>
+                <source src="assets/video/film.webm" type="video/webm">
+                <source src="assets/video/film.mp4" type="video/mp4">
               </video>
+              <button class="player__play" type="button" data-video-play><span><i class="ph-fill ph-play"></i></span>Play with sound<small>72 seconds</small></button>
             </div>
           </div>
           <ol class="chapters" data-chapters aria-label="Video chapters"></ol>

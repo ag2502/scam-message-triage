@@ -12,7 +12,7 @@ const MAX_SLOTS = () => (window.innerWidth < 900 ? 4 : 5);
 const ARC = Math.PI * 70;
 
 /** Pick the strongest positive signals whose evidence can be located without overlapping. */
-function pickSignals(engine, text, r) {
+export function pickSignals(engine, text, r) {
   const base = engine.nWord + engine.nChar;
   const lower = text.toLowerCase();
   const used = [];
@@ -32,7 +32,7 @@ function pickSignals(engine, text, r) {
   return picks;
 }
 
-function messageHtml(text, picks) {
+export function messageHtml(text, picks) {
   const ranges = picks.map((p, i) => p.range && [...p.range, i]).filter(Boolean).sort((a, b) => a[0] - b[0]);
   const words = (chunk) => chunk.split(/(\s+)/).map((t) => (/^\s+$/.test(t) || !t ? t : `<span class="w">${esc(t)}</span>`)).join("");
   let out = "", pos = 0;

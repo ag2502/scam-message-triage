@@ -88,7 +88,8 @@ matches Python exactly on 549 messages ([tests/test_web_parity.py](tests/test_we
 ```bash
 uv pip install -e ".[web]" && playwright install chromium
 python scripts/export_web.py      # model + eval scores -> site/assets/{model,data}
-python scripts/record_demo.py     # renders site/demo.html -> site/assets/video/demo.{mp4,webm}
+python scripts/capture_screens.py # real screenshots used in the film
+python scripts/record_demo.py     # renders site/film.html + synthesized soundtrack -> site/assets/video/film.{mp4,webm}
 python -m http.server -d site     # preview at http://localhost:8000
 ```
 

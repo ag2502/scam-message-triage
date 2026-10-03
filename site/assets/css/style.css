@@ -861,3 +861,9 @@ input[type="range"] { width: 100%; accent-color: var(--accent); height: 28px; cu
 .os.is-mobile .oswin__bar { cursor: default; grid-template-columns: 1fr auto; }
 .os.is-mobile .oswin__body { max-height: 78dvh; }
 @media (prefers-reduced-transparency: reduce) { .os__dock, .os__menubar { background: var(--surface); backdrop-filter: none; } }
+
+.player__media { position: relative; }
+.player__play { position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; gap: 10px; border: 0; cursor: pointer; color: #fff; font-weight: 650; font-size: 1.1rem; background: radial-gradient(60% 60% at 50% 50%, rgb(0 0 0 / 0.35), rgb(0 0 0 / 0.15)); }
+.player__play span { display: grid; place-items: center; width: 84px; height: 84px; border-radius: 50%; background: var(--accent); color: #fff; font-size: 2rem; box-shadow: 0 16px 40px -10px rgb(0 0 0 / 0.6); transition: transform 0.25s var(--ease); }
+.player__play:hover span { transform: scale(1.08); }
+.player__play small { font-weight: 500; opacity: 0.8; font-size: 0.85rem; }
