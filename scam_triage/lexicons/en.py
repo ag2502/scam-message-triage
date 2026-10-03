@@ -40,7 +40,7 @@ PATTERNS: dict[str, list[str]] = {
     ],
     "secrecy": [
         r"\bdon'?t tell\b", r"\bkeep (this|it) (between us|secret|quiet)\b", r"\bdon'?t (mention|say anything)\b",
-        r"\bnobody (else )?(can|should) know\b", r"\bdo not (share|discuss) this\b",
+        r"\bnobody (else )?(can|should) know\b", r"\bdo not discuss this with\b",
     ],
     "avoid_voice": [
         r"\bcan'?t (call|talk|speak)\b", r"\b(mic|microphone|speaker) (is )?(broken|not working)\b",

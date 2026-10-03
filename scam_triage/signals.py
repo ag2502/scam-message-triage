@@ -38,6 +38,12 @@ RISKY_TLDS = {
 
 LINK_SIGNALS = ("has_link", "suspicious_link", "has_phone_number", "money_amount")
 
+# Signals whose match is cancelled by a preceding negation, so that legitimate
+# warnings ("do not share this code", "we never ask you to move money to a safe
+# account") don't read as requests.
+NEGATABLE = {"code_request", "credential_request", "safe_account", "remote_access", "money_request"}
+_NEGATION_RE = re.compile(r"\b(not|never|n't|no one|nobody|don't|do not)\b[^.!?]{0,50}$", re.IGNORECASE)
+
 
 def normalize(text: str) -> str:
     """NFKC-normalize, drop zero-width characters, unify quotes, collapse whitespace."""
@@ -95,17 +101,19 @@ def signal_ids(lang: str = "en") -> tuple[str, ...]:
     return (*_compiled(lang), *LINK_SIGNALS)
 
 
+def _negated(sid: str, text: str, m: re.Match[str]) -> bool:
+    return sid in NEGATABLE and bool(_NEGATION_RE.search(text[max(0, m.start() - 60) : m.start()]))
+
+
 def detect(text: str, lang: str = "en") -> list[SignalHit]:
     """Return every signal that fires on `text`, with the matching snippet as evidence."""
     lex = lexicons.load(lang)
     norm = normalize(text)
     hits: list[SignalHit] = []
     for sid, patterns in _compiled(lang).items():
-        for pat in patterns:
-            m = pat.search(norm)
-            if m:
-                hits.append(SignalHit(sid, lex.REASONS[sid], m.group(0)))
-                break
+        m = next((m for pat in patterns for m in pat.finditer(norm) if not _negated(sid, norm, m)), None)
+        if m:
+            hits.append(SignalHit(sid, lex.REASONS[sid], m.group(0)))
 
     urls = extract_urls(norm)
     if urls:

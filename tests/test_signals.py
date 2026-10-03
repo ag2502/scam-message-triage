@@ -15,6 +15,12 @@ def test_code_request():
     assert "code_request" in fired("Hey, I sent you a 6-digit code by mistake, can you forward it to me?")
 
 
+def test_negated_requests_do_not_fire():
+    s = fired("Your OTP is 482913. Do not share this code with anyone. We will never ask you to move your money to a safe account.")
+    assert "code_request" not in s
+    assert "safe_account" not in s
+
+
 def test_safe_account_and_remote_access():
     s = fired("This is your bank's fraud team. Move your money to a safe account and install AnyDesk so we can help.")
     assert {"safe_account", "remote_access", "bank_mention"} <= s
