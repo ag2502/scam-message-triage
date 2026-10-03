@@ -157,3 +157,12 @@ IMITATED_BRANDS: list[str] = [
     "bankofamerica", "hsbc", "barclays", "santander", "nubank", "itau", "bradesco", "inter", "sbi", "hdfc",
     "icici", "irs", "hmrc", "ezpass", "toll", "dmv", "gov", "bank", "secure", "verify", "login",
 ]
+
+# Words that phishing domains bolt onto a name ("spotify-billing-help.com"). A hyphenated
+# domain containing one of these is treated as suspicious even for brands not listed above.
+LURE_WORDS: list[str] = [
+    "verify", "verification", "secure", "security", "login", "signin", "update", "billing", "support", "help",
+    "account", "unlock", "refund", "claim", "reward", "rewards", "redeem", "pay", "payment", "track", "tracking",
+    "delivery", "redelivery", "reschedule", "rebook", "customs", "toll", "tollbill", "center", "centre", "portal",
+    "resolution", "appeal", "restore", "kyc", "gift", "prize", "bonus", "fees", "taxrefund", "rebate", "review",
+]

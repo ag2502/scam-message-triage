@@ -1,6 +1,6 @@
 [project]
 name = "scam-message-triage"
-version = "0.1.0"
+version = "0.3.0"
 description = "Explainable scam-message triage for instant-payment fraud (Pix, UPI, Zelle, SPEI, bank transfer...)"
 readme = "README.md"
 requires-python = ">=3.11"

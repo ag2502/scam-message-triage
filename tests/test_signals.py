@@ -74,3 +74,15 @@ def test_task_scam_and_crypto_doubling_patterns():
 def test_authority_and_cash_courier_patterns():
     assert "authority" in fired("You are under digital arrest in a money laundering case")
     assert "safe_account" in fired("Withdraw your savings and buy gold, a courier will collect it")
+
+
+def test_lure_word_domains_are_suspicious_without_known_brand():
+    assert is_suspicious_url("spotify-billing-help.com", en.IMITATED_BRANDS, en.LURE_WORDS)
+    assert is_suspicious_url("evri-rebook.info", en.IMITATED_BRANDS, en.LURE_WORDS)
+    assert not is_suspicious_url("https://www.my-bakery.com/menu", en.IMITATED_BRANDS, en.LURE_WORDS)
+
+
+def test_reference_numbers_are_not_phone_numbers():
+    assert "has_phone_number" not in fired("Paytm: ₹1,200 paid to Reliance Fresh. UPI Ref 4209118823.")
+    assert "has_phone_number" not in fired("Your order #1124482910 has shipped")
+    assert "has_phone_number" in fired("Call our fraud team on +44 7700 912 344")

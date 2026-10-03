@@ -23,21 +23,24 @@ from scipy import sparse
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import average_precision_score, f1_score
+from sklearn.model_selection import GroupKFold
 
 from scam_triage import __version__
-from scam_triage.signals import AMOUNT_RE, PHONE_RE, URL_RE, normalize, signal_ids, signal_vector
+from scam_triage.signals import AMOUNT_RE, URL_RE, find_phones, normalize, signal_ids, signal_vector
 from scam_triage.taxonomy import LEGIT
 
 MODEL_DIR = Path(__file__).resolve().parent.parent / "models"
 SIGNAL_WEIGHT = 1.0  # scale of the binary signal block relative to tf-idf features
 TARGET_FPRS = {"high": 0.01, "medium": 0.05}
+OPERATING_FPRS = (0.001, 0.005, 0.01, 0.05)
 
 
 def preprocess(text: str) -> str:
     """Normalize and mask volatile tokens so the model learns patterns, not specific URLs/numbers."""
     text = normalize(text).lower()
     text = URL_RE.sub(" __url__ ", text)
-    text = PHONE_RE.sub(" __phone__ ", text)
+    for phone in find_phones(text):
+        text = text.replace(phone, " __phone__ ")
     text = AMOUNT_RE.sub(" __amount__ ", text)
     text = re.sub(r"\d+", "0", text)
     return re.sub(r"\s+", " ", text).strip()
@@ -96,45 +99,77 @@ class TriageModel:
     # ---- training -------------------------------------------------------
     @classmethod
     def train(
-        cls, train: list[dict], val: list[dict], lang: str = "en", c_grid=(0.3, 1.0, 3.0, 10.0), type_c_grid=None
+        cls,
+        train: list[dict],
+        val: list[dict],
+        lang: str = "en",
+        c_grid=(0.3, 1.0, 3.0, 10.0),
+        type_c_grid=None,
+        oof_folds: int = 5,
     ) -> "TriageModel":
+        """Pick C on `val`, set thresholds from out-of-fold scores, then refit on train+val.
+
+        Thresholds come from template-grouped out-of-fold scores over train+val: every
+        legit score used was produced by a model that never saw that message's template.
+        Picking them on a single val split overfits to its handful of legit templates.
+        With `oof_folds=0` (used inside cross-validation) thresholds come from `val`
+        and the model is not refit.
+        """
         feat = Featurizer(lang)
         X_tr = feat.fit_transform([r["text"] for r in train])
         X_va = feat.transform([r["text"] for r in val])
-        y_tr = np.array([r["is_scam"] for r in train])
-        y_va = np.array([r["is_scam"] for r in val])
+        y_tr, y_va = _y(train), _y(val)
 
-        best_risk = max(
-            (cls._fit_risk(X_tr, y_tr, c) for c in c_grid),
-            key=lambda m: average_precision_score(y_va, m.predict_proba(X_va)[:, 1]),
-        )
+        risk_C = max(
+            c_grid, key=lambda c: average_precision_score(y_va, cls._fit_risk(X_tr, y_tr, c).predict_proba(X_va)[:, 1])
+        ) if len(c_grid) > 1 else c_grid[0]
+        type_grid = type_c_grid or c_grid
+        scam_tr, scam_va = _scam_idx(train), _scam_idx(val)
+        type_C = max(
+            type_grid,
+            key=lambda c: f1_score(
+                _labels(val, scam_va), cls._fit_type(X_tr[scam_tr], _labels(train, scam_tr), c).predict(X_va[scam_va]),
+                average="macro",
+            ),
+        ) if len(type_grid) > 1 else type_grid[0]
 
-        scam_tr = [i for i, r in enumerate(train) if r["is_scam"]]
-        scam_va = [i for i, r in enumerate(val) if r["is_scam"]]
-        t_tr = np.array([train[i]["label"] for i in scam_tr])
-        t_va = np.array([val[i]["label"] for i in scam_va])
-        best_type = max(
-            (LogisticRegression(C=c, max_iter=3000).fit(X_tr[scam_tr], t_tr) for c in (type_c_grid or c_grid)),
-            key=lambda m: f1_score(t_va, m.predict(X_va[scam_va]), average="macro"),
-        )
+        if oof_folds:
+            pool = train + val
+            legit_scores = oof_risk_scores(pool, lang, risk_C, oof_folds)[_y(pool) == 0]
+            feat = Featurizer(lang)
+            X = feat.fit_transform([r["text"] for r in pool])
+            risk = cls._fit_risk(X, _y(pool), risk_C)
+            scam = _scam_idx(pool)
+            typ = cls._fit_type(X[scam], _labels(pool, scam), type_C)
+            threshold_source = f"template-grouped {oof_folds}-fold out-of-fold scores on train+val"
+        else:
+            pool = train
+            risk = cls._fit_risk(X_tr, y_tr, risk_C)
+            typ = cls._fit_type(X_tr[scam_tr], _labels(train, scam_tr), type_C)
+            legit_scores = risk.predict_proba(X_va)[:, 1][y_va == 0]
+            threshold_source = "val split"
 
-        val_scores = best_risk.predict_proba(X_va)[:, 1]
-        thresholds = {lvl: threshold_at_fpr(val_scores[y_va == 0], fpr) for lvl, fpr in TARGET_FPRS.items()}
+        thresholds = {lvl: threshold_at_fpr(legit_scores, fpr) for lvl, fpr in TARGET_FPRS.items()}
         meta = {
             "version": __version__,
             "trained_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
-            "risk_C": best_risk.C,
-            "type_C": best_type.C,
-            "n_train": len(train),
-            "n_val": len(val),
+            "risk_C": risk_C,
+            "type_C": type_C,
+            "n_train": len(pool),
             "target_fprs": TARGET_FPRS,
-            "sources": sorted({r["source"] for r in train}),
+            "threshold_source": threshold_source,
+            "fpr_thresholds": {f"fpr@{t:g}": threshold_at_fpr(legit_scores, t) for t in OPERATING_FPRS},
+            "sources": sorted({r["source"] for r in pool}),
         }
-        return cls(lang, feat, best_risk, best_type, thresholds, meta)
+        return cls(lang, feat, risk, typ, thresholds, meta)
 
     @staticmethod
     def _fit_risk(X, y, c: float) -> LogisticRegression:
         return LogisticRegression(C=c, max_iter=3000, class_weight="balanced").fit(X, y)
+
+    @staticmethod
+    def _fit_type(X, labels, c: float) -> LogisticRegression:
+        return LogisticRegression(C=c, max_iter=3000).fit(X, labels)
 
     # ---- inference ------------------------------------------------------
     def risk_scores(self, texts: list[str]) -> np.ndarray:
@@ -174,6 +209,31 @@ class TriageModel:
     @staticmethod
     def load(path: Path | None = None, lang: str = "en") -> "TriageModel":
         return joblib.load(path or default_model_path(lang))
+
+
+def _y(rows: list[dict]) -> np.ndarray:
+    return np.array([r["is_scam"] for r in rows])
+
+
+def _scam_idx(rows: list[dict]) -> list[int]:
+    return [i for i, r in enumerate(rows) if r["is_scam"]]
+
+
+def _labels(rows: list[dict], idx: list[int]) -> np.ndarray:
+    return np.array([rows[i]["label"] for i in idx])
+
+
+def oof_risk_scores(rows: list[dict], lang: str, C: float, n_splits: int) -> np.ndarray:
+    """Out-of-fold risk scores, holding out whole templates (or single real messages) per fold."""
+    groups = [r.get("template_id") or r["id"] for r in rows]
+    y = _y(rows)
+    scores = np.zeros(len(rows))
+    for tr, te in GroupKFold(n_splits=n_splits).split(rows, y, groups):
+        feat = Featurizer(lang)
+        X_tr = feat.fit_transform([rows[i]["text"] for i in tr])
+        clf = TriageModel._fit_risk(X_tr, y[tr], C)
+        scores[te] = clf.predict_proba(feat.transform([rows[i]["text"] for i in te]))[:, 1]
+    return scores
 
 
 def default_model_path(lang: str = "en") -> Path:

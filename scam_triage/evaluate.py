@@ -23,8 +23,6 @@ from sklearn.metrics import (
 from sklearn.model_selection import GroupKFold
 
 from scam_triage.model import TriageModel, threshold_at_fpr
-
-FPR_TARGETS = (0.001, 0.005, 0.01, 0.05)
 PREVALENCES = (0.01, 0.1, 0.5)
 
 
@@ -82,12 +80,9 @@ def type_report(model: TriageModel, rows: list[dict]) -> dict:
     }
 
 
-def val_thresholds(model: TriageModel, val: list[dict]) -> dict[str, float]:
-    scores = model.risk_scores([r["text"] for r in val])
-    legit = scores[np.array([r["is_scam"] for r in val]) == 0]
-    ths = {f"fpr@{t:g}": threshold_at_fpr(legit, t) for t in FPR_TARGETS}
-    ths |= {f"model_{lvl}": t for lvl, t in model.thresholds.items()}
-    return ths
+def operating_thresholds(model: TriageModel) -> dict[str, float]:
+    """Thresholds fixed at training time (never tuned on the evaluation data)."""
+    return {**model.meta.get("fpr_thresholds", {}), **{f"model_{lvl}": t for lvl, t in model.thresholds.items()}}
 
 
 def evaluate_split(model: TriageModel, rows: list[dict], thresholds: dict[str, float]) -> dict:
@@ -133,7 +128,7 @@ def grouped_cv(rows: list[dict], lang: str, n_splits: int = 5, C: float = 10.0, 
     for tr_idx, te_idx in GroupKFold(n_splits=n_splits).split(rows, y, groups):
         tr = [rows[i] for i in tr_idx]
         te = [rows[i] for i in te_idx]
-        m = TriageModel.train(tr, te, lang=lang, c_grid=(C,), type_c_grid=(type_C,))
+        m = TriageModel.train(tr, te, lang=lang, c_grid=(C,), type_c_grid=(type_C,), oof_folds=0)
         s = m.risk_scores([r["text"] for r in te])
         yt = y[te_idx]
         th = threshold_at_fpr(s[yt == 0], 0.01)

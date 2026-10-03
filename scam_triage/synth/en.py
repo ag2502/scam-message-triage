@@ -19,16 +19,9 @@ NAMES = [
 RELATIONS = ["mum", "mom", "dad", "mam", "mother", "grandma", "nan", "auntie"]
 KIDS = ["son", "daughter", "grandson", "granddaughter", "nephew", "niece"]
 RAILS = ["Pix", "UPI", "Zelle", "bank transfer", "Venmo", "PayPal", "Cash App", "SPEI", "wire transfer", "Faster Payments"]
-BANKS = [
-    "Chase", "Wells Fargo", "Bank of America", "HSBC", "Barclays", "Lloyds", "Santander", "Monzo", "Nubank", "Itaú",
-    "Banco Inter", "Bradesco", "SBI", "HDFC Bank", "ICICI Bank", "BBVA", "Citibank", "NatWest", "Revolut",
-]
-COURIERS = ["USPS", "DHL", "FedEx", "UPS", "Royal Mail", "Evri", "India Post", "Correios", "Canada Post", "DPD"]
-SERVICES = ["Netflix", "Apple ID", "WhatsApp", "Instagram", "Microsoft", "PayPal", "Amazon", "Google", "Spotify", "Facebook"]
 TOLLS = ["E-ZPass", "FasTrak", "SunPass", "Toll Services", "TxTag", "The Toll Roads"]
 TAX_AUTHS = ["IRS", "HMRC", "Tax Department", "Revenue Service", "Income Tax Department"]
 DMVS = ["DMV", "DVLA", "Department of Motor Vehicles", "Transport Authority"]
-STORES = ["Amazon", "Walmart", "Tesco", "Target", "ASOS", "Mercado Livre", "Flipkart", "Shein", "IKEA", "Best Buy"]
 MERCHANTS = ["Starbucks", "Uber", "Tesco", "Walmart", "Shell", "McDonald's", "Zara", "iFood", "Swiggy", "Lidl"]
 CITIES = ["Lagos", "Moscow", "São Paulo", "Mumbai", "London", "Miami", "Manila", "Bucharest", "Jakarta"]
 PLACES = ["airport", "train station", "hospital", "mall", "bus station", "police station", "pharmacy"]
@@ -45,39 +38,64 @@ WALLET_APPS = ["Google Pay", "PhonePe", "Paytm", "Venmo", "Cash App", "PicPay", 
 UTILITIES = ["electricity", "water", "broadband", "gas", "phone"]
 HOTELS = ["Ibis", "Hilton", "Airbnb", "Marriott", "Holiday Inn", "Booking.com"]
 AIRLINES = ["LATAM", "British Airways", "IndiGo", "United", "Azul", "Ryanair"]
-BANK_SITES = {
-    "Chase": "chase.com", "Wells Fargo": "wellsfargo.com", "Bank of America": "bankofamerica.com", "HSBC": "hsbc.co.uk",
-    "Barclays": "barclays.co.uk", "Lloyds": "lloydsbank.com", "Santander": "santander.com", "Monzo": "monzo.com",
-    "Nubank": "nubank.com.br", "Itaú": "itau.com.br", "Banco Inter": "bancointer.com.br", "Bradesco": "bradesco.com.br",
-    "SBI": "onlinesbi.sbi", "HDFC Bank": "hdfcbank.com", "ICICI Bank": "icicibank.com", "BBVA": "bbva.mx",
-    "Citibank": "citi.com", "NatWest": "natwest.com", "Revolut": "revolut.com",
+# Official sites, so legit messages link to the entity they name (scam links come from _bad_url).
+SITES: dict[str, dict[str, str]] = {
+    "bank": {
+        "Chase": "chase.com", "Wells Fargo": "wellsfargo.com", "Bank of America": "bankofamerica.com",
+        "HSBC": "hsbc.co.uk", "Barclays": "barclays.co.uk", "Lloyds": "lloydsbank.com", "Santander": "santander.com",
+        "Monzo": "monzo.com", "Nubank": "nubank.com.br", "Itaú": "itau.com.br", "Banco Inter": "bancointer.com.br",
+        "Bradesco": "bradesco.com.br", "SBI": "onlinesbi.sbi", "HDFC Bank": "hdfcbank.com", "ICICI Bank": "icicibank.com",
+        "BBVA": "bbva.mx", "Citibank": "citi.com", "NatWest": "natwest.com", "Revolut": "revolut.com",
+    },
+    "store": {
+        "Amazon": "amazon.com/your-orders", "Walmart": "walmart.com/orders", "Tesco": "tesco.com/account",
+        "Target": "target.com/orders", "ASOS": "asos.com/my-account", "Mercado Livre": "mercadolivre.com.br/compras",
+        "Flipkart": "flipkart.com/account/orders", "Shein": "shein.com/user/orders", "IKEA": "ikea.com/orders",
+        "Best Buy": "bestbuy.com/profile/orders",
+    },
+    "courier": {
+        "USPS": "usps.com/tracking", "DHL": "dhl.com/track", "FedEx": "fedex.com/tracking", "UPS": "ups.com/track",
+        "Royal Mail": "royalmail.com/track", "Evri": "evri.com/track", "India Post": "indiapost.gov.in",
+        "Correios": "rastreamento.correios.com.br", "Canada Post": "canadapost.ca/track", "DPD": "dpd.co.uk",
+    },
+    "service": {
+        "Netflix": "netflix.com/account", "Apple ID": "appleid.apple.com", "WhatsApp": "whatsapp.com",
+        "Instagram": "instagram.com/accounts", "Microsoft": "account.microsoft.com", "PayPal": "paypal.com",
+        "Amazon": "amazon.com/account", "Google": "myaccount.google.com", "Spotify": "spotify.com/account",
+        "Facebook": "facebook.com/settings",
+    },
 }
-GOOD_URLS = [
-    "https://www.amazon.com/your-orders", "https://www.usps.com/tracking", "https://www.royalmail.com/track",
-    "https://www.dhl.com/track", "https://www.netflix.com/account", "https://www.gov.uk", "https://www.irs.gov",
-    "amazon.com/your-orders", "fedex.com", "ups.com", "evri.com", "correios.com.br/rastreamento", "indiapost.gov.in",
-    "https://www.booking.com/mytrips", "ikea.com/orders", "https://www.target.com/orders", "flipkart.com/account/orders",
-]
 
 _CURRENCIES = [("$", 1.0), ("£", 0.8), ("€", 0.9), ("R$", 5.0), ("₹", 80.0), ("MXN $", 18.0)]
 _RISKY_TLDS = ["top", "xyz", "icu", "click", "live", "info", "shop", "buzz", "vip", "online", "cc"]
 _LURE_WORDS = ["verify", "secure", "redelivery", "update", "pay", "track", "help", "support", "login", "claim", "refund"]
 
-
-_message_currency: list[tuple[str, float]] = []
-
-
-_message_bank: list[str] = []
+# Per-message context: one currency and one bank/store/courier/service per message, so
+# amounts agree and a legit link matches the entity named in the text.
+_ctx: dict[str, object] = {}
 
 
 def begin_message(rng: random.Random) -> None:
-    """Called by the generator before each message so amounts share one currency and bank/site agree."""
-    _message_currency[:] = [rng.choice(_CURRENCIES)]
-    _message_bank[:] = [rng.choice(BANKS)]
+    """Called by the generator before each message."""
+    _ctx.clear()
+    _ctx["currency"] = rng.choice(_CURRENCIES)
+    for entity, sites in SITES.items():
+        _ctx[entity] = rng.choice(list(sites))
+
+
+def _entity(kind: str):
+    return lambda r: _ctx.get(kind) or r.choice(list(SITES[kind]))
+
+
+def _site(kind: str):
+    def pick(r: random.Random) -> str:
+        site = SITES[kind][_ctx.get(kind) or r.choice(list(SITES[kind]))]
+        return r.choice(["", "https://", "https://www."]) + site if not site.count(".") > 2 else "https://" + site
+    return pick
 
 
 def _amount(rng: random.Random, lo: float, hi: float) -> str:
-    sym, rate = _message_currency[0] if _message_currency else rng.choice(_CURRENCIES)
+    sym, rate = _ctx.get("currency") or rng.choice(_CURRENCIES)
     value = rng.uniform(lo, hi) * rate
     if value >= 100:
         value = round(value, -1) if rng.random() < 0.7 else round(value)
@@ -141,12 +159,14 @@ def _time2(rng: random.Random) -> str:
 
 SLOTS: dict[str, object] = {
     "name": NAMES, "name2": NAMES, "kid_name": NAMES, "relation": RELATIONS, "kid": KIDS, "rail": RAILS,
-    "bank": lambda r: _message_bank[0] if _message_bank else r.choice(BANKS),
-    "bank_site": lambda r: BANK_SITES[_message_bank[0] if _message_bank else r.choice(BANKS)],
-    "wallet_app": WALLET_APPS, "utility": UTILITIES, "hotel": HOTELS, "airline": AIRLINES, "courier": COURIERS, "service": SERVICES, "toll": TOLLS, "taxauth": TAX_AUTHS, "dmv": DMVS,
-    "store": STORES, "merchant": MERCHANTS, "city": CITIES, "place": PLACES, "item": ITEMS, "company": COMPANIES,
+    "bank": _entity("bank"), "bank_site": _site("bank"), "store": _entity("store"), "store_url": _site("store"),
+    "courier": _entity("courier"), "courier_url": _site("courier"), "service": _entity("service"),
+    "service_url": _site("service"),
+    "wallet_app": WALLET_APPS, "utility": UTILITIES, "hotel": HOTELS, "airline": AIRLINES,
+    "toll": TOLLS, "taxauth": TAX_AUTHS, "dmv": DMVS,
+    "merchant": MERCHANTS, "city": CITIES, "place": PLACES, "item": ITEMS, "company": COMPANIES,
     "group": GROUPS, "crypto": CRYPTO, "exchange": EXCHANGES, "lottery": LOTTERIES, "job": JOBS, "day": DAYS,
-    "month": MONTHS, "good_url": GOOD_URLS,
+    "month": MONTHS,
     "relation_cap": lambda r: r.choice(RELATIONS).capitalize(),
     "amount": lambda r: _amount(r, 150, 2500),
     "amount2": lambda r: _amount(r, 2600, 6000),
@@ -360,10 +380,15 @@ TEMPLATES: dict[str, list[str]] = {
         "{courier}: Your parcel will be delivered today between {time1} and {time2}. Your driver is {name}.",
         "Your package was delivered to your front door at {time1}. Thanks for shopping with {store}!",
         "{courier}: we missed you today. Your parcel is at the {place} pickup point, bring ID to collect it.",
-        "Your package from {store} is out for delivery. Track: {good_url}",
-        "Your {store} order #{order} has been delivered. View it at {good_url}",
+        "Your package from {store} is out for delivery. Track: {store_url}",
+        "Your {store} order #{order} has been delivered. View it at {store_url}",
         "{courier}: parcel {tracking} delivered and signed for by {name}.",
-        "{courier}: track your parcel {tracking} at {good_url}",
+        "{courier}: track your parcel {tracking} at {courier_url}",
+        "{courier}: your parcel from {store} is out for delivery today. Track it at {courier_url}",
+        "{store}: your return has been received. Refund status: {store_url}",
+        "{bank}: your statement is ready. Log in at {bank_site} or in the app to view it.",
+        "{service}: your monthly receipt is available at {service_url}",
+        "{service}: you changed your email address. Review your security settings at {service_url}",
         "{store}: your order is ready to collect from the store. Bring your order number {order}.",
         # Personal chat (hard negatives: money between people who know each other)
         "Hey {name}, running 10 min late, save me a seat!",

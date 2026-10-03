@@ -24,7 +24,7 @@ def small_model():
     rows = generate(seed=7, scam_per_label=48, legit_total=400)
     train = [r for r in rows if r["split"] == "train"]
     val = [r for r in rows if r["split"] != "train"]
-    return TriageModel.train(train, val, c_grid=(1.0,))
+    return TriageModel.train(train, val, c_grid=(1.0,), oof_folds=3)
 
 
 def test_small_model_trains_and_round_trips(small_model, tmp_path):
@@ -48,3 +48,9 @@ def test_low_risk_hides_context_reasons(small_model):
     r = triage("Thanks for dinner! Sent you $25 on Venmo", model=small_model)
     if r.risk_level == "low":
         assert r.scam_type == "legit" and r.key_phrases == []
+
+
+def test_thresholds_come_from_out_of_fold_scores(small_model):
+    assert "out-of-fold" in small_model.meta["threshold_source"]
+    fpr = small_model.meta["fpr_thresholds"]
+    assert fpr["fpr@0.001"] >= fpr["fpr@0.01"] >= fpr["fpr@0.05"]

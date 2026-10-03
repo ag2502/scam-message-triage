@@ -27,6 +27,8 @@ AMOUNT_RE = re.compile(
     re.IGNORECASE,
 )
 
+_REFERENCE_RE = re.compile(r"\b(ref|reference|txn|transaction|order|id|utr|no|nº|a/c|acct|account|tracking)\b\.?\s*(#|no\.?|number|:)?\s*$|#\s*$", re.IGNORECASE)
+
 URL_SHORTENERS = {
     "bit.ly", "tinyurl.com", "t.co", "is.gd", "cutt.ly", "rb.gy", "goo.gl", "ow.ly", "shorturl.at",
     "tiny.cc", "s.id", "rebrand.ly", "t.ly", "buff.ly",
@@ -52,6 +54,16 @@ def normalize(text: str) -> str:
     return re.sub(r"\s+", " ", text).strip()
 
 
+def find_phones(text: str) -> list[str]:
+    """Phone-number-like digit runs, skipping reference/order/transaction numbers."""
+    out = []
+    for m in PHONE_RE.finditer(text):
+        if sum(c.isdigit() for c in m.group(0)) < 9 or _REFERENCE_RE.search(text[max(0, m.start() - 16) : m.start()]):
+            continue
+        out.append(m.group(0).strip())
+    return out
+
+
 def extract_urls(text: str) -> list[str]:
     return [m.group(0).rstrip(".,;:!?)") for m in URL_RE.finditer(text)]
 
@@ -62,7 +74,7 @@ def _host(url: str) -> str:
     return (urlparse(url).hostname or "").lower()
 
 
-def is_suspicious_url(url: str, imitated_brands: list[str]) -> bool:
+def is_suspicious_url(url: str, imitated_brands: list[str], lure_words: list[str] = ()) -> bool:
     host = _host(url)
     if not host:
         return False
@@ -76,6 +88,9 @@ def is_suspicious_url(url: str, imitated_brands: list[str]) -> bool:
     registrable = labels[-2] if len(labels) >= 2 else host
     # Brand + extra words in the registrable label ("usps-redelivery", "paypal-secure-login").
     if "-" in registrable and any(b in registrable for b in imitated_brands):
+        return True
+    # Any hyphenated name built from lure words ("spotify-billing-help", "evri-rebook").
+    if "-" in registrable and any(part in lure_words for part in registrable.split("-")):
         return True
     # Many subdomains stacked in front of an unrelated domain ("chase.com.verify-acct.net").
     if len(labels) >= 4 and any(b in ".".join(labels[:-2]) for b in imitated_brands):
@@ -118,12 +133,12 @@ def detect(text: str, lang: str = "en") -> list[SignalHit]:
     urls = extract_urls(norm)
     if urls:
         hits.append(SignalHit("has_link", lex.REASONS["has_link"], urls[0]))
-        bad = [u for u in urls if is_suspicious_url(u, lex.IMITATED_BRANDS)]
+        bad = [u for u in urls if is_suspicious_url(u, lex.IMITATED_BRANDS, lex.LURE_WORDS)]
         if bad:
             hits.append(SignalHit("suspicious_link", lex.REASONS["suspicious_link"], bad[0]))
-    phone = PHONE_RE.search(norm)
-    if phone and sum(c.isdigit() for c in phone.group(0)) >= 9:
-        hits.append(SignalHit("has_phone_number", lex.REASONS["has_phone_number"], phone.group(0).strip()))
+    phones = find_phones(norm)
+    if phones:
+        hits.append(SignalHit("has_phone_number", lex.REASONS["has_phone_number"], phones[0]))
     amount = AMOUNT_RE.search(norm)
     if amount:
         hits.append(SignalHit("money_amount", lex.REASONS["money_amount"], amount.group(0)))

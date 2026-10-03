@@ -1,143 +1,149 @@
 {
   "model": {
-    "version": "0.1.0",
-    "trained_at": "2026-10-03T12:17:06+00:00",
-    "risk_C": 3.0,
-    "type_C": 10.0,
-    "n_train": 8111,
-    "n_val": 1832,
+    "version": "0.3.0",
+    "trained_at": "2026-10-03T12:23:53+00:00",
+    "risk_C": 0.3,
+    "type_C": 3.0,
+    "n_train": 9946,
     "target_fprs": {
       "high": 0.01,
       "medium": 0.05
+    },
+    "threshold_source": "template-grouped 5-fold out-of-fold scores on train+val",
+    "fpr_thresholds": {
+      "fpr@0.001": 0.9603255400497726,
+      "fpr@0.005": 0.614126018543743,
+      "fpr@0.01": 0.5456980809569918,
+      "fpr@0.05": 0.38021080135973545
     },
     "sources": [
       "synthetic",
       "uci_sms_ham"
     ]
   },
-  "thresholds_from_val": {
-    "fpr@0.001": 0.3153413370636619,
-    "fpr@0.005": 0.187228664156339,
-    "fpr@0.01": 0.16537240269133752,
-    "fpr@0.05": 0.13053883873692446,
-    "model_high": 0.16537240269133752,
-    "model_medium": 0.13053883873692446
+  "thresholds": {
+    "fpr@0.001": 0.9603255400497726,
+    "fpr@0.005": 0.614126018543743,
+    "fpr@0.01": 0.5456980809569918,
+    "fpr@0.05": 0.38021080135973545,
+    "model_high": 0.5456980809569918,
+    "model_medium": 0.38021080135973545
   },
   "test": {
     "binary": {
-      "n": 2172,
-      "n_scam": 666,
-      "n_legit": 1506,
-      "roc_auc": 0.9998,
-      "pr_auc": 0.9996,
+      "n": 2170,
+      "n_scam": 665,
+      "n_legit": 1505,
+      "roc_auc": 0.9886,
+      "pr_auc": 0.9729,
       "operating_points": {
         "fpr@0.001": {
-          "threshold": 0.315341,
-          "tp": 666,
-          "fp": 35,
-          "fn": 0,
-          "tn": 1471,
-          "recall": 1.0,
-          "fpr": 0.02324,
-          "precision": 0.9501,
+          "threshold": 0.960326,
+          "tp": 284,
+          "fp": 6,
+          "fn": 381,
+          "tn": 1499,
+          "recall": 0.4271,
+          "fpr": 0.00399,
+          "precision": 0.9793,
           "precision_at_prevalence": {
-            "0.01": 0.303,
-            "0.1": 0.827,
-            "0.5": 0.9773
+            "0.01": 0.5197,
+            "0.1": 0.9225,
+            "0.5": 0.9908
           }
         },
         "fpr@0.005": {
-          "threshold": 0.187229,
-          "tp": 666,
-          "fp": 182,
-          "fn": 0,
-          "tn": 1324,
-          "recall": 1.0,
-          "fpr": 0.12085,
-          "precision": 0.7854,
+          "threshold": 0.614126,
+          "tp": 566,
+          "fp": 23,
+          "fn": 99,
+          "tn": 1482,
+          "recall": 0.8511,
+          "fpr": 0.01528,
+          "precision": 0.961,
           "precision_at_prevalence": {
-            "0.01": 0.0771,
-            "0.1": 0.479,
-            "0.5": 0.8922
+            "0.01": 0.36,
+            "0.1": 0.8609,
+            "0.5": 0.9824
           }
         },
         "fpr@0.01": {
-          "threshold": 0.165372,
-          "tp": 666,
-          "fp": 210,
-          "fn": 0,
-          "tn": 1296,
-          "recall": 1.0,
-          "fpr": 0.13944,
-          "precision": 0.7603,
+          "threshold": 0.545698,
+          "tp": 571,
+          "fp": 40,
+          "fn": 94,
+          "tn": 1465,
+          "recall": 0.8586,
+          "fpr": 0.02658,
+          "precision": 0.9345,
           "precision_at_prevalence": {
-            "0.01": 0.0675,
-            "0.1": 0.4435,
-            "0.5": 0.8776
+            "0.01": 0.246,
+            "0.1": 0.7821,
+            "0.5": 0.97
           }
         },
         "fpr@0.05": {
-          "threshold": 0.130539,
-          "tp": 666,
-          "fp": 260,
-          "fn": 0,
-          "tn": 1246,
-          "recall": 1.0,
-          "fpr": 0.17264,
-          "precision": 0.7192,
+          "threshold": 0.380211,
+          "tp": 619,
+          "fp": 60,
+          "fn": 46,
+          "tn": 1445,
+          "recall": 0.9308,
+          "fpr": 0.03987,
+          "precision": 0.9116,
           "precision_at_prevalence": {
-            "0.01": 0.0553,
-            "0.1": 0.3916,
-            "0.5": 0.8528
+            "0.01": 0.1908,
+            "0.1": 0.7218,
+            "0.5": 0.9589
           }
         },
         "model_high": {
-          "threshold": 0.165372,
-          "tp": 666,
-          "fp": 210,
-          "fn": 0,
-          "tn": 1296,
-          "recall": 1.0,
-          "fpr": 0.13944,
-          "precision": 0.7603,
+          "threshold": 0.545698,
+          "tp": 571,
+          "fp": 40,
+          "fn": 94,
+          "tn": 1465,
+          "recall": 0.8586,
+          "fpr": 0.02658,
+          "precision": 0.9345,
           "precision_at_prevalence": {
-            "0.01": 0.0675,
-            "0.1": 0.4435,
-            "0.5": 0.8776
+            "0.01": 0.246,
+            "0.1": 0.7821,
+            "0.5": 0.97
           }
         },
         "model_medium": {
-          "threshold": 0.130539,
-          "tp": 666,
-          "fp": 260,
-          "fn": 0,
-          "tn": 1246,
-          "recall": 1.0,
-          "fpr": 0.17264,
-          "precision": 0.7192,
+          "threshold": 0.380211,
+          "tp": 619,
+          "fp": 60,
+          "fn": 46,
+          "tn": 1445,
+          "recall": 0.9308,
+          "fpr": 0.03987,
+          "precision": 0.9116,
           "precision_at_prevalence": {
-            "0.01": 0.0553,
-            "0.1": 0.3916,
-            "0.5": 0.8528
+            "0.01": 0.1908,
+            "0.1": 0.7218,
+            "0.5": 0.9589
           }
         }
       }
     },
     "type": {
-      "n": 666,
-      "accuracy": 0.7688,
-      "macro_f1": 0.7557,
+      "n": 665,
+      "accuracy": 0.6962,
+      "macro_f1": 0.688,
       "per_class_f1": {
-        "account_phishing": 0.6241,
-        "bank_impersonation": 0.547,
-        "delivery_fee": 0.8382,
-        "fake_payment_receipt": 0.6091,
+        "account_phishing": 0.4874,
+        "bank_impersonation": 0.4832,
+        "delivery_fee": 0.6424,
+        "fake_payment_receipt": 0.5,
         "family_impersonation": 1.0,
-        "investment_crypto": 0.4359,
-        "job_task": 0.9545,
-        "prize_lottery": 0.6875,
-        "toll_fine_tax": 0.8609,
-        "verification_code_theft": 1.0
+        "investment_crypto": 0.6593,
+        "job_task": 0.8485,
+        "prize_lottery": 0.6522,
+        "toll_fine_tax": 0.7879,
+        "verification_code_theft": 0.8194
       },
       "labels": [
         "account_phishing",
@@ -153,42 +159,55 @@
       ],
       "confusion": [
         [
-          44,
-          0,
-          6,
-          6,
+          29,
+          29,
           0,
           0,
-          1,
-          0,
-          3,
-          0
-        ],
-        [
-          24,
-          32,
-          0,
-          26,
-          0,
-          1,
           0,
           0,
-          1,
+          0,
+          0,
+          2,
           0
         ],
         [
           0,
+          36,
+          23,
           0,
-          57,
-          3,
           0,
           0,
+          0,
+          0,
+          0,
+          25
+        ],
+        [
+          4,
+          0,
+          53,
+          0,
+          0,
+          0,
+          0,
+          2,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          29,
+          30,
+          0,
+          1,
           0,
           0,
           0,
           0
         ],
         [
+          0,
           0,
           0,
           0,
@@ -197,31 +216,18 @@
           0,
           0,
           0,
-          0,
           0
         ],
         [
           0,
           0,
           0,
+          27,
           0,
-          60,
-          0,
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          0,
-          0,
-          6,
-          24,
-          0,
-          17,
-          7,
+          30,
           3,
-          3,
+          0,
+          0,
           0
         ],
         [
@@ -237,27 +243,27 @@
           0
         ],
         [
-          1,
-          0,
-          7,
-          18,
           0,
           0,
           0,
-          33,
-          1,
+          3,
+          0,
+          0,
+          27,
+          30,
+          0,
           0
         ],
         [
-          12,
-          1,
+          26,
           0,
           0,
           0,
           0,
           0,
           0,
-          65,
+          0,
+          52,
           0
         ],
         [
@@ -270,368 +276,544 @@
           0,
           0,
           0,
-          60
+          59
         ]
       ]
     },
     "fpr_by_source_at_high": {
-      "synthetic": 0.2509,
-      "uci_sms_ham": 0.00295
+      "synthetic": 0.04831,
+      "uci_sms_ham": 0.0
     },
     "errors": {
-      "missed_scams": [],
+      "missed_scams": [
+        {
+          "id": "en-syn-001064",
+          "label": "bank_impersonation",
+          "score": 0.2172,
+          "pred_type": "delivery_fee",
+          "text": "Wells Fargo investigations: staff at your branch are under investigation. Withdraw your savings in cash and a courier will collect them for safekeeping"
+        },
+        {
+          "id": "en-syn-001063",
+          "label": "bank_impersonation",
+          "score": 0.2199,
+          "pred_type": "delivery_fee",
+          "text": "Citibank investigations: staff at your branch are under investigation. Withdraw your savings in cash and a courier will collect them for safekeeping"
+        },
+        {
+          "id": "en-syn-001082",
+          "label": "bank_impersonation",
+          "score": 0.2199,
+          "pred_type": "delivery_fee",
+          "text": "citibank investigations: staff at your branch are under investigation. withdraw your savings in cash and a courier will collect them for safekeeping"
+        },
+        {
+          "id": "en-syn-001332",
+          "label": "delivery_fee",
+          "score": 0.2209,
+          "pred_type": "verification_code_theft",
+          "text": "DPD: The item couldn't be delivered because the house number is missing. Reply Y, then reopen this message to activate the link rb.gy/UzhBqs"
+        },
+        {
+          "id": "en-syn-001075",
+          "label": "bank_impersonation",
+          "score": 0.2268,
+          "pred_type": "delivery_fee",
+          "text": "Revolut investigations: staff at your branch are under investigation. Withdraw your savings in cash and a courier will collect them for safekeeping 🚨"
+        },
+        {
+          "id": "en-syn-001056",
+          "label": "bank_impersonation",
+          "score": 0.2285,
+          "pred_type": "delivery_fee",
+          "text": "Revolut investigations: staff at your branch are under investigation. Withdraw your savings in cash and a courier will collect them for safekeeping"
+        },
+        {
+          "id": "en-syn-001080",
+          "label": "bank_impersonation",
+          "score": 0.2323,
+          "pred_type": "delivery_fee",
+          "text": "SBI investigations: staff at your branch are under investigation. Withdraw your savings in cash and a courier will collect them for safekeeping"
+        },
+        {
+          "id": "en-syn-001076",
+          "label": "bank_impersonation",
+          "score": 0.2324,
+          "pred_type": "delivery_fee",
+          "text": "Nubank investigations: staff at your branch are under investigation. Withdraw your savings in cash and a courier will collect them for safekeeping 🚨"
+        },
+        {
+          "id": "en-syn-001060",
+          "label": "bank_impersonation",
+          "score": 0.2331,
+          "pred_type": "delivery_fee",
+          "text": "Banco Inter investigations: staff at your branch are under investigation. Withdraw your savings in cash and a courier will collect them for safekeeping"
+        },
+        {
+          "id": "en-syn-001068",
+          "label": "bank_impersonation",
+          "score": 0.2335,
+          "pred_type": "delivery_fee",
+          "text": "Monzo investigations: staff at your branch are under investigation. Withdraw your savings in cash and a courier will collect them for safekeeping"
+        },
+        {
+          "id": "en-syn-001065",
+          "label": "bank_impersonation",
+          "score": 0.2341,
+          "pred_type": "delivery_fee",
+          "text": "Nubank investigations: staff at your branch are under investigation. Withdraw your savings in cash and a courier will collect them for safekeeping"
+        },
+        {
+          "id": "en-syn-001059",
+          "label": "bank_impersonation",
+          "score": 0.2347,
+          "pred_type": "delivery_fee",
+          "text": "Nubank investigations: staff at your branch r under investigation. Withdraw your savings in cash and a courier will collect them for safekeeping"
+        },
+        {
+          "id": "en-syn-001074",
+          "label": "bank_impersonation",
+          "score": 0.2349,
+          "pred_type": "delivery_fee",
+          "text": "Barclays investigations: staff at your branch are under investigation. Withdraw your savings in cash and a courier will collect them for safekeeping"
+        },
+        {
+          "id": "en-syn-001081",
+          "label": "bank_impersonation",
+          "score": 0.2354,
+          "pred_type": "delivery_fee",
+          "text": "barclays investigations: staff at your branch r under investigation. withdraw your savings in cash and a courier will collect them for safekeeping"
+        },
+        {
+          "id": "en-syn-001062",
+          "label": "bank_impersonation",
+          "score": 0.2373,
+          "pred_type": "delivery_fee",
+          "text": "BBVA investigations: staff at your branch are under investigation. Withdraw your savings in cash and a courier will collect them for safekeeping"
+        },
+        {
+          "id": "en-syn-001058",
+          "label": "bank_impersonation",
+          "score": 0.2414,
+          "pred_type": "delivery_fee",
+          "text": "NatWest investigations: staff at your branch are under investigation. Withdraw your savings in cash and a courier will collect them for safekeeping"
+        },
+        {
+          "id": "en-syn-001073",
+          "label": "bank_impersonation",
+          "score": 0.242,
+          "pred_type": "delivery_fee",
+          "text": "NatWest investigations: staff at your branch r under investigation. Withdraw your savings in cash and a courier will collect them for safekeeping"
+        },
+        {
+          "id": "en-syn-001057",
+          "label": "bank_impersonation",
+          "score": 0.2422,
+          "pred_type": "delivery_fee",
+          "text": "Lloyds investigations: staff at your branch are under investigation. Withdraw your savings in cash and a courier will collect them for safekeeping"
+        },
+        {
+          "id": "en-syn-001066",
+          "label": "bank_impersonation",
+          "score": 0.2428,
+          "pred_type": "delivery_fee",
+          "text": "Lloyds investigations: staff at your branch r under investigation. Withdraw your savings in cash and a courier will collect them for safekeeping"
+        },
+        {
+          "id": "en-syn-001078",
+          "label": "bank_impersonation",
+          "score": 0.2431,
+          "pred_type": "delivery_fee",
+          "text": "Santander investigations: staff at your branch are under investigation. Withdraw your savings in cash and a courier will collect them for safekeeping 😊"
+        },
+        {
+          "id": "en-syn-001070",
+          "label": "bank_impersonation",
+          "score": 0.2461,
+          "pred_type": "delivery_fee",
+          "text": "Itaú investigations: staff at your branch are under investigation. Withdraw your savings in cash and a courier will collect them for safekeeping"
+        },
+        {
+          "id": "en-syn-001083",
+          "label": "bank_impersonation",
+          "score": 0.2461,
+          "pred_type": "delivery_fee",
+          "text": "itaú investigations: staff at your branch are under investigation. withdraw your savings in cash and a courier will collect them for safekeeping"
+        },
+        {
+          "id": "en-syn-001067",
+          "label": "bank_impersonation",
+          "score": 0.2467,
+          "pred_type": "delivery_fee",
+          "text": "Itaú investigations: staff at your branch r under investigation. Withdraw your savings in cash and a courier will collect them for safekeeping"
+        },
+        {
+          "id": "en-syn-001069",
+          "label": "bank_impersonation",
+          "score": 0.2489,
+          "pred_type": "delivery_fee",
+          "text": "santander investigations: staff at your branch are under investigation. withdraw your savings in cash and a courier will collect them for saefkeeping"
+        },
+        {
+          "id": "en-syn-001072",
+          "label": "bank_impersonation",
+          "score": 0.3106,
+          "pred_type": "bank_impersonation",
+          "text": "Bank of America investigations: staff at your branch are under investigation. Withdraw your savings in cash and a courier will collect them for safekeeping 📦"
+        }
+      ],
       "false_alarms": [
         {
-          "id": "en-syn-005613",
+          "id": "en-syn-004070",
           "label": "legit",
-          "score": 0.8849,
-          "pred_type": "delivery_fee",
-          "text": "Your Shein ordre #956-3113527 has been delivered. View it at fedex.com"
+          "score": 0.985,
+          "pred_type": "fake_payment_receipt",
+          "text": "Itaú: You sent £1,600 to Chloe with Pix. Ref BI50WFBQ4A. Questions? Visit https://www.itau.com.br"
         },
         {
-          "id": "en-syn-005578",
+          "id": "en-syn-004058",
           "label": "legit",
-          "score": 0.762,
-          "pred_type": "delivery_fee",
-          "text": "Your Amazon order #317-6753264 has been delivered. View it at https://www.usps.com/tracking"
+          "score": 0.9845,
+          "pred_type": "fake_payment_receipt",
+          "text": "HSBC: u sent £1,130 to Ana with Venmo. Ref HI0WUD4IWR. Questions? Visit https://www.hsbc.co.uk"
         },
         {
-          "id": "en-syn-005571",
+          "id": "en-syn-004060",
           "label": "legit",
-          "score": 0.7314,
-          "pred_type": "delivery_fee",
-          "text": "Your ASOS order #871-4627193 has been delivered. View it at ups.com"
+          "score": 0.9844,
+          "pred_type": "fake_payment_receipt",
+          "text": "HSBC: You sent MXN $2,900 to Sam with wire transfer. Ref 36IFSPGMNZ. Questions? Visit https://www.hsbc.co.uk"
         },
         {
-          "id": "en-syn-005572",
+          "id": "en-syn-004039",
           "label": "legit",
-          "score": 0.7314,
-          "pred_type": "delivery_fee",
-          "text": "Your ASOS order #219-1539570 has been delivered. View it at fedex.com"
+          "score": 0.9837,
+          "pred_type": "fake_payment_receipt",
+          "text": "Itaú: You sent R$7,356 to Michael with PayPal. Ref U80RCQ0ZHL. Questions? Visit https://www.itau.com.br"
         },
         {
-          "id": "en-syn-005588",
+          "id": "en-syn-004056",
           "label": "legit",
-          "score": 0.7314,
-          "pred_type": "delivery_fee",
-          "text": "Your ASOS order #143-5932656 has been delivered. View it at fedex.com"
+          "score": 0.9834,
+          "pred_type": "fake_payment_receipt",
+          "text": "Barclays: You sent 1,110 dollars to Juliana with Faster Payments. Ref MSMNFNQA4J. Questions? Visit https://www.barclays.co.uk"
         },
         {
-          "id": "en-syn-005602",
+          "id": "en-syn-004059",
           "label": "legit",
-          "score": 0.7314,
-          "pred_type": "delivery_fee",
-          "text": "Your ASOS order #663-5838564 has been delivered. View it at fedex.com"
+          "score": 0.9832,
+          "pred_type": "fake_payment_receipt",
+          "text": "Nubank: You sent 357 dollars to Olivia with Pix. Ref 56GHXJVKNC. Questions? Visit https://www.nubank.com.br"
         },
         {
-          "id": "en-syn-005599",
+          "id": "en-syn-005681",
           "label": "legit",
-          "score": 0.7207,
-          "pred_type": "delivery_fee",
-          "text": "Your Mercado Livre order #450-9046971 has been delivered. View it at https://www.usps.com/tracking"
+          "score": 0.7152,
+          "pred_type": "account_phishing",
+          "text": "Bradesco: your statement is ready. Log in at https://www.bradesco.com.br or in the app to view it"
         },
         {
-          "id": "en-syn-005615",
+          "id": "en-syn-005693",
           "label": "legit",
-          "score": 0.7207,
-          "pred_type": "delivery_fee",
-          "text": "Your Mercado Livre order #509-2764804 has been delivered. View it at ups.com"
+          "score": 0.6879,
+          "pred_type": "account_phishing",
+          "text": "bradesco: your statement is ready. log in at https://www.bradesco.com.br or in the app to view it."
         },
         {
-          "id": "en-syn-005591",
+          "id": "en-syn-005709",
           "label": "legit",
-          "score": 0.7127,
-          "pred_type": "delivery_fee",
-          "text": "Your Shein order #862-7159149 has been delivered. View it at https://www.usps.com/tracking"
+          "score": 0.6879,
+          "pred_type": "account_phishing",
+          "text": "Bradesco: your statement is ready. Log in at https://www.bradesco.com.br or in the app to view it."
         },
         {
-          "id": "en-syn-005576",
+          "id": "en-syn-004061",
           "label": "legit",
-          "score": 0.7088,
-          "pred_type": "toll_fine_tax",
-          "text": "Your Tesco order #307-3101856 has been delivered. View it at https://www.irs.gov"
+          "score": 0.6797,
+          "pred_type": "fake_payment_receipt",
+          "text": "BBVA: u sent ₹38,128 to Priya with bank transfer. Ref IL9QEXS1UX. Questions? Visit https://bbva.mx"
         },
         {
-          "id": "en-syn-005601",
+          "id": "en-syn-004037",
           "label": "legit",
-          "score": 0.7053,
-          "pred_type": "delivery_fee",
-          "text": "Your IKEA order #805-1005996 has been delivered. View it at ups.com ⚠️"
+          "score": 0.6748,
+          "pred_type": "fake_payment_receipt",
+          "text": "Banco Inter: You sent £1,400 to James with bank transfer. Ref AUXVF6VQ4I. Questions? Visit https://bancointer.com.br"
         },
         {
-          "id": "en-syn-005575",
-          "label": "legit",
-          "score": 0.7011,
-          "pred_type": "toll_fine_tax",
-          "text": "your mercado livre order #110-9870899 has been delivered. view it at https://www.irs.gov"
-        },
-        {
-          "id": "en-syn-005587",
-          "label": "legit",
-          "score": 0.7011,
-          "pred_type": "toll_fine_tax",
-          "text": "Your Mercado Livre order #773-6200072 has been delivered. View it at https://www.irs.gov"
-        },
-        {
-          "id": "en-syn-005607",
-          "label": "legit",
-          "score": 0.6986,
-          "pred_type": "delivery_fee",
-          "text": "your mercado livre order #830-1988663 has been delivered. view it at correios.com.br/rastreamento"
-        },
-        {
-          "id": "en-syn-005568",
-          "label": "legit",
-          "score": 0.6932,
-          "pred_type": "delivery_fee",
-          "text": "Your Best Buy order #160-8604234 has been delivered. View it at fedex.com"
-        },
-        {
-          "id": "en-syn-005586",
-          "label": "legit",
-          "score": 0.6932,
-          "pred_type": "delivery_fee",
-          "text": "Your Best Buy order #522-6012023 has been delivered. View it at evri.com"
-        },
-        {
-          "id": "en-syn-005574",
-          "label": "legit",
-          "score": 0.6922,
-          "pred_type": "delivery_fee",
-          "text": "Your Walmart order #194-9895642 has been delivered. View it at https://www.usps.com/tracking"
-        },
-        {
-          "id": "en-syn-005609",
-          "label": "legit",
-          "score": 0.6922,
-          "pred_type": "delivery_fee",
-          "text": "Your Walmart order #149-4875607 has been delivered. View it at fedex.com"
-        },
-        {
-          "id": "en-syn-005590",
-          "label": "legit",
-          "score": 0.6892,
-          "pred_type": "delivery_fee",
-          "text": "YOUR IKEA ORDER #785-8449933 HAS BEEN DELIVERED. VIEW IT AT CORREIOS.COM.BR/RASTREAMENTO"
-        },
-        {
-          "id": "en-syn-005570",
+          "id": "en-syn-005705",
           "label": "legit",
           "score": 0.6726,
-          "pred_type": "toll_fine_tax",
-          "text": "Your Best Buy order #456-1872663 has been delivered. View it at https://www.irs.gov"
-        },
-        {
-          "id": "en-syn-005595",
-          "label": "legit",
-          "score": 0.5454,
           "pred_type": "account_phishing",
-          "text": "Your Target roder #769-7109580 has been delivered. View it at https://www.gov.uk"
+          "text": "Nubank: your statement is ready. Log in at https://www.nubank.com.br or in the app to view it"
         },
         {
-          "id": "en-uci-00228",
+          "id": "en-syn-005722",
           "label": "legit",
-          "score": 0.4239,
-          "pred_type": "family_impersonation",
-          "text": "I av a new number,  . Wil u only use this one,ta."
+          "score": 0.6621,
+          "pred_type": "account_phishing",
+          "text": "HSBC: your statement is ready. Log in at https://www.hsbc.co.uk or in the app to view it."
         },
         {
-          "id": "en-syn-004790",
+          "id": "en-syn-004038",
           "label": "legit",
-          "score": 0.3494,
-          "pred_type": "job_task",
-          "text": "Your Amazon gift card balance is ₹1,830."
+          "score": 0.6591,
+          "pred_type": "fake_payment_receipt",
+          "text": "Bank of America: You sent £1,120 to Carlos with UPI. Ref ONCRDRLQ1E. Questions? Visit https://www.bankofamerica.com"
         },
         {
-          "id": "en-syn-004793",
+          "id": "en-syn-005715",
           "label": "legit",
-          "score": 0.3494,
-          "pred_type": "job_task",
-          "text": "YOUR AMAZON GIFT CARD BALANCE IS £41.12"
+          "score": 0.6533,
+          "pred_type": "account_phishing",
+          "text": "Barclays: your statement is ready. Log in at https://www.barclays.co.uk or in the app to view it."
         },
         {
-          "id": "en-syn-004822",
+          "id": "en-syn-004063",
           "label": "legit",
-          "score": 0.3494,
-          "pred_type": "job_task",
-          "text": "your amazon gift card balance is r$56.39."
+          "score": 0.653,
+          "pred_type": "fake_payment_receipt",
+          "text": "HSBC: You sent ₹27,830 to Aisha with bank transfer. Ref OYSBP6IDXO. Questions? Visit hsbc.co.uk"
+        },
+        {
+          "id": "en-syn-005708",
+          "label": "legit",
+          "score": 0.6478,
+          "pred_type": "account_phishing",
+          "text": "Nubank: your tsatement is ready. Log in at https://www.nubank.com.br or in the app to view it."
+        },
+        {
+          "id": "en-syn-004034",
+          "label": "legit",
+          "score": 0.6462,
+          "pred_type": "fake_payment_receipt",
+          "text": "Citibank: You sent 2,909 reais to Carlos with bank transfer. Ref PR71O5OKEZ. Questions? Visit https://www.citi.com"
+        },
+        {
+          "id": "en-syn-005697",
+          "label": "legit",
+          "score": 0.6424,
+          "pred_type": "account_phishing",
+          "text": "Nubank: your statement is ready. Log in at https://www.nubank.com.br or in the app to view it."
+        },
+        {
+          "id": "en-syn-004066",
+          "label": "legit",
+          "score": 0.6343,
+          "pred_type": "fake_payment_receipt",
+          "text": "BANK OF AMERICA: YOU SENT €1,823 TO GRACE WITH BANK TRANSFER. REF QQDZ8JM4QQ. QUESTIONS? VISIT HTTPS://WWW.BANKOFAMERICA.COM"
+        },
+        {
+          "id": "en-syn-004065",
+          "label": "legit",
+          "score": 0.6245,
+          "pred_type": "fake_payment_receipt",
+          "text": "ICICI Bank: u sent MXN $9,910 to Zara with Cash App. Ref 9BQUIRSYUP. Questions? Visit icicibank.com"
+        },
+        {
+          "id": "en-syn-004041",
+          "label": "legit",
+          "score": 0.6227,
+          "pred_type": "fake_payment_receipt",
+          "text": "HDFC Bank: You sent ₹32,650 to Aisha with PayPal. Ref CGDI4MED47. Questions? Visit https://hdfcbank.com"
+        },
+        {
+          "id": "en-syn-004062",
+          "label": "legit",
+          "score": 0.6221,
+          "pred_type": "fake_payment_receipt",
+          "text": "ICICI Bank: You sent 1,800 pounds to Juliana with SPEI. Ref UCCM1H62NS. Questions? Visit icicibank.com ❗"
+        },
+        {
+          "id": "en-syn-004032",
+          "label": "legit",
+          "score": 0.6117,
+          "pred_type": "fake_payment_receipt",
+          "text": "Nubank: You sent £130 to Pedro with bank transfer. Ref NOTP7OR7I6. Questions? Vsiit nubank.com.br"
+        },
+        {
+          "id": "en-syn-004051",
+          "label": "legit",
+          "score": 0.5873,
+          "pred_type": "fake_payment_receipt",
+          "text": "ICICI Bank: You sent €1,303 to Diego with Cash App. Ref AP83BVI0BO. Questions? Visit icicibank.com"
         }
       ],
       "wrong_type": [
         {
-          "id": "en-syn-000944",
-          "label": "bank_impersonation",
-          "score": 0.9723,
-          "pred_type": "investment_crypto",
-          "text": "Lloyds alert: A Venom transfer of R$3,660 is pending. If you did not authorise it, click amazon-secure.top/track to cancel"
+          "id": "en-syn-000660",
+          "label": "fake_payment_receipt",
+          "score": 0.9967,
+          "pred_type": "delivery_fee",
+          "text": "Hi I'm buying your concert tickets. I've made the payment of ₹19,440, the money is on hold until u send the tracking number and pay the ₹1,950 insurance fee. See irs.com.claim-center.net/i"
         },
         {
-          "id": "en-syn-000945",
-          "label": "bank_impersonation",
-          "score": 0.9842,
-          "pred_type": "fake_payment_receipt",
-          "text": "Nubank alert: A Venmo transfer of R$7,610 is pending. If you did not authorise it, click https://amazon-update.info/track to cancel"
+          "id": "en-syn-000661",
+          "label": "fake_payment_receipt",
+          "score": 0.9964,
+          "pred_type": "delivery_fee",
+          "text": "HI I'M BUYING YOUR PS5. I'VE MADE THE PAYMENT OF €1,030, THE MONEY IS ON HOLD UNTIL YOU SEND THE TRACKING NUMBER AND PAY THE €11.36 INSURANCE FEE. SEE HMRC.COM.LOGIN-ID.NET/TRACK"
         },
         {
-          "id": "en-syn-000946",
-          "label": "bank_impersonation",
-          "score": 0.9842,
-          "pred_type": "fake_payment_receipt",
-          "text": "Chase alert: A Pix transfer of ₹31,011 is pending. If you did not authorise it, click https://toll.com.update-center.com/us to cancel 😩"
+          "id": "en-syn-000662",
+          "label": "fake_payment_receipt",
+          "score": 0.9934,
+          "pred_type": "delivery_fee",
+          "text": "Hi I'm buying your fridge. I've made the payment of MXN $41,530, the money is on hold until you send the tracking number and pay the MXN $740 insurance fee. See dhl.com.update-acct.com/verify"
         },
         {
-          "id": "en-syn-000947",
-          "label": "bank_impersonation",
-          "score": 0.9826,
-          "pred_type": "fake_payment_receipt",
-          "text": "itaú alert: a cash app transfer of £990 is pending. if you did not authorise it, click toll-help.info/us to cancel"
+          "id": "en-syn-000663",
+          "label": "fake_payment_receipt",
+          "score": 0.9934,
+          "pred_type": "delivery_fee",
+          "text": "Hi I'm buying your PS5. I've made the payment of 5,704 reais, the money is on hold until you send the tracking number and pay the R$300 insurance fee. See bit.ly/v9veZZ"
         },
         {
-          "id": "en-syn-000948",
-          "label": "bank_impersonation",
-          "score": 0.9985,
-          "pred_type": "fake_payment_receipt",
-          "text": "Itaú alert: A bank transfer transfer of MXN $41,180 is pending. If u did not authorise it, click hmrc.com.login-acct.net to cancel"
+          "id": "en-syn-000664",
+          "label": "fake_payment_receipt",
+          "score": 0.9965,
+          "pred_type": "delivery_fee",
+          "text": "Hi I'm buying your concert tickets. I've made the payment of €590, the money is on hold until you send the tracking number and pay the €22.56 insurance fee. See bank-login.buzz/verify"
         },
         {
-          "id": "en-syn-000949",
-          "label": "bank_impersonation",
-          "score": 0.9891,
-          "pred_type": "fake_payment_receipt",
-          "text": "HDFC Bank alert: A PayPal transfer of 595 pounds is pending. If you did not authorise it, click bit.ly/9XJv8M to cancel"
+          "id": "en-syn-000665",
+          "label": "fake_payment_receipt",
+          "score": 0.9946,
+          "pred_type": "delivery_fee",
+          "text": "Hi I'm buying your iPhone. I've made the payment of €2,170, the money is on hold until you send the tracking number and pay the €39.24 insurance fee. See hsbc-pay.buzz/i"
         },
         {
-          "id": "en-syn-000950",
-          "label": "bank_impersonation",
-          "score": 0.9851,
-          "pred_type": "fake_payment_receipt",
-          "text": "Citibank alert: A PayPal transfer of R$5,108 is pending. If you did not authorise it, click http://netflix.com.update-portal.net/us to cancel"
+          "id": "en-syn-000666",
+          "label": "fake_payment_receipt",
+          "score": 0.8087,
+          "pred_type": "delivery_fee",
+          "text": "Hi I'm buying your iPhone. I've made the payment of $1,380, the money is on hold until you send the tracking number and pay the $53.58 insurance fee. See rb.gy/5YDshU 💰"
         },
         {
-          "id": "en-syn-000951",
-          "label": "bank_impersonation",
-          "score": 0.9925,
-          "pred_type": "fake_payment_receipt",
-          "text": "Bradesco alert: A Faster Payments transfer of €1,660 is pending. If u did not authorise it, click https://toll.com.help-center.net/track to cancel"
-        },
-        {
-          "id": "en-syn-000952",
-          "label": "bank_impersonation",
-          "score": 0.9906,
-          "pred_type": "fake_payment_receipt",
-          "text": "Santander alert: A Zelle transfer of MXN $11,751 is pending. If you did not authorise it, click http://amazon-claim.vip/verify to cancel"
-        },
-        {
-          "id": "en-syn-000953",
-          "label": "bank_impersonation",
-          "score": 0.989,
-          "pred_type": "fake_payment_receipt",
-          "text": "Wells Fargo alert: A Faster Payments transfer of 2,290 dollars is pending. If you did not authorise it, click http://toll.com.update-center.com/track to cancel"
-        },
-        {
-          "id": "en-syn-000954",
-          "label": "bank_impersonation",
+          "id": "en-syn-000667",
+          "label": "fake_payment_receipt",
           "score": 0.9999,
-          "pred_type": "fake_payment_receipt",
-          "text": "ICICI Bank alert: A wire transfer transfer of $1,560 is pending. If you did not authorise it, click http://127.17.173.14/update to cancel"
+          "pred_type": "delivery_fee",
+          "text": "Hi I'm buying your laptop. I've made the payment of R$860, the money is on hold until you send the tracking number and pay the R$130 insurance fee. See http://90.104.104.73/claim"
         },
         {
-          "id": "en-syn-000955",
-          "label": "bank_impersonation",
-          "score": 0.9911,
-          "pred_type": "fake_payment_receipt",
-          "text": "Santander alert: A Faster Payments transfer of $2,446 is pending. If you did not authorise it, click http://gov-verify.vip/pay to cancel"
+          "id": "en-syn-000668",
+          "label": "fake_payment_receipt",
+          "score": 0.9939,
+          "pred_type": "delivery_fee",
+          "text": "Hi I'm buying your concert tickets. I've made the payment of €240, the money is on hold until u send the tracking number and pay the €5.05 insurance fee. See tinyurl.com/hD56aa"
         },
         {
-          "id": "en-syn-000956",
-          "label": "bank_impersonation",
-          "score": 0.9897,
-          "pred_type": "fake_payment_receipt",
-          "text": "Bank of America alert: A wire transfer transfer of $1,150 is pending. If you did not authorise it, click bit.ly/Paim3g to cancel"
+          "id": "en-syn-000669",
+          "label": "fake_payment_receipt",
+          "score": 0.9932,
+          "pred_type": "delivery_fee",
+          "text": "hi i'm buying your fridge. i've made the payment of ₹17,760, the money is on hold until you send the tracking number and pay the ₹660 insurance fee. see http://dhl-secure.info"
         },
         {
-          "id": "en-syn-000957",
-          "label": "bank_impersonation",
-          "score": 0.9998,
-          "pred_type": "fake_payment_receipt",
-          "text": "SBI alert: A SPEI transfer of $2,000 is pending. If you did not authorise it, click http://28.208.195.190/redelivery to cancel"
-        },
-        {
-          "id": "en-syn-000958",
-          "label": "bank_impersonation",
-          "score": 0.9976,
-          "pred_type": "toll_fine_tax",
-          "text": "BBVA alert: A UPI transfer of $2,480 is pending. If you did not authorise it, click https://irs-secure.icu/pay to cancel"
-        },
-        {
-          "id": "en-syn-000959",
-          "label": "bank_impersonation",
+          "id": "en-syn-000670",
+          "label": "fake_payment_receipt",
           "score": 0.9843,
-          "pred_type": "fake_payment_receipt",
-          "text": "BBVA alert: A PayPal transfer of R$10,660 is pending. If you did not authorise it, click http://netflix-track.icu/us to cancel"
+          "pred_type": "investment_crypto",
+          "text": "Hi I'm buying your iPhone. I've made the payment of €1,440, the money is on hold until you send the tracking unmber and pay the 22.23 euros insurance fee. See royalmail-support.buzz"
         },
         {
-          "id": "en-syn-000960",
-          "label": "bank_impersonation",
-          "score": 0.9874,
-          "pred_type": "fake_payment_receipt",
-          "text": "HSBC alert: A Cash App transfer of MXN $5,490 is pending. If u did not authorise it, click https://chase.com.secure-id.net/i to cancel"
+          "id": "en-syn-000671",
+          "label": "fake_payment_receipt",
+          "score": 0.9931,
+          "pred_type": "delivery_fee",
+          "text": "Hi I'm buying your baby stroller. I've made the payment of 2,180 euros, the money is on hold until you send the tracking number and pay the €5.36 insurance fee. See https://fedex-support.xyz/pay"
         },
         {
-          "id": "en-syn-000961",
-          "label": "bank_impersonation",
-          "score": 0.99,
-          "pred_type": "fake_payment_receipt",
-          "text": "Itaú alert: A Faster Payments transfer of £1,120 is pending. If you did not authorise it, click https://hsbc-secure.buzz/verify to cancel"
+          "id": "en-syn-000672",
+          "label": "fake_payment_receipt",
+          "score": 0.9999,
+          "pred_type": "delivery_fee",
+          "text": "Hi I'm buying your guitar. I've made the payment of R$11,580, the money is on hold until you send the tracking number and pay the R$10.41 insurance fee. See http://57.187.126.28/track"
         },
         {
-          "id": "en-syn-000962",
-          "label": "bank_impersonation",
-          "score": 0.988,
-          "pred_type": "fake_payment_receipt",
-          "text": "santander alert: a cash app transfer of €540 is pending. if you did not auhtorise it, click https://bank-track.click/track to cancel"
+          "id": "en-syn-000673",
+          "label": "fake_payment_receipt",
+          "score": 0.9934,
+          "pred_type": "delivery_fee",
+          "text": "Hi I'm buying your laptop. I've made the payment of 30,880 pesos, the money is on hold until you send the tracking number and pay the MXN $1,060 insurance fee. See usps-support.info/pay"
         },
         {
-          "id": "en-syn-000963",
-          "label": "bank_impersonation",
-          "score": 0.9983,
-          "pred_type": "fake_payment_receipt",
-          "text": "Santander alert: A SPEI transfer of ₹158,930 is pending. If you did not authorise it, click usps.com.secure-portal.net to cancel"
+          "id": "en-syn-000674",
+          "label": "fake_payment_receipt",
+          "score": 0.9964,
+          "pred_type": "delivery_fee",
+          "text": "Hi I'm buying your bike. I've made the payment of $2,290, the money is on hold until you send the tracking number and pay the $41.17 insurance fee. See ezpass-redelivery.online"
         },
         {
-          "id": "en-syn-000964",
-          "label": "bank_impersonation",
-          "score": 0.9921,
-          "pred_type": "fake_payment_receipt",
-          "text": "NatWest alert: A SPEI transfer of ₹88,110 is pending. If u did not authorise it, click https://bank.com.login-portal.com to cancel"
+          "id": "en-syn-000675",
+          "label": "fake_payment_receipt",
+          "score": 0.9935,
+          "pred_type": "delivery_fee",
+          "text": "Hi I'm buying your guitar. I've made the payment of 260 euros, the money is on hold until you send the tracking number and pay the €33.87 insurance fee. See https://amazon-login.shop/us"
         },
         {
-          "id": "en-syn-000965",
-          "label": "bank_impersonation",
-          "score": 0.9881,
-          "pred_type": "fake_payment_receipt",
-          "text": "Lloyds alert: A UPI transfer of R$10,050 is pending. If you did not authorise it, click https://amazon.com.refund-acct.com to cancel"
+          "id": "en-syn-000676",
+          "label": "fake_payment_receipt",
+          "score": 0.9933,
+          "pred_type": "delivery_fee",
+          "text": "hi i'm buying your sofa. i've made the payment of ₹160,290, the money is on hold until you send the tracking number and pay the ₹2,790 insurance fee. see https://nubank.com.login-id.net/us"
         },
         {
-          "id": "en-syn-000966",
-          "label": "bank_impersonation",
-          "score": 0.9908,
-          "pred_type": "fake_payment_receipt",
-          "text": "santander alert: a faster payments transfer of £660 is pending. if you did not authorise it, clcik tinyurl.com/myhato to cancel"
+          "id": "en-syn-000677",
+          "label": "fake_payment_receipt",
+          "score": 0.9935,
+          "pred_type": "delivery_fee",
+          "text": "Hi I'm buying your bike. I've made the payment of $2,121, the money is on hold until you send the tracking number and pay the $50.79 insurance fee. See usps-help.info/us"
         },
         {
-          "id": "en-syn-000967",
-          "label": "bank_impersonation",
-          "score": 0.9847,
-          "pred_type": "fake_payment_receipt",
-          "text": "Wells Fargo alert: A UPI transfer of 108,138 rupees is pending. If you did not authorise it, click tinyurl.com/0Ha6Ys to cancel"
+          "id": "en-syn-000678",
+          "label": "fake_payment_receipt",
+          "score": 0.9938,
+          "pred_type": "delivery_fee",
+          "text": "HI I'M BUYING YOUR CONCERT TICKETS. I'VE MADE THE PAYMENT OF R$4,330, THE MONEY IS ON HOLD UNTIL YOU SEND THE TRACKING NUMBER AND PAY THE R$250 INSURANCE FEE. SEE HTTPS://TOLL-VERIFY.INFO/I ❗"
         },
         {
-          "id": "en-syn-000968",
-          "label": "bank_impersonation",
-          "score": 0.998,
-          "pred_type": "fake_payment_receipt",
-          "text": "HSBC alert: A Venmo transfer of $1,020 is pending. If you did not authorise it, click http://fedex.com.help-acct.net/track to cancel"
+          "id": "en-syn-000679",
+          "label": "fake_payment_receipt",
+          "score": 0.9937,
+          "pred_type": "delivery_fee",
+          "text": "hi i'm buying your bike. i've made the payment of 21,410 pesos, the money is on hold until you send the tracking number and pay the mxn $1,063 insurance fee. see bit.ly/k1emxu"
+        },
+        {
+          "id": "en-syn-000680",
+          "label": "fake_payment_receipt",
+          "score": 0.9962,
+          "pred_type": "delivery_fee",
+          "text": "Hi I'm buying your baby stroller. I've made the payment of €2,080, the money is on hold until you send the tracking number and pay the €10.97 insurance fee. See hmrc.com.track-id.net/verify"
+        },
+        {
+          "id": "en-syn-000681",
+          "label": "fake_payment_receipt",
+          "score": 0.9934,
+          "pred_type": "delivery_fee",
+          "text": "Hi I'm buying your sofa. I've made the payment of 2,730 reais, the money is on hold until u send the tracking number and pay the R$290 insurance fee. See http://fedex.com.refund-acct.top/track"
+        },
+        {
+          "id": "en-syn-000682",
+          "label": "fake_payment_receipt",
+          "score": 0.9935,
+          "pred_type": "delivery_fee",
+          "text": "Hi I'm buying your bike. I've made the payment of $2,110, the money is on hold until u send the tracking number and pay the $58.13 insurance fee. See royalmail-secure.buzz/track"
+        },
+        {
+          "id": "en-syn-000683",
+          "label": "fake_payment_receipt",
+          "score": 0.9937,
+          "pred_type": "delivery_fee",
+          "text": "Hi I'm buying your bike. I've made the payment of MXN $25,510, the money is on hold until you send the tracking number and pay the MXN $380 insurance fee. See usps.com.update-portal.net/pay"
+        },
+        {
+          "id": "en-syn-000684",
+          "label": "fake_payment_receipt",
+          "score": 0.9933,
+          "pred_type": "delivery_fee",
+          "text": "Hi I'm buying your PS5. I've made the payment of ₹25,060, the money is on hold until you send the tracking number and pay the ₹4,130 insurance fee. See royalmail-claim.top/i"
         }
       ]
     }
@@ -641,97 +823,97 @@
       "n": 90,
       "n_scam": 50,
       "n_legit": 40,
-      "roc_auc": 0.988,
-      "pr_auc": 0.9927,
+      "roc_auc": 0.9775,
+      "pr_auc": 0.9837,
       "operating_points": {
         "fpr@0.001": {
-          "threshold": 0.315341,
-          "tp": 48,
-          "fp": 1,
-          "fn": 2,
-          "tn": 39,
-          "recall": 0.96,
-          "fpr": 0.025,
-          "precision": 0.9796,
+          "threshold": 0.960326,
+          "tp": 21,
+          "fp": 0,
+          "fn": 29,
+          "tn": 40,
+          "recall": 0.42,
+          "fpr": 0.0,
+          "precision": 1.0,
           "precision_at_prevalence": {
-            "0.01": 0.2795,
-            "0.1": 0.8101,
-            "0.5": 0.9746
+            "0.01": 1.0,
+            "0.1": 1.0,
+            "0.5": 1.0
           }
         },
         "fpr@0.005": {
-          "threshold": 0.187229,
-          "tp": 49,
-          "fp": 3,
-          "fn": 1,
-          "tn": 37,
-          "recall": 0.98,
-          "fpr": 0.075,
-          "precision": 0.9423,
+          "threshold": 0.614126,
+          "tp": 39,
+          "fp": 0,
+          "fn": 11,
+          "tn": 40,
+          "recall": 0.78,
+          "fpr": 0.0,
+          "precision": 1.0,
           "precision_at_prevalence": {
-            "0.01": 0.1166,
-            "0.1": 0.5921,
-            "0.5": 0.9289
+            "0.01": 1.0,
+            "0.1": 1.0,
+            "0.5": 1.0
           }
         },
         "fpr@0.01": {
-          "threshold": 0.165372,
-          "tp": 49,
-          "fp": 3,
-          "fn": 1,
-          "tn": 37,
-          "recall": 0.98,
-          "fpr": 0.075,
-          "precision": 0.9423,
+          "threshold": 0.545698,
+          "tp": 41,
+          "fp": 2,
+          "fn": 9,
+          "tn": 38,
+          "recall": 0.82,
+          "fpr": 0.05,
+          "precision": 0.9535,
           "precision_at_prevalence": {
-            "0.01": 0.1166,
-            "0.1": 0.5921,
-            "0.5": 0.9289
+            "0.01": 0.1421,
+            "0.1": 0.6457,
+            "0.5": 0.9425
           }
         },
         "fpr@0.05": {
-          "threshold": 0.130539,
-          "tp": 49,
-          "fp": 3,
-          "fn": 1,
-          "tn": 37,
-          "recall": 0.98,
-          "fpr": 0.075,
-          "precision": 0.9423,
+          "threshold": 0.380211,
+          "tp": 46,
+          "fp": 2,
+          "fn": 4,
+          "tn": 38,
+          "recall": 0.92,
+          "fpr": 0.05,
+          "precision": 0.9583,
           "precision_at_prevalence": {
-            "0.01": 0.1166,
-            "0.1": 0.5921,
-            "0.5": 0.9289
+            "0.01": 0.1567,
+            "0.1": 0.6715,
+            "0.5": 0.9485
           }
         },
         "model_high": {
-          "threshold": 0.165372,
-          "tp": 49,
-          "fp": 3,
-          "fn": 1,
-          "tn": 37,
-          "recall": 0.98,
-          "fpr": 0.075,
-          "precision": 0.9423,
+          "threshold": 0.545698,
+          "tp": 41,
+          "fp": 2,
+          "fn": 9,
+          "tn": 38,
+          "recall": 0.82,
+          "fpr": 0.05,
+          "precision": 0.9535,
           "precision_at_prevalence": {
-            "0.01": 0.1166,
-            "0.1": 0.5921,
-            "0.5": 0.9289
+            "0.01": 0.1421,
+            "0.1": 0.6457,
+            "0.5": 0.9425
           }
         },
         "model_medium": {
-          "threshold": 0.130539,
-          "tp": 49,
-          "fp": 3,
-          "fn": 1,
-          "tn": 37,
-          "recall": 0.98,
-          "fpr": 0.075,
-          "precision": 0.9423,
+          "threshold": 0.380211,
+          "tp": 46,
+          "fp": 2,
+          "fn": 4,
+          "tn": 38,
+          "recall": 0.92,
+          "fpr": 0.05,
+          "precision": 0.9583,
           "precision_at_prevalence": {
-            "0.01": 0.1166,
-            "0.1": 0.5921,
-            "0.5": 0.9289
+            "0.01": 0.1567,
+            "0.1": 0.6715,
+            "0.5": 0.9485
           }
         }
       }
@@ -739,18 +921,18 @@
     "type": {
       "n": 49,
       "accuracy": 0.7551,
-      "macro_f1": 0.7668,
+      "macro_f1": 0.7605,
       "per_class_f1": {
-        "account_phishing": 0.6667,
-        "bank_impersonation": 0.5455,
-        "delivery_fee": 1.0,
-        "fake_payment_receipt": 0.6667,
+        "account_phishing": 0.7143,
+        "bank_impersonation": 0.6,
+        "delivery_fee": 0.9091,
+        "fake_payment_receipt": 0.8889,
         "family_impersonation": 0.8,
-        "investment_crypto": 0.5,
-        "job_task": 0.8,
+        "investment_crypto": 0.5714,
+        "job_task": 0.7273,
         "prize_lottery": 1.0,
-        "toll_fine_tax": 0.8,
-        "verification_code_theft": 0.8889
+        "toll_fine_tax": 0.6667,
+        "verification_code_theft": 0.7273
       },
       "labels": [
         "account_phishing",
@@ -778,16 +960,16 @@
           0
         ],
         [
-          2,
+          1,
           3,
-          0,
-          2,
-          0,
-          0,
+          1,
+          1,
           0,
           0,
           0,
-          0
+          0,
+          0,
+          1
         ],
         [
           0,
@@ -805,22 +987,22 @@
           0,
           0,
           0,
-          3,
+          4,
           0,
           0,
-          1,
+          0,
           0,
           0,
           0
         ],
         [
           0,
-          1,
+          0,
           0,
           0,
           4,
-          1,
           0,
+          2,
           0,
           0,
           0
@@ -870,8 +1052,8 @@
           0,
           0,
           0,
-          4,
-          0
+          3,
+          1
         ],
         [
           0,
@@ -888,116 +1070,123 @@
       ]
     },
     "fpr_by_source_at_high": {
-      "handwritten": 0.075
+      "handwritten": 0.05
     },
     "errors": {
       "missed_scams": [
         {
           "id": "en-chal-s045",
           "label": "investment_crypto",
-          "score": 0.0205,
+          "score": 0.0561,
           "pred_type": "verification_code_theft",
           "text": "Hi, is this David? Oh sorry, wrong number! Nice talking to you though, where are you from? 😊"
+        },
+        {
+          "id": "en-chal-s025",
+          "label": "toll_fine_tax",
+          "score": 0.2231,
+          "pred_type": "verification_code_theft",
+          "text": "This is a CBI officer. Your Aadhaar is linked to a money laundering case. You are under digital arrest, do not disconnect, transfer your funds to the RBI verification account"
+        },
+        {
+          "id": "en-chal-s037",
+          "label": "verification_code_theft",
+          "score": 0.2447,
+          "pred_type": "verification_code_theft",
+          "text": "Hello, I'm with Amazon support. To complete your refund, I'll need the OTP that was sent to your phone"
+        },
+        {
+          "id": "en-chal-s042",
+          "label": "job_task",
+          "score": 0.2859,
+          "pred_type": "job_task",
+          "text": "Hello, I'm the HR at Mediaplus. Our job is simple: help merchants increase app downloads, you get commission after each set of 40 tasks. Can I add you on WhatsApp?"
         }
       ],
       "false_alarms": [
         {
+          "id": "en-chal-l001",
+          "label": "legit",
+          "score": 0.5857,
+          "pred_type": "fake_payment_receipt",
+          "text": "Chase: You sent $45.00 to Maria Lopez with Zelle. Ref # 8G2HJ. Questions? Visit chase.com"
+        },
+        {
           "id": "en-chal-l023",
           "label": "legit",
-          "score": 0.4099,
+          "score": 0.5834,
           "pred_type": "verification_code_theft",
           "text": "Your verification code for Instagram is 384 291. Don't share it."
-        },
-        {
-          "id": "en-chal-l026",
-          "label": "legit",
-          "score": 0.3062,
-          "pred_type": "family_impersonation",
-          "text": "Mom I lost my phone at the concert 😭 using Jess's. I'm fine, getting a taxi home, will be back by 12"
-        },
-        {
-          "id": "en-chal-l003",
-          "label": "legit",
-          "score": 0.2434,
-          "pred_type": "account_phishing",
-          "text": "Your Amazon order #112-4482910 has been delivered. Track at amazon.com/your-orders"
         }
       ],
       "wrong_type": [
         {
+          "id": "en-chal-s001",
+          "label": "family_impersonation",
+          "score": 0.6294,
+          "pred_type": "job_task",
+          "text": "Dad it's me. Long story but my phone's dead and I'm on a mate's. I need to pay for the hotel tonight, £320, could you transfer it and I'll explain tomorrow? please dont ring, battery's nearly gone"
+        },
+        {
           "id": "en-chal-s002",
           "label": "family_impersonation",
-          "score": 0.4154,
-          "pred_type": "investment_crypto",
-          "text": "Hey Aunty, it's Rohan, using my friend's phone. Can you GPay ₹15,000 to this number, it's an emergency at college, will return by Monday"
-        },
-        {
-          "id": "en-chal-s004",
-          "label": "family_impersonation",
-          "score": 0.9566,
-          "pred_type": "bank_impersonation",
-          "text": "Hi mom, my bank card got blocked and I need to pay my uni fees today or I'll be kicked out of halls. can you send it to my flatmate's account? I'll send the details"
-        },
-        {
-          "id": "en-chal-s008",
-          "label": "fake_payment_receipt",
-          "score": 0.5357,
+          "score": 0.5172,
           "pred_type": "job_task",
-          "text": "Sorry to message randomly, my daughter typed the wrong UPI ID and ₹4,999 went to you. Please return it to 98XXXXXX21@ybl, we are a poor family 🙏"
+          "text": "Hey Aunty, it's Rohan, using my friend's phone. Can you GPay ₹15,000 to this number, it's an emergency at college, will return by Monday"
         },
         {
           "id": "en-chal-s011",
           "label": "bank_impersonation",
-          "score": 0.3337,
+          "score": 0.4523,
           "pred_type": "fake_payment_receipt",
           "text": "This is Chase Fraud. Did you attempt a Zelle payment of $2,900 to Marcus? Reply YES or NO."
         },
         {
           "id": "en-chal-s013",
           "label": "bank_impersonation",
-          "score": 0.9978,
-          "pred_type": "fake_payment_receipt",
+          "score": 0.994,
+          "pred_type": "verification_code_theft",
           "text": "Hi, I'm calling from Nubank's security centre. Someone tried to make a Pix of R$3,000 from your account. To block it I'll send you a code, just confirm it back to me"
         },
         {
           "id": "en-chal-s014",
           "label": "bank_impersonation",
-          "score": 0.9986,
+          "score": 0.9904,
           "pred_type": "account_phishing",
           "text": "Your HSBC account requires urgent verification. Failure to verify within 2 hours will result in suspension. hsbc-uk-verify.com"
         },
         {
-          "id": "en-chal-s015",
+          "id": "en-chal-s016",
           "label": "bank_impersonation",
-          "score": 1.0,
-          "pred_type": "account_phishing",
-          "text": "Dear customer your SBI YONO account will be blocked today. Please update your PAN card immediately click here http://bit.ly/sbi-pan-upd"
+          "score": 0.3917,
+          "pred_type": "delivery_fee",
+          "text": "Fraud dept here. We need you to withdraw your savings and buy gold bars, a courier will collect them to keep them safe while we investigate"
         },
         {
           "id": "en-chal-s026",
           "label": "toll_fine_tax",
-          "score": 0.9977,
+          "score": 0.9875,
           "pred_type": "account_phishing",
           "text": "Notice from DVLA: your vehicle tax payment failed. Update your details to avoid a £1000 fine: dvla-renewal.online"
         },
         {
           "id": "en-chal-s033",
           "label": "account_phishing",
-          "score": 0.9633,
+          "score": 0.9732,
           "pred_type": "toll_fine_tax",
           "text": "Geek Squad: Your annual subscription of $399.99 has been renewed. To cancel and get a refund, call 1-808-555-0172"
         },
         {
           "id": "en-chal-s047",
           "label": "investment_crypto",
-          "score": 0.8264,
+          "score": 0.7801,
           "pred_type": "job_task",
           "text": "My trading coach helped me make $12k in a month with forex. I can introduce you, he only takes a small fee from profits 💸"
         },
         {
           "id": "en-chal-s048",
           "label": "investment_crypto",
-          "score": 0.9217,
+          "score": 0.8746,
           "pred_type": "account_phishing",
           "text": "Exclusive WhatsApp stock group: our analyst picks gained 300% this quarter. Click to join free: chat.whatsapp-stocks.vip"
         }
@@ -1009,116 +1198,116 @@
       "n": 80,
       "n_scam": 40,
       "n_legit": 40,
-      "roc_auc": 0.9694,
-      "pr_auc": 0.973,
+      "roc_auc": 0.9837,
+      "pr_auc": 0.9884,
       "operating_points": {
         "fpr@0.001": {
-          "threshold": 0.315341,
-          "tp": 35,
-          "fp": 2,
-          "fn": 5,
-          "tn": 38,
-          "recall": 0.875,
-          "fpr": 0.05,
-          "precision": 0.9459,
+          "threshold": 0.960326,
+          "tp": 12,
+          "fp": 0,
+          "fn": 28,
+          "tn": 40,
+          "recall": 0.3,
+          "fpr": 0.0,
+          "precision": 1.0,
           "precision_at_prevalence": {
-            "0.01": 0.1502,
-            "0.1": 0.6604,
-            "0.5": 0.9459
+            "0.01": 1.0,
+            "0.1": 1.0,
+            "0.5": 1.0
           }
         },
         "fpr@0.005": {
-          "threshold": 0.187229,
-          "tp": 35,
-          "fp": 2,
-          "fn": 5,
-          "tn": 38,
-          "recall": 0.875,
-          "fpr": 0.05,
-          "precision": 0.9459,
+          "threshold": 0.614126,
+          "tp": 31,
+          "fp": 0,
+          "fn": 9,
+          "tn": 40,
+          "recall": 0.775,
+          "fpr": 0.0,
+          "precision": 1.0,
           "precision_at_prevalence": {
-            "0.01": 0.1502,
-            "0.1": 0.6604,
-            "0.5": 0.9459
+            "0.01": 1.0,
+            "0.1": 1.0,
+            "0.5": 1.0
           }
         },
         "fpr@0.01": {
-          "threshold": 0.165372,
-          "tp": 35,
-          "fp": 2,
-          "fn": 5,
-          "tn": 38,
-          "recall": 0.875,
-          "fpr": 0.05,
-          "precision": 0.9459,
+          "threshold": 0.545698,
+          "tp": 33,
+          "fp": 0,
+          "fn": 7,
+          "tn": 40,
+          "recall": 0.825,
+          "fpr": 0.0,
+          "precision": 1.0,
           "precision_at_prevalence": {
-            "0.01": 0.1502,
-            "0.1": 0.6604,
-            "0.5": 0.9459
+            "0.01": 1.0,
+            "0.1": 1.0,
+            "0.5": 1.0
           }
         },
         "fpr@0.05": {
-          "threshold": 0.130539,
+          "threshold": 0.380211,
           "tp": 37,
-          "fp": 2,
+          "fp": 1,
           "fn": 3,
-          "tn": 38,
+          "tn": 39,
           "recall": 0.925,
-          "fpr": 0.05,
-          "precision": 0.9487,
+          "fpr": 0.025,
+          "precision": 0.9737,
           "precision_at_prevalence": {
-            "0.01": 0.1574,
-            "0.1": 0.6727,
-            "0.5": 0.9487
+            "0.01": 0.2721,
+            "0.1": 0.8043,
+            "0.5": 0.9737
           }
         },
         "model_high": {
-          "threshold": 0.165372,
-          "tp": 35,
-          "fp": 2,
-          "fn": 5,
-          "tn": 38,
-          "recall": 0.875,
-          "fpr": 0.05,
-          "precision": 0.9459,
+          "threshold": 0.545698,
+          "tp": 33,
+          "fp": 0,
+          "fn": 7,
+          "tn": 40,
+          "recall": 0.825,
+          "fpr": 0.0,
+          "precision": 1.0,
           "precision_at_prevalence": {
-            "0.01": 0.1502,
-            "0.1": 0.6604,
-            "0.5": 0.9459
+            "0.01": 1.0,
+            "0.1": 1.0,
+            "0.5": 1.0
           }
         },
         "model_medium": {
-          "threshold": 0.130539,
+          "threshold": 0.380211,
           "tp": 37,
-          "fp": 2,
+          "fp": 1,
           "fn": 3,
-          "tn": 38,
+          "tn": 39,
           "recall": 0.925,
-          "fpr": 0.05,
-          "precision": 0.9487,
+          "fpr": 0.025,
+          "precision": 0.9737,
           "precision_at_prevalence": {
-            "0.01": 0.1574,
-            "0.1": 0.6727,
-            "0.5": 0.9487
+            "0.01": 0.2721,
+            "0.1": 0.8043,
+            "0.5": 0.9737
           }
         }
       }
     },
     "type": {
       "n": 40,
-      "accuracy": 0.825,
-      "macro_f1": 0.8223,
+      "accuracy": 0.775,
+      "macro_f1": 0.7711,
       "per_class_f1": {
         "account_phishing": 0.7273,
-        "bank_impersonation": 0.75,
+        "bank_impersonation": 0.4,
         "delivery_fee": 1.0,
-        "fake_payment_receipt": 0.8571,
-        "family_impersonation": 1.0,
+        "fake_payment_receipt": 0.8889,
+        "family_impersonation": 0.8889,
         "investment_crypto": 0.6667,
-        "job_task": 0.6667,
+        "job_task": 0.5,
         "prize_lottery": 1.0,
         "toll_fine_tax": 0.8889,
-        "verification_code_theft": 0.6667
+        "verification_code_theft": 0.75
       },
       "labels": [
         "account_phishing",
@@ -1135,26 +1324,26 @@
       "confusion": [
         [
           4,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
           1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
           0
         ],
         [
           1,
-          3,
+          2,
           0,
           0,
           0,
           0,
           0,
           0,
-          0,
+          1,
           1
         ],
         [
@@ -1173,20 +1362,8 @@
           0,
           0,
           0,
-          3,
+          4,
           0,
-          0,
-          1,
-          0,
-          0,
-          0
-        ],
-        [
-          0,
-          0,
-          0,
-          0,
-          5,
           0,
           0,
           0,
@@ -1197,22 +1374,34 @@
           0,
           0,
           0,
+          1,
+          4,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
           0,
           0,
           2,
           0,
           0,
           0,
-          2
+          1
         ],
         [
+          1,
           1,
           0,
           0,
           0,
           0,
-          0,
-          2,
+          1,
           0,
           0,
           0
@@ -1256,110 +1445,415 @@
       ]
     },
     "fpr_by_source_at_high": {
-      "handwritten_v2": 0.05
+      "handwritten_v2": 0.0
     },
     "errors": {
       "missed_scams": [
         {
           "id": "en-chal2-s039",
           "label": "investment_crypto",
-          "score": 0.0116,
+          "score": 0.0366,
           "pred_type": "verification_code_theft",
           "text": "Sorry, I think I got the wrong number. I was looking for my yoga instructor. By the way, you seem nice, do you invest?"
         },
         {
-          "id": "en-chal2-s022",
-          "label": "account_phishing",
-          "score": 0.0466,
-          "pred_type": "account_phishing",
-          "text": "Spotify: your Premium payment failed. Update your card within 24h to keep listening: spotify-billing-help.com"
-        },
-        {
           "id": "en-chal2-s012",
           "label": "bank_impersonation",
-          "score": 0.0789,
+          "score": 0.1725,
           "pred_type": "bank_impersonation",
           "text": "ICICI Bank: Your credit card reward points of 7,850 will expire today. Redeem now at icici-rewards-redeem.in"
+        },
+        {
+          "id": "en-chal2-s037",
+          "label": "investment_crypto",
+          "score": 0.2371,
+          "pred_type": "bank_impersonation",
+          "text": "Ripple XRP airdrop is live! Send any amount of XRP to the address below and receive double back within 30 minutes"
         }
       ],
       "false_alarms": [
         {
-          "id": "en-chal2-l026",
-          "label": "legit",
-          "score": 0.9124,
-          "pred_type": "fake_payment_receipt",
-          "text": "Paytm: ₹1,200 paid to Reliance Fresh. UPI Ref 4209118823."
-        },
-        {
           "id": "en-chal2-l011",
           "label": "legit",
-          "score": 0.368,
+          "score": 0.4427,
           "pred_type": "verification_code_theft",
           "text": "Your Apple Account code is: 615309. Do not share it with anyone."
         }
       ],
       "wrong_type": [
         {
-          "id": "en-chal2-s006",
-          "label": "fake_payment_receipt",
-          "score": 0.153,
-          "pred_type": "job_task",
-          "text": "I paid you $1,200 on Cash App for the PS5 but it charged me twice. Please send back $600 to my $cashtag before I report it"
+          "id": "en-chal2-s001",
+          "label": "family_impersonation",
+          "score": 0.8609,
+          "pred_type": "fake_payment_receipt",
+          "text": "Papa, I'm using a classmate's phone, mine was stolen on the bus. I need ₹8,000 for my hostel fee by today evening, please send on this UPI, I'll explain at home"
+        },
+        {
+          "id": "en-chal2-s009",
+          "label": "bank_impersonation",
+          "score": 0.9711,
+          "pred_type": "toll_fine_tax",
+          "text": "Monzo: we've blocked a £1,250 payment to Coinbase. If you didn't make this, call our fraud line on 0330 555 8821 now"
         },
         {
           "id": "en-chal2-s010",
           "label": "bank_impersonation",
-          "score": 0.9965,
+          "score": 0.9581,
           "pred_type": "account_phishing",
           "text": "Wells Fargo: Your online access has been suspended. To restore, sign in at wellsfargo-access-restore.com"
         },
         {
           "id": "en-chal2-s013",
           "label": "bank_impersonation",
-          "score": 0.9626,
+          "score": 0.948,
           "pred_type": "verification_code_theft",
           "text": "Bank of America fraud dept: to stop the wire to an unknown recipient, please read me the verification code we sent"
         },
         {
           "id": "en-chal2-s026",
           "label": "account_phishing",
-          "score": 0.888,
-          "pred_type": "toll_fine_tax",
+          "score": 0.946,
+          "pred_type": "bank_impersonation",
           "text": "Norton: Thank you for your purchase of $349.99. If you did not authorise this charge, call our refunds desk at +1 (888) 555-0143"
         },
         {
           "id": "en-chal2-s034",
           "label": "job_task",
-          "score": 0.977,
-          "pred_type": "account_phishing",
+          "score": 0.8902,
+          "pred_type": "bank_impersonation",
           "text": "Your task account is frozen because of a negative balance. Deposit 300 USDT to unfreeze and withdraw your 1,900 USDT"
         },
         {
-          "id": "en-chal2-s037",
+          "id": "en-chal2-s035",
+          "label": "job_task",
+          "score": 0.9745,
+          "pred_type": "account_phishing",
+          "text": "Hi, we're hiring remote 'order optimizers'. Complete 30 orders a day and get commission. Training is free, just register at task-optimize.vip"
+        }
+      ]
+    }
+  },
+  "challenge_v3": {
+    "binary": {
+      "n": 60,
+      "n_scam": 30,
+      "n_legit": 30,
+      "roc_auc": 0.9844,
+      "pr_auc": 0.9878,
+      "operating_points": {
+        "fpr@0.001": {
+          "threshold": 0.960326,
+          "tp": 15,
+          "fp": 0,
+          "fn": 15,
+          "tn": 30,
+          "recall": 0.5,
+          "fpr": 0.0,
+          "precision": 1.0,
+          "precision_at_prevalence": {
+            "0.01": 1.0,
+            "0.1": 1.0,
+            "0.5": 1.0
+          }
+        },
+        "fpr@0.005": {
+          "threshold": 0.614126,
+          "tp": 25,
+          "fp": 0,
+          "fn": 5,
+          "tn": 30,
+          "recall": 0.8333,
+          "fpr": 0.0,
+          "precision": 1.0,
+          "precision_at_prevalence": {
+            "0.01": 1.0,
+            "0.1": 1.0,
+            "0.5": 1.0
+          }
+        },
+        "fpr@0.01": {
+          "threshold": 0.545698,
+          "tp": 26,
+          "fp": 0,
+          "fn": 4,
+          "tn": 30,
+          "recall": 0.8667,
+          "fpr": 0.0,
+          "precision": 1.0,
+          "precision_at_prevalence": {
+            "0.01": 1.0,
+            "0.1": 1.0,
+            "0.5": 1.0
+          }
+        },
+        "fpr@0.05": {
+          "threshold": 0.380211,
+          "tp": 28,
+          "fp": 1,
+          "fn": 2,
+          "tn": 29,
+          "recall": 0.9333,
+          "fpr": 0.03333,
+          "precision": 0.9655,
+          "precision_at_prevalence": {
+            "0.01": 0.2205,
+            "0.1": 0.7568,
+            "0.5": 0.9655
+          }
+        },
+        "model_high": {
+          "threshold": 0.545698,
+          "tp": 26,
+          "fp": 0,
+          "fn": 4,
+          "tn": 30,
+          "recall": 0.8667,
+          "fpr": 0.0,
+          "precision": 1.0,
+          "precision_at_prevalence": {
+            "0.01": 1.0,
+            "0.1": 1.0,
+            "0.5": 1.0
+          }
+        },
+        "model_medium": {
+          "threshold": 0.380211,
+          "tp": 28,
+          "fp": 1,
+          "fn": 2,
+          "tn": 29,
+          "recall": 0.9333,
+          "fpr": 0.03333,
+          "precision": 0.9655,
+          "precision_at_prevalence": {
+            "0.01": 0.2205,
+            "0.1": 0.7568,
+            "0.5": 0.9655
+          }
+        }
+      }
+    },
+    "type": {
+      "n": 30,
+      "accuracy": 0.8667,
+      "macro_f1": 0.8683,
+      "per_class_f1": {
+        "account_phishing": 0.75,
+        "bank_impersonation": 0.6667,
+        "delivery_fee": 1.0,
+        "fake_payment_receipt": 1.0,
+        "family_impersonation": 1.0,
+        "investment_crypto": 0.8,
+        "job_task": 1.0,
+        "prize_lottery": 1.0,
+        "toll_fine_tax": 0.8,
+        "verification_code_theft": 0.6667
+      },
+      "labels": [
+        "account_phishing",
+        "bank_impersonation",
+        "delivery_fee",
+        "fake_payment_receipt",
+        "family_impersonation",
+        "investment_crypto",
+        "job_task",
+        "prize_lottery",
+        "toll_fine_tax",
+        "verification_code_theft"
+      ],
+      "confusion": [
+        [
+          3,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          2,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          3,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          3,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          4,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          2,
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          3,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          2,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          2,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          2
+        ]
+      ]
+    },
+    "fpr_by_source_at_high": {
+      "handwritten_v3": 0.0
+    },
+    "errors": {
+      "missed_scams": [
+        {
+          "id": "en-chal3-s028",
           "label": "investment_crypto",
-          "score": 0.154,
+          "score": 0.0486,
           "pred_type": "verification_code_theft",
-          "text": "Ripple XRP airdrop is live! Send any amount of XRP to the address below and receive double back within 30 minutes"
+          "text": "Hi! We met at the conference last month, remember? I've been doing really well with a new crypto platform, want me to show you?"
+        },
+        {
+          "id": "en-chal3-s026",
+          "label": "job_task",
+          "score": 0.249,
+          "pred_type": "job_task",
+          "text": "Hiring now: YouTube video likers, ₹50 per like, ₹2,000-5,000 daily. Message us on Telegram @ytjobs_hr"
+        }
+      ],
+      "false_alarms": [
+        {
+          "id": "en-chal3-l009",
+          "label": "legit",
+          "score": 0.4842,
+          "pred_type": "fake_payment_receipt",
+          "text": "Dad can you send me R$50 on Pix for the uber? My card's at home"
+        }
+      ],
+      "wrong_type": [
+        {
+          "id": "en-chal3-s009",
+          "label": "bank_impersonation",
+          "score": 0.4557,
+          "pred_type": "verification_code_theft",
+          "text": "Revolut Security: unusual crypto purchase detected. To protect funds we've created a new vault for you, please transfer your balance to it now"
+        },
+        {
+          "id": "en-chal3-s010",
+          "label": "bank_impersonation",
+          "score": 0.9774,
+          "pred_type": "account_phishing",
+          "text": "Dear HDFC customer, your NetBanking will be suspended today. Kindly update KYC by clicking hdfc-kyc-update.co"
+        },
+        {
+          "id": "en-chal3-s015",
+          "label": "toll_fine_tax",
+          "score": 0.9952,
+          "pred_type": "account_phishing",
+          "text": "HMRC: Your tax refund of £418.30 has been approved. Provide your card details to receive it: hmrc-taxrefund.online"
         }
       ]
     }
   },
   "grouped_cv": {
     "roc_auc": {
-      "mean": 0.991,
-      "std": 0.0076
+      "mean": 0.9853,
+      "std": 0.0117
     },
     "pr_auc": {
-      "mean": 0.9816,
-      "std": 0.0165
+      "mean": 0.974,
+      "std": 0.0207
     },
     "recall_at_1pct_fpr": {
-      "mean": 0.8471,
-      "std": 0.1202
+      "mean": 0.8961,
+      "std": 0.0957
     },
     "type_macro_f1": {
-      "mean": 0.6975,
-      "std": 0.066
+      "mean": 0.7308,
+      "std": 0.0599
     },
     "n_splits": 5,
     "note": "recall@1%FPR uses a threshold set on each held-out fold (ranking quality)"
