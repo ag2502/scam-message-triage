@@ -14,6 +14,7 @@ from scam_triage import __version__
 from scam_triage.lexicons import SUPPORTED_LANGS
 from scam_triage.reply import format_reply
 from scam_triage.triage import get_model, triage
+from scam_triage.whatsapp import router as whatsapp_router
 
 MAX_CHARS = 4000
 
@@ -22,6 +23,7 @@ app = FastAPI(
     version=__version__,
     description="Forward a suspicious message; get a risk score, scam type, reasons and next steps.",
 )
+app.include_router(whatsapp_router)
 
 
 class TriageRequest(BaseModel):
