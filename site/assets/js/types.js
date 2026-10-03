@@ -1,4 +1,4 @@
-// Field guide: the ten scam types as a horizontal rail of cards.
+// Scam types: a pinned horizontal pan on desktop, a swipeable rail on phones.
 import { $, esc } from "./ui.js";
 
 // Labels, descriptions and next steps come from the model's taxonomy; tells and examples are curated here.
@@ -25,29 +25,46 @@ const GUIDE = [
     "Join our VIP trading group: 40% weekly profit guaranteed. Minimum deposit 200 USDT, withdraw anytime"],
 ];
 
-export function initGuide({ state, loadEngine }) {
-  const rail = $("[data-guide]");
-  if (!rail) return;
+export function initTypes({ state, loadEngine }) {
+  const root = $("[data-types]");
+  if (!root) return;
+  const track = $("[data-types-track]", root);
+  const pin = $("[data-types-pin]", root);
 
   const render = (tax) => {
-    rail.innerHTML = GUIDE.map(([id, icon, tells, example], i) => `
-      <article class="card">
+    track.querySelectorAll(".tpanel").forEach((n) => n.remove());
+    track.insertAdjacentHTML("beforeend", GUIDE.map(([id, icon, tells, example], i) => `
+      <article class="tpanel ${i % 3 === 1 ? "tpanel--tint" : i % 3 === 2 ? "tpanel--deep" : ""}">
+        <i class="ph ${icon} tpanel__bg" aria-hidden="true"></i>
         <span class="card__icon"><i class="ph ${icon}"></i></span>
         <h3>${esc(tax?.[id]?.label || id)}</h3>
         <p>${esc(tax?.[id]?.description || "")}</p>
-        <ul>${tells.map((t) => `<li>${esc(t)}</li>`).join("")}</ul>
-        <blockquote>${esc(example)}</blockquote>
-        <button class="btn btn--ghost btn--sm" type="button" data-try="${i}"><i class="ph ph-magnifying-glass"></i>Test this example</button>
-      </article>`).join("");
+        <ul class="tpanel__tells">${tells.map((t) => `<li>${esc(t)}</li>`).join("")}</ul>
+        <div class="tpanel__msg"><span class="wa-fwd"><i class="ph ph-share-fat"></i>Example</span>${esc(example)}</div>
+        <button class="btn btn--ghost btn--sm" type="button" data-send="${i}"><i class="ph ph-paper-plane-right"></i>Send to the chat</button>
+      </article>`).join(""));
   };
   render(null);
-  loadEngine().then((e) => render(e.m.taxonomy)).catch(() => {});
-
-  rail.addEventListener("click", (e) => {
-    const b = e.target.closest("[data-try]");
-    if (b) state.runCheck?.(GUIDE[+b.dataset.try][3]);
+  track.addEventListener("click", (e) => {
+    const b = e.target.closest("[data-send]");
+    if (b) state.chatSend?.(GUIDE[+b.dataset.send][3]);
   });
-  const step = () => Math.min(rail.clientWidth * 0.8, 720);
-  $("[data-guide-prev]").addEventListener("click", () => rail.scrollBy({ left: -step(), behavior: "smooth" }));
-  $("[data-guide-next]").addEventListener("click", () => rail.scrollBy({ left: step(), behavior: "smooth" }));
+
+  loadEngine().then((e) => {
+    render(e.m.taxonomy);
+    const gsap = window.gsap;
+    if (!gsap || !window.ScrollTrigger) return;
+    gsap.registerPlugin(window.ScrollTrigger);
+    // Canonical horizontal pan: pin at "top top", scroll distance = horizontal travel.
+    gsap.matchMedia().add("(min-width: 900px) and (prefers-reduced-motion: no-preference)", () => {
+      root.classList.add("is-pinned");
+      const distance = () => track.scrollWidth - window.innerWidth;
+      const tween = gsap.to(track, {
+        x: () => -distance(), ease: "none",
+        scrollTrigger: { trigger: pin, start: "top top", end: () => `+=${distance()}`, pin: true, scrub: 1, invalidateOnRefresh: true },
+      });
+      return () => { root.classList.remove("is-pinned"); tween.scrollTrigger?.kill(); tween.kill(); };
+    });
+    window.ScrollTrigger.refresh();
+  }).catch(() => {});
 }

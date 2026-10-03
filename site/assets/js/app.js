@@ -4,8 +4,8 @@ import { $, $$ } from "./ui.js";
 import { initChat } from "./chat.js";
 import { initChecker } from "./checker.js";
 import { initChannels } from "./channels.js";
-import { initXray } from "./xray.js";
-import { initGuide } from "./guide.js";
+import { initStory } from "./story.js";
+import { initTypes } from "./types.js";
 import { initResults } from "./results.js";
 import { initVideo } from "./video.js";
 
@@ -97,7 +97,7 @@ initTheme();
 initNav();
 initReveal();
 
-const modules = [initChat, initChecker, initChannels, initXray, initGuide, initResults, initVideo];
+const modules = [initChat, initStory, initTypes, initChecker, initChannels, initResults, initVideo];
 modules.forEach((init) => {
   try { init({ state, loadEngine }); } catch (err) { console.error(err); }
 });
