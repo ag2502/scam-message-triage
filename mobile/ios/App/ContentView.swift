@@ -74,7 +74,7 @@ struct ContentView: View {
     private var howToCard: some View {
         card {
             Text("WhatsApp, iMessage and everything else").font(.headline)
-            step(1, "Long-press the message and tap Share (or select the text, then Share).")
+            step(1, "Long-press the message and tap Share. Select several messages to check the whole conversation.")
             step(2, "Choose Check for Scam. The verdict opens on top of the chat.")
             step(3, "Or ask Siri: \"Check a message with Scam Triage\".")
         }

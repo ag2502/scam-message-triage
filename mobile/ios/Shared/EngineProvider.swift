@@ -13,7 +13,8 @@ actor EngineProvider {
         return e
     }
 
+    /// One message, or a shared/pasted WhatsApp conversation judged as a whole.
     func triage(_ text: String) async throws -> Engine.Result {
-        try get().triage(text)
+        try get().triageText(text)
     }
 }

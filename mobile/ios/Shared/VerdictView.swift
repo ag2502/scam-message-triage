@@ -23,7 +23,7 @@ struct VerdictView: View {
                     .padding(.horizontal, 12).padding(.vertical, 6)
                     .background(color.opacity(0.12), in: Capsule())
                 Spacer()
-                Text("\(Int((result.riskScore * 100).rounded()))%")
+                Text("\(Engine.pct0(result.riskScore))%")
                     .font(.system(size: 30, weight: .bold, design: .monospaced))
                     .foregroundStyle(color)
             }
@@ -31,6 +31,19 @@ struct VerdictView: View {
                 .font(.title3.weight(.semibold))
             Text(result.riskLevel == "low" ? result.summary : (result.summary.components(separatedBy: ". ").dropFirst().joined(separator: ". ")))
                 .font(.subheadline).foregroundStyle(.secondary)
+            if result.fromContext {
+                Label("Judged as a conversation: the last \(result.threadSize) messages together raised the risk.", systemImage: "square.stack.3d.up.fill")
+                    .font(.footnote.weight(.semibold)).foregroundStyle(.tint)
+            }
+            if !result.cautions.isEmpty {
+                VStack(alignment: .leading, spacing: 4) {
+                    Label("Before you act", systemImage: "hand.raised.fill").font(.footnote.weight(.semibold))
+                        .foregroundStyle(Color(red: 0.66, green: 0.40, blue: 0.04))
+                    ForEach(result.cautions, id: \.self) { Text($0).font(.subheadline) }
+                }
+                .padding(12).frame(maxWidth: .infinity, alignment: .leading)
+                .background(Color(red: 0.78, green: 0.48, blue: 0.04).opacity(0.13), in: RoundedRectangle(cornerRadius: 12))
+            }
             if !result.reasons.isEmpty {
                 section("Why") {
                     ForEach(result.reasons, id: \.self) { r in

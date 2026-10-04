@@ -21,6 +21,10 @@ public final class Engine: @unchecked Sendable { // immutable after init
         public let keyPhrases: [String]
         public let nextSteps: [String]
         public let signals: [SignalHit]
+        public var asks: [String] = [] // "money" | "code" | "app"
+        public var cautions: [String] = [] // safety-net notes, only when risk is low
+        public var threadSize: Int = 1
+        public var fromContext: Bool = false // the conversation, not the latest message alone, raised the level
     }
 
     // MARK: Model data
@@ -46,6 +50,11 @@ public final class Engine: @unchecked Sendable { // immutable after init
     private let thresholdHigh: Double, thresholdMedium: Double
     private let maxReasons: Int, maxPhrases: Int
     private let taxonomy: [String: [String: Any]]
+    private let askOrder: [String]
+    private let askSignals: [String: Set<String>]
+    private let cautionText: [String: String]
+    private let threadMaxMessages: Int, threadMaxChars: Int
+    private let headerRe: NSRegularExpression
     public let version: String
 
     /// - Parameter withTypeModel: false skips the scam-type model (the SMS filter only needs the risk score).
@@ -98,6 +107,12 @@ public final class Engine: @unchecked Sendable { // immutable after init
         thresholdHigh = th["high"]!.doubleValue; thresholdMedium = th["medium"]!.doubleValue
         maxReasons = m["max_reasons"] as! Int; maxPhrases = m["max_phrases"] as! Int
         taxonomy = m["taxonomy"] as! [String: [String: Any]]
+        askOrder = m["ask_order"] as! [String]
+        askSignals = (m["ask_signals"] as! [String: [String]]).mapValues(Set.init)
+        cautionText = m["cautions"] as! [String: String]
+        let thread = m["thread"] as! [String: Int]
+        threadMaxMessages = thread["max_messages"]!; threadMaxChars = thread["max_chars"]!
+        headerRe = try Engine.py(m["conversation_header"] as! String)
         version = m["version"] as? String ?? "?"
     }
 
@@ -341,21 +356,101 @@ public final class Engine: @unchecked Sendable { // immutable after init
             summary = "\(lvl == "high" ? "This looks like a scam" : "This could be a scam"): \((st["label"] as! String).lowercased()). \(st["description"] as! String)"
         }
         let st = taxonomy[typeId]!
+        let asks = asksFrom(allHits)
         return Result(riskScore: Engine.round4(score), riskLevel: lvl, scamType: typeId, scamTypeLabel: st["label"] as! String,
                       typeConfidence: Engine.round4(conf), summary: summary, reasons: reasons, keyPhrases: phrases,
-                      nextSteps: st["next_steps"] as! [String], signals: allHits)
+                      nextSteps: st["next_steps"] as! [String], signals: allHits,
+                      asks: asks, cautions: lvl == "low" ? cautionsFor(asks) : [])
+    }
+
+    // MARK: Safety net + conversations (triage.py)
+    private func asksFrom(_ hits: [SignalHit]) -> [String] {
+        let fired = Set(hits.map(\.id))
+        return askOrder.filter { !askSignals[$0]!.isDisjoint(with: fired) }
+    }
+
+    public func asksIn(_ text: String) -> [String] { asksFrom(detect(text)) }
+
+    public func cautionsFor(_ asks: [String]) -> [String] { asks.map { cautionText[$0]! } }
+
+    public func threadWindow(_ messages: [String]) -> [String] {
+        var msgs = Array(messages.map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }.filter { !$0.isEmpty }.suffix(threadMaxMessages))
+        while msgs.count > 1 && msgs.joined(separator: "\n").unicodeScalars.count > threadMaxChars { msgs.removeFirst() }
+        return msgs
+    }
+
+    /// The latest message judged in the light of the conversation so far (oldest first).
+    public func triageThread(_ messages: [String]) -> Result {
+        let msgs = threadWindow(messages)
+        precondition(!msgs.isEmpty, "no messages")
+        var latest = triage(msgs.last!)
+        if msgs.count == 1 { return latest }
+        var whole = triage(msgs.joined(separator: "\n"))
+        let rank = ["low": 0, "medium": 1, "high": 2]
+        if rank[whole.riskLevel]! > rank[latest.riskLevel]! {
+            let st = taxonomy[whole.scamType]!
+            let lead = whole.riskLevel == "high" ? "Taken together, these messages look like a scam" : "Taken together, these messages could be a scam"
+            whole = Result(riskScore: whole.riskScore, riskLevel: whole.riskLevel, scamType: whole.scamType, scamTypeLabel: whole.scamTypeLabel,
+                           typeConfidence: whole.typeConfidence, summary: "\(lead): \((st["label"] as! String).lowercased()). \(st["description"] as! String)",
+                           reasons: whole.reasons, keyPhrases: whole.keyPhrases, nextSteps: whole.nextSteps, signals: whole.signals,
+                           asks: whole.asks, cautions: whole.cautions, threadSize: msgs.count, fromContext: true)
+            return whole
+        }
+        latest.threadSize = msgs.count
+        latest.asks = whole.asks
+        latest.cautions = latest.riskLevel == "low" ? cautionsFor(whole.asks) : []
+        return latest
+    }
+
+    /// Split text copied from a WhatsApp chat into messages (oldest first); otherwise [text].
+    public func splitConversation(_ text: String) -> [String] {
+        // Python's str.splitlines() boundaries; a trailing line break does not add an empty line.
+        var lines = text.components(separatedBy: "\r\n").flatMap { $0.split(omittingEmptySubsequences: false, whereSeparator: { c in
+            c.unicodeScalars.count == 1 && Engine.lineBreaks.contains(c.unicodeScalars.first!) }).map(String.init) }
+        if lines.count > 1 && lines.last == "" { lines.removeLast() }
+        var messages: [String] = []
+        var headers = 0
+        for line in lines {
+            if let m = first(headerRe, line), m.range.location == 0 {
+                headers += 1
+                messages.append((line as NSString).substring(from: m.range.length))
+            } else if !messages.isEmpty {
+                messages[messages.count - 1] += "\n" + line
+            } else {
+                messages.append(line)
+            }
+        }
+        if headers < 2 { return [text] }
+        return messages.map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }.filter { !$0.isEmpty }
+    }
+
+    private static let lineBreaks: Set<Unicode.Scalar> = ["\n", "\r", "\u{0B}", "\u{0C}", "\u{1C}", "\u{1D}", "\u{1E}", "\u{85}", "\u{2028}", "\u{2029}"]
+
+    /// One message, or a pasted conversation judged as a whole.
+    public func triageText(_ text: String) -> Result {
+        let msgs = splitConversation(text)
+        return msgs.count > 1 ? triageThread(msgs) : triage(text)
+    }
+
+    /// Whole-number percent with round-half-even, like Python's f"{x:.0%}".
+    public static func pct0(_ x: Double) -> Int {
+        let v = x * 100, f = v.rounded(.down)
+        if abs(v - f - 0.5) < 1e-9 { return Int(f) % 2 == 0 ? Int(f) : Int(f) + 1 }
+        return Int(v.rounded())
     }
 
     /// The reply the WhatsApp bot sends (twin of scam_triage/reply.py).
     public func formatReply(_ r: Result) -> String {
         let badge = ["high": "🔴 HIGH RISK", "medium": "🟠 MEDIUM RISK", "low": "🟢 LOW RISK"][r.riskLevel]!
-        var lines = ["\(badge) (\(Int((r.riskScore * 100).rounded()))%)", ""]
+        var lines = ["\(badge) (\(Engine.pct0(r.riskScore))%)", ""]
         if r.riskLevel == "low" { lines.append("*\(r.scamTypeLabel).* \(r.summary)") }
         else {
             lines.append("*Likely scam type:* \(r.scamTypeLabel)")
             lines.append(r.summary.range(of: ". ").map { String(r.summary[$0.upperBound...]) } ?? r.summary)
         }
+        if r.fromContext { lines.append("_Based on the last \(r.threadSize) messages together._") }
         if !r.reasons.isEmpty { lines += ["", "*Why:*"] + r.reasons.map { "• \($0)" } }
+        if !r.cautions.isEmpty { lines += ["", "*Before you act:*"] + r.cautions.map { "• \($0)" } }
         if !r.nextSteps.isEmpty { lines += ["", "*What to do:*"] + r.nextSteps.map { "• \($0)" } }
         lines += ["", "_Automated check. It can be wrong. When in doubt, verify through a channel you already trust._"]
         return lines.joined(separator: "\n")
