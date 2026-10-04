@@ -43,13 +43,22 @@ fun Verdict(r: Engine.Result, modifier: Modifier = Modifier) {
                 Text(LEVEL_LABEL.getValue(r.riskLevel), color = risk.color, fontWeight = FontWeight.SemiBold, fontSize = 14.sp)
             }
             Spacer(Modifier.weight(1f))
-            Text("${Math.round(r.riskScore * 100)}%", fontFamily = FontFamily.Monospace, fontWeight = FontWeight.Bold,
+            Text("${Engine.pct0(r.riskScore)}%", fontFamily = FontFamily.Monospace, fontWeight = FontWeight.Bold,
                 fontSize = 28.sp, color = risk.color)
         }
         Text(if (r.riskLevel == "low") r.scamTypeLabel else "Likely: ${r.scamTypeLabel}",
             style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.SemiBold)
         Text(if (r.riskLevel == "low") r.summary else r.summary.substringAfter(". "),
             color = MaterialTheme.colorScheme.onSurfaceVariant, style = MaterialTheme.typography.bodyMedium)
+        if (r.fromContext) Text("Judged as a conversation: the last ${r.threadSize} messages together raised the risk.",
+            color = MaterialTheme.colorScheme.primary, style = MaterialTheme.typography.bodySmall, fontWeight = FontWeight.SemiBold)
+        if (r.cautions.isNotEmpty()) {
+            val med = riskColors("medium")
+            Column(Modifier.fillMaxWidth().background(med.soft, RoundedCornerShape(12.dp)).padding(12.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                Text("Before you act", color = med.color, fontWeight = FontWeight.SemiBold, style = MaterialTheme.typography.labelLarge)
+                r.cautions.forEach { Text(it, style = MaterialTheme.typography.bodyMedium) }
+            }
+        }
         if (r.reasons.isNotEmpty()) Section("Why") {
             r.reasons.forEach { Bullet("⚑", it, risk.color) }
         }

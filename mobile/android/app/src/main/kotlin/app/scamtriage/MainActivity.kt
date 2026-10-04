@@ -159,12 +159,14 @@ private fun Home() {
                     }
                     HorizontalDivider(Modifier.padding(vertical = 6.dp))
                     var medium by remember { mutableStateOf(prefs.warnMedium) }
-                    SwitchRow("Also warn on medium risk (more alerts, more false alarms)", medium) { medium = it; prefs.warnMedium = it }
+                    SwitchRow("Also warn on medium risk for single messages (more alerts, more false alarms). Chats that build up to a scam always warn.", medium) { medium = it; prefs.warnMedium = it }
+                    var remind by remember { mutableStateOf(prefs.remindRequests) }
+                    SwitchRow("Quietly remind me to verify when a normal-looking message asks for money or a code", remind) { remind = it; prefs.remindRequests = it }
                 }
             }
         }
         item {
-            Text("Scam Triage reads message notifications only to check them on this phone. It keeps a message only if it warned you about it, and you can clear that any time. Version ${BuildConfig.VERSION_NAME}, model ${EngineVersion.get(ctx)}.",
+            Text("Scam Triage reads message notifications only to check them on this phone. To spot scams that build up slowly, it remembers the last few incoming messages of each chat for up to 3 days, in memory only (never saved). It keeps a message only if it warned you about it, and you can clear that any time. Version ${BuildConfig.VERSION_NAME}, model ${EngineVersion.get(ctx)}.",
                 style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
     }
@@ -208,7 +210,7 @@ private fun CheckBox() {
     fun run(t: String) {
         text = t
         if (t.isBlank()) return
-        scope.launch { result = withContext(Dispatchers.Default) { EngineHolder.get(ctx).triage(t) } }
+        scope.launch { result = withContext(Dispatchers.Default) { EngineHolder.get(ctx).triageText(t) } }
     }
     Card(colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)) {
         Column(Modifier.padding(18.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {

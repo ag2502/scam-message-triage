@@ -28,6 +28,11 @@ class Prefs(context: Context) {
     }
     fun setWatched(pkg: String, on: Boolean) = sp.edit().putBoolean("watch:$pkg", on).apply()
 
+    /** Safety net: a quiet "verify first" reminder when a low-risk message asks for money or a code. */
+    var remindRequests: Boolean
+        get() = sp.getBoolean("remind_requests", true)
+        set(v) = sp.edit().putBoolean("remind_requests", v).apply()
+
     var warnMedium: Boolean
         get() = sp.getBoolean("warn_medium", false)
         set(v) = sp.edit().putBoolean("warn_medium", v).apply()

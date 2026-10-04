@@ -31,4 +31,18 @@ class AndroidParityTest {
         }
         assertTrue("${bad.size}/${golden.size} differ:\n" + bad.take(8).joinToString("\n"), bad.isEmpty())
     }
+
+    @Test
+    fun conversationsMatchPythonOnDevice() {
+        val ctx = InstrumentationRegistry.getInstrumentation().targetContext
+        val testCtx = InstrumentationRegistry.getInstrumentation().context
+        val engine = EngineHolder.get(ctx)
+        val cases = testCtx.assets.open("threads.jsonl").bufferedReader().readLines().filter { it.isNotBlank() }.map { JSONObject(it) }
+        val bad = cases.filter { c ->
+            val msgs = c.getJSONArray("messages").let { a -> (0 until a.length()).map { a.getString(it) } }
+            val r = engine.triageThread(msgs)
+            r.riskLevel != c.getString("risk_level") || r.fromContext != c.getBoolean("from_context") || engine.formatReply(r) != c.getString("reply")
+        }
+        assertTrue("${bad.size}/${cases.size} conversations differ", bad.isEmpty())
+    }
 }

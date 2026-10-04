@@ -52,4 +52,31 @@ class EngineParityTest {
     }
 
     private fun JsonObject.str(key: String) = this[key]!!.jsonPrimitive.content
+    private fun jsonl(name: String) = File(shared, "golden/$name").readLines().filter { it.isNotBlank() }.map { Json.parseToJsonElement(it).jsonObject }
+
+    @Test
+    fun safetyNetAndReplyTextMatchPython() {
+        val bad = golden.filter { g ->
+            val r = engine.triage(g.str("text"))
+            r.asks != g.strings("asks") || r.cautions != g.strings("cautions") || engine.formatReply(r) != g.str("reply")
+        }
+        assertTrue(bad.isEmpty(), "${bad.size}/${golden.size} differ, e.g. ${bad.take(3).map { it.str("text").take(50) }}")
+    }
+
+    @Test
+    fun conversationsMatchPython() {
+        val cases = jsonl("threads.jsonl")
+        val bad = cases.filter { c ->
+            val r = engine.triageThread(c.strings("messages"))
+            r.riskLevel != c.str("risk_level") || r.scamType != c.str("scam_type") || r.fromContext.toString() != c.str("from_context") ||
+                r.threadSize.toString() != c.str("thread_size") || r.summary != c.str("summary") || r.asks != c.strings("asks") ||
+                r.cautions != c.strings("cautions") || engine.formatReply(r) != c.str("reply")
+        }
+        assertTrue(bad.isEmpty(), "${bad.size}/${cases.size} differ, e.g. ${bad.take(3).map { it.strings("messages").last().take(40) }}")
+    }
+
+    @Test
+    fun splitConversationMatchesPython() {
+        for (c in jsonl("split.jsonl")) assertEquals(c.strings("messages"), engine.splitConversation(c.str("text")))
+    }
 }

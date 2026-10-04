@@ -50,6 +50,10 @@ class Engine private constructor(
         val nextSteps: List<String>,
         val signals: List<SignalHit>,
         val typeProbabilities: Map<String, Double>,
+        val asks: List<String> = emptyList(), // "money" | "code" | "app"
+        val cautions: List<String> = emptyList(), // safety-net notes, only when risk is low
+        val threadSize: Int = 1,
+        val fromContext: Boolean = false, // the conversation, not the latest message alone, raised the level
     )
 
     // Python's re is Unicode-aware for \w \d \b \s. On the JVM that needs UNICODE_CHARACTER_CLASS;
@@ -95,6 +99,12 @@ class Engine private constructor(
     private val maxReasons = m["max_reasons"]!!.jsonPrimitive.int
     private val maxPhrases = m["max_phrases"]!!.jsonPrimitive.int
     private val taxonomy = m.obj("taxonomy")
+    private val askOrder = m.strList("ask_order")
+    private val askSignals = m.obj("ask_signals").mapValues { (_, v) -> v.jsonArray.map { it.jsonPrimitive.content }.toSet() }
+    private val cautionText = m.obj("cautions").mapValues { it.value.jsonPrimitive.content }
+    private val threadMaxMessages = m.obj("thread")["max_messages"]!!.jsonPrimitive.int
+    private val threadMaxChars = m.obj("thread")["max_chars"]!!.jsonPrimitive.int
+    private val headerRe = py(m.str("conversation_header"))
 
     val version: String = m["version"]?.jsonPrimitive?.content ?: "?"
 
@@ -297,21 +307,82 @@ class Engine private constructor(
             summary = "${if (lvl == "high") "This looks like a scam" else "This could be a scam"}: ${st.str("label").lowercase(Locale.ROOT)}. ${st.str("description")}"
         }
         val st = taxonomy.obj(typeId)
+        val asks = asksFrom(allHits)
         return Result(
             riskScore = round4(score), riskLevel = lvl, scamType = typeId, scamTypeLabel = st.str("label"),
             typeConfidence = round4(conf), summary = summary, reasons = reasons, keyPhrases = phrases,
             nextSteps = st.strList("next_steps"), signals = allHits,
             typeProbabilities = classes.indices.associate { classes[it] to probs[it] },
+            asks = asks, cautions = if (lvl == "low") cautionsFor(asks) else emptyList(),
         )
+    }
+
+    // ---------------- safety net + conversations (triage.py) ----------------
+    private fun asksFrom(hits: List<SignalHit>): List<String> {
+        val fired = hits.map { it.id }.toSet()
+        return askOrder.filter { a -> askSignals.getValue(a).any { it in fired } }
+    }
+
+    fun asksIn(text: String): List<String> = asksFrom(detect(text))
+
+    fun cautionsFor(asks: List<String>): List<String> = asks.map { cautionText.getValue(it) }
+
+    fun threadWindow(messages: List<String>): List<String> {
+        var msgs = messages.map { it.trim() }.filter { it.isNotEmpty() }.takeLast(threadMaxMessages)
+        while (msgs.size > 1 && msgs.joinToString("\n").let { it.codePointCount(0, it.length) } > threadMaxChars) msgs = msgs.drop(1)
+        return msgs
+    }
+
+    /** The latest message judged in the light of the conversation so far (oldest first). */
+    fun triageThread(messages: List<String>): Result {
+        val msgs = threadWindow(messages)
+        require(msgs.isNotEmpty()) { "no messages" }
+        val latest = triage(msgs.last())
+        if (msgs.size == 1) return latest
+        val whole = triage(msgs.joinToString("\n"))
+        val rank = mapOf("low" to 0, "medium" to 1, "high" to 2)
+        if (rank.getValue(whole.riskLevel) > rank.getValue(latest.riskLevel)) {
+            val st = taxonomy.obj(whole.scamType)
+            val lead = if (whole.riskLevel == "high") "Taken together, these messages look like a scam" else "Taken together, these messages could be a scam"
+            return whole.copy(summary = "$lead: ${st.str("label").lowercase(Locale.ROOT)}. ${st.str("description")}",
+                threadSize = msgs.size, fromContext = true)
+        }
+        return latest.copy(threadSize = msgs.size, asks = whole.asks,
+            cautions = if (latest.riskLevel == "low") cautionsFor(whole.asks) else emptyList())
+    }
+
+    /** Split text copied from a WhatsApp chat into messages (oldest first); otherwise listOf(text). */
+    fun splitConversation(text: String): List<String> {
+        // Python's str.splitlines() boundaries; a trailing line break does not add an empty line.
+        val lines = text.split(LINE_BREAKS).toMutableList()
+        if (lines.size > 1 && lines.last().isEmpty()) lines.removeAt(lines.size - 1)
+        val messages = mutableListOf<String>()
+        var headers = 0
+        for (line in lines) {
+            val mt = headerRe.matcher(line)
+            if (mt.lookingAt()) { headers++; messages += line.substring(mt.end()) }
+            else if (messages.isNotEmpty()) messages[messages.size - 1] = messages.last() + "\n" + line
+            else messages += line
+        }
+        if (headers < 2) return listOf(text)
+        return messages.map { it.trim() }.filter { it.isNotEmpty() }
+    }
+
+    /** One message, or a pasted conversation judged as a whole. */
+    fun triageText(text: String): Result {
+        val msgs = splitConversation(text)
+        return if (msgs.size > 1) triageThread(msgs) else triage(text)
     }
 
     /** The reply the WhatsApp bot sends (twin of scam_triage/reply.py). */
     fun formatReply(r: Result): String {
         val badge = mapOf("high" to "🔴 HIGH RISK", "medium" to "🟠 MEDIUM RISK", "low" to "🟢 LOW RISK").getValue(r.riskLevel)
-        val lines = mutableListOf("$badge (${(r.riskScore * 100).roundToLong()}%)", "")
+        val lines = mutableListOf("$badge (${pct0(r.riskScore)}%)", "")
         if (r.riskLevel == "low") lines += "*${r.scamTypeLabel}.* ${r.summary}"
         else { lines += "*Likely scam type:* ${r.scamTypeLabel}"; lines += r.summary.substringAfter(". ") }
+        if (r.fromContext) lines += "_Based on the last ${r.threadSize} messages together._"
         if (r.reasons.isNotEmpty()) { lines += ""; lines += "*Why:*"; lines += r.reasons.map { "• $it" } }
+        if (r.cautions.isNotEmpty()) { lines += ""; lines += "*Before you act:*"; lines += r.cautions.map { "• $it" } }
         if (r.nextSteps.isNotEmpty()) { lines += ""; lines += "*What to do:*"; lines += r.nextSteps.map { "• $it" } }
         lines += ""; lines += "_Automated check. It can be wrong. When in doubt, verify through a channel you already trust._"
         return lines.joinToString("\n")
@@ -354,6 +425,15 @@ class Engine private constructor(
         }
 
         private fun round4(v: Double): Double = (v * 1e4).roundToLong() / 1e4
+
+        private val LINE_BREAKS = Regex("\r\n|[\n\r\u000B\u000C\u001C\u001D\u001E\u0085\u2028\u2029]")
+
+        /** Whole-number percent with round-half-even, like Python's f"{x:.0%}". */
+        fun pct0(x: Double): Long {
+            val v = x * 100
+            val f = kotlin.math.floor(v)
+            return if (kotlin.math.abs(v - f - 0.5) < 1e-9) (if (f.toLong() % 2 == 0L) f.toLong() else f.toLong() + 1) else v.roundToLong()
+        }
     }
 }
 

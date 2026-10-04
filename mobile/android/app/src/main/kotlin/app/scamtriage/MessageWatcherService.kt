@@ -25,7 +25,8 @@ class MessageWatcherService : NotificationListenerService() {
         if (!prefs.isWatched(sbn.packageName)) return
         val n = sbn.notification
         if (n.flags and Notification.FLAG_GROUP_SUMMARY != 0) return
-        val (sender, text) = extract(n) ?: return
+        val incoming = extract(n) ?: return
+        val text = incoming.texts.last()
         if (text.length < 12) return
         val key = (sbn.packageName + "\u0000" + text).hashCode()
         synchronized(seen) {
@@ -33,11 +34,19 @@ class MessageWatcherService : NotificationListenerService() {
             seen[key] = true
         }
         worker.execute {
-            val r = EngineHolder.get(this).triage(text)
-            if (r.riskLevel == "high" || (r.riskLevel == "medium" && prefs.warnMedium)) {
-                val app = appLabel(sbn.packageName)
-                Warnings.post(this, key, app, sender, text, r)
-                History.add(this, Warning(System.currentTimeMillis(), app, sender, text, r.riskLevel, r.riskScore, r.scamTypeLabel))
+            // Judge the newest message together with the chat's recent incoming messages.
+            val chatKey = sbn.packageName + "|" + (incoming.chat ?: incoming.sender ?: "")
+            val history = ConversationMemory.add(chatKey, incoming.texts)
+            val r = EngineHolder.get(this).triageThread(history)
+            val app = appLabel(sbn.packageName)
+            // A conversation that escalates is the slow-burn pattern itself, so it warns from medium up;
+            // single messages warn at high (medium only if the user opted in).
+            if (r.riskLevel == "high" || (r.riskLevel == "medium" && (prefs.warnMedium || r.fromContext))) {
+                val shown = if (r.fromContext) history.joinToString("\n") else text
+                Warnings.post(this, key, app, incoming.chat ?: incoming.sender, shown, r)
+                History.add(this, Warning(System.currentTimeMillis(), app, incoming.sender, shown, r.riskLevel, r.riskScore, r.scamTypeLabel))
+            } else if (r.cautions.isNotEmpty() && prefs.remindRequests && ConversationMemory.shouldRemind(chatKey)) {
+                Warnings.remind(this, key, app, incoming.sender, text, r)
             }
         }
     }
@@ -51,16 +60,28 @@ class MessageWatcherService : NotificationListenerService() {
     }
 
     companion object {
-        /** (sender, latest message text) from a messaging notification, or null if there is no text. */
-        fun extract(n: Notification): Pair<String?, String>? {
+        data class Incoming(val chat: String?, val sender: String?, val texts: List<String>)
+
+        /**
+         * The chat name, latest sender and recent incoming texts (oldest first) of a messaging notification.
+         * Messaging apps usually include the last few messages of the conversation; the user's own messages
+         * are left out.
+         */
+        fun extract(n: Notification): Incoming? {
             val style = NotificationCompat.MessagingStyle.extractMessagingStyleFromNotification(n)
-            val last = style?.messages?.lastOrNull()
-            val text = last?.text?.toString()
-                ?: n.extras.getCharSequence(Notification.EXTRA_BIG_TEXT)?.toString()
+            if (style != null) {
+                val me = style.user.name?.toString()
+                val msgs = style.messages.filter { it.person != null && it.person?.name?.toString() != me }
+                    .mapNotNull { m -> m.text?.toString()?.trim()?.takeIf { it.isNotEmpty() }?.let { m.person?.name?.toString() to it } }
+                if (msgs.isNotEmpty()) {
+                    return Incoming(style.conversationTitle?.toString(), msgs.last().first, msgs.map { it.second })
+                }
+            }
+            val text = n.extras.getCharSequence(Notification.EXTRA_BIG_TEXT)?.toString()
                 ?: n.extras.getCharSequence(Notification.EXTRA_TEXT)?.toString()
                 ?: return null
-            val sender = last?.person?.name?.toString() ?: n.extras.getCharSequence(Notification.EXTRA_TITLE)?.toString()
-            return sender to text.trim()
+            val sender = n.extras.getCharSequence(Notification.EXTRA_TITLE)?.toString()
+            return Incoming(null, sender, listOf(text.trim()))
         }
     }
 }

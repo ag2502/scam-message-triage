@@ -56,7 +56,7 @@ class CheckActivity : ComponentActivity() {
     private fun Sheet(text: String, source: String?, onDone: () -> Unit) {
         var result by remember { mutableStateOf<Engine.Result?>(null) }
         LaunchedEffect(text) {
-            if (text.isNotBlank()) result = withContext(Dispatchers.Default) { EngineHolder.get(this@CheckActivity).triage(text) }
+            if (text.isNotBlank()) result = withContext(Dispatchers.Default) { EngineHolder.get(this@CheckActivity).triageText(text) }
         }
         ModalBottomSheet(onDismissRequest = onDone, sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)) {
             Column(
