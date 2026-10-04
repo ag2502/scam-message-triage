@@ -825,3 +825,12 @@ input[type="range"] { width: 100%; accent-color: var(--accent); height: 28px; cu
 .apk-help { font-size: 0.86rem; }
 .apk-help summary { cursor: pointer; color: var(--accent); font-weight: 560; }
 .apk-help code { font-family: var(--mono); font-size: 0.72rem; word-break: break-all; }
+
+/* ---------- safety net + conversation notes ---------- */
+.caution { display: grid; grid-template-columns: 26px 1fr; gap: 10px; padding: 14px 16px; border-radius: var(--r-input); background: var(--med-soft); border: 1px solid color-mix(in srgb, var(--med) 40%, transparent); }
+.caution i { color: var(--med); font-size: 1.3rem; }
+.caution h4 { margin: 0 0 4px; font-size: 0.86rem; color: var(--med); }
+.caution p { margin: 0; font-size: 0.92rem; }
+.ctx-note { margin: 0; display: flex; align-items: center; gap: 8px; font-size: 0.88rem; color: var(--accent); font-weight: 560; }
+.wa-ctx { display: flex; align-items: center; gap: 5px; color: var(--accent); font-weight: 600; font-size: 0.76rem !important; }
+.wa-caution { margin-top: 4px !important; padding: 7px 9px; border-radius: 8px; background: var(--med-soft); font-size: 0.78rem !important; }

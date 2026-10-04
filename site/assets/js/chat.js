@@ -1,5 +1,5 @@
 // Usable WhatsApp-style chat with the bot. Everything runs on-device with the in-browser engine.
-import { $, $$, esc, reducedMotion, LEVEL_LABEL, LEVEL_ICON } from "./ui.js";
+import { $, $$, esc, reducedMotion, pct0, LEVEL_LABEL, LEVEL_ICON } from "./ui.js";
 import { markText } from "./checker.js";
 
 const EMOJI = { high: "🔴", medium: "🟠", low: "🟢" };
@@ -32,7 +32,8 @@ export function initChat({ state, loadEngine }) {
   const fileInput = $("[data-chat-file]", root);
   const rec = $("[data-chat-rec]", root);
   const recTime = $("[data-chat-rec-time]", root);
-  const lastResults = new Map(); // message id -> {text, result}
+  const lastResults = new Map(); // message id -> {text, result, recent}
+  const checked = []; // messages checked in this chat, oldest first (for "check together")
   let seq = 0;
   let queue = Promise.resolve();
 
@@ -81,9 +82,11 @@ export function initChat({ state, loadEngine }) {
   function verdictHtml(r) {
     const why = r.reasons.slice(0, 2).map((x) => `<li>${esc(x)}</li>`).join("");
     return `<div class="wa-verdict lvl-${r.risk_level}">
-        <span class="badge"><i class="${LEVEL_ICON[r.risk_level]}"></i>${LEVEL_LABEL[r.risk_level]} ${EMOJI[r.risk_level]} ${Math.round(r.risk_score * 100)}%</span>
+        <span class="badge"><i class="${LEVEL_ICON[r.risk_level]}"></i>${LEVEL_LABEL[r.risk_level]} ${EMOJI[r.risk_level]} ${pct0(r.risk_score)}%</span>
         <strong>${esc(r.scam_type_label)}</strong>
+        ${r.from_context ? `<p class="wa-ctx"><i class="ph ph-stack"></i>Based on the last ${r.thread_size} messages together.</p>` : ""}
         ${r.risk_level === "low" ? `<p>${esc(r.summary)}</p>` : `${why ? `<ul>${why}</ul>` : ""}<p><b>Next:</b> ${esc(r.next_steps[0])}</p>`}
+        ${r.cautions.length ? `<p class="wa-caution"><b>Before you act:</b> ${esc(r.cautions[0])}</p>` : ""}
       </div>`;
   }
 
@@ -103,15 +106,20 @@ export function initChat({ state, loadEngine }) {
       return botBubble("I couldn't load my model. Check your connection and try again.");
     }
     u.read();
-    const r = engine.triage(t);
+    // A pasted WhatsApp conversation is split and judged as a whole.
+    const r = engine.triageText(t);
+    checked.push(...engine.splitConversation(t));
+    const recent = engine.threadWindow(checked);
     await wait(Math.min(1500, 650 + t.length * 4));
     tp.remove();
     status.textContent = "online";
     const buttons = r.risk_level === "low"
       ? [["safe", "Why does it look OK?", "ph-question"], ["words", "Show me the words", "ph-highlighter-circle"]]
       : [["why", "Why?", "ph-question"], ["todo", "What should I do?", "ph-list-checks"], ["words", "Show me the words", "ph-highlighter-circle"]];
+    // Offer (not force) a joint check: messages checked one after another may come from different chats.
+    if (!r.from_context && recent.length >= 2) buttons.push(["together", `Same chat? Check my last ${recent.length} together`, "ph-stack"]);
     const b = botBubble(verdictHtml(r), buttons);
-    lastResults.set(String(b.id), { text: t, r });
+    lastResults.set(String(b.id), { text: t, r, recent });
     state.publish(t, r);
   }
 
@@ -132,6 +140,17 @@ export function initChat({ state, loadEngine }) {
     }
     if (action === "safe") {
       return botSays(`I didn't find the usual pressure tactics: no new number, no urgent request to pay, no suspicious link or code request. ${r.reasons.length ? "A couple of things are still worth a second look." : ""}<br><br>If it asks you for money or a code later, check again.`);
+    }
+    if (action === "together") {
+      const engine = await loadEngine();
+      const tr = engine.triageThread(ctx.recent);
+      const lead = tr.from_context
+        ? `Looking at your last ${tr.thread_size} messages <b>together</b>, the risk goes up:`
+        : `Taken together, your last ${tr.thread_size} messages don't add up to more than the latest one on its own:`;
+      const b = await botSays(`${lead}${verdictHtml(tr)}`, tr.risk_level === "low" ? [] : [["todo", "What should I do?", "ph-list-checks"]]);
+      lastResults.set(String(b.id), { text: ctx.recent.join("\n"), r: tr, recent: ctx.recent });
+      state.publish(ctx.recent.join("\n"), tr);
+      return;
     }
     if (action === "sure") {
       return botSays("No, and I won't pretend to be. On a blind test of 60 hand-written messages, my <b>high</b> level caught 26 of 30 scams with no false alarms, and <b>medium</b> caught 28 of 30 with 1 false alarm. When money is involved, call the person on a number you already have.");

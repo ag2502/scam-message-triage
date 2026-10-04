@@ -32,15 +32,23 @@ export const LEVEL_LABEL = { high: "High risk", medium: "Medium risk", low: "Low
 const BADGE = { high: "🔴 HIGH RISK", medium: "🟠 MEDIUM RISK", low: "🟢 LOW RISK" };
 
 /** JS twin of scam_triage/reply.py format_reply(): the text the WhatsApp bot sends. */
+/** Whole-number percent with round-half-even, like Python's f"{x:.0%}". */
+export function pct0(x) {
+  const v = x * 100, f = Math.floor(v);
+  return Math.abs(v - f - 0.5) < 1e-9 ? (f % 2 === 0 ? f : f + 1) : Math.round(v);
+}
+
 export function formatReply(r) {
-  const lines = [`${BADGE[r.risk_level]} (${Math.round(r.risk_score * 100)}%)`, ""];
+  const lines = [`${BADGE[r.risk_level]} (${pct0(r.risk_score)}%)`, ""];
   if (r.risk_level === "low") lines.push(`*${r.scam_type_label}.* ${r.summary}`);
   else {
     lines.push(`*Likely scam type:* ${r.scam_type_label}`);
     const i = r.summary.indexOf(". ");
     lines.push(i >= 0 ? r.summary.slice(i + 2) : r.summary);
   }
+  if (r.from_context) lines.push(`_Based on the last ${r.thread_size} messages together._`);
   if (r.reasons.length) lines.push("", "*Why:*", ...r.reasons.map((x) => `• ${x}`));
+  if (r.cautions?.length) lines.push("", "*Before you act:*", ...r.cautions.map((x) => `• ${x}`));
   if (r.next_steps.length) lines.push("", "*What to do:*", ...r.next_steps.map((x) => `• ${x}`));
   lines.push("", "_Automated check. It can be wrong. When in doubt, verify through a channel you already trust._");
   return lines.join("\n");

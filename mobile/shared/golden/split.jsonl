@@ -1,0 +1,7 @@
+{"text": "[04/10/2026, 09:41:12] Mum: Hi it's me\n[04/10/2026, 09:42:03] Mum: new number\nsave it", "messages": ["Hi it's me", "new number\nsave it"]}
+{"text": "[09:41, 04/10/2026] Mum: Hi it's me\n[09:42, 04/10/2026] Mum: new number", "messages": ["Hi it's me", "new number"]}
+{"text": "04/10/2026, 09:41 - Mum: Hi it's me\n04/10/2026, 09:42 - Mum: new number", "messages": ["Hi it's me", "new number"]}
+{"text": "[10/4/26, 9:41 PM] Lia Souza: oi!\n[10/4/26, 9:43 PM] Lia Souza: tudo bem?", "messages": ["oi!", "tudo bem?"]}
+{"text": "Just one message\nwith two lines", "messages": ["Just one message\nwith two lines"]}
+{"text": "[04/10/2026, 09:41] Mum: only one header", "messages": ["[04/10/2026, 09:41] Mum: only one header"]}
+{"text": "Intro line\n[04/10/2026, 09:41] A: one\n\n[04/10/2026, 09:42] B: two 😩", "messages": ["Intro line", "one", "two 😩"]}

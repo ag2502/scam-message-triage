@@ -24,7 +24,8 @@ from export_web import export_model  # noqa: E402
 from scam_triage.dataset import DATA_DIR, load_split, read_jsonl  # noqa: E402
 from scam_triage.model import TriageModel  # noqa: E402
 from scam_triage.signals import detect  # noqa: E402
-from scam_triage.triage import triage  # noqa: E402
+from scam_triage.reply import format_reply  # noqa: E402
+from scam_triage.triage import split_conversation, triage, triage_thread  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "mobile" / "shared"
@@ -80,13 +81,42 @@ def main() -> None:
     (OUT / "golden").mkdir(parents=True, exist_ok=True)
     with (OUT / "golden" / "golden.jsonl").open("w", encoding="utf-8") as g:
         for text in golden_texts():
-            r = triage(text).to_dict()
+            res = triage(text)
+            r = res.to_dict()
             g.write(json.dumps({
                 "text": text,
                 "risk_score": r["risk_score"], "risk_level": r["risk_level"], "scam_type": str(r["scam_type"]),
                 "reasons": r["reasons"], "key_phrases": r["key_phrases"],
                 "signals": [[h.id, h.evidence] for h in detect(text)],
+                "asks": r["asks"], "cautions": r["cautions"], "reply": format_reply(res),
             }, ensure_ascii=False) + "\n")
+
+    # Conversations: every prefix of every blind test conversation (what a phone sees as messages arrive).
+    with (OUT / "golden" / "threads.jsonl").open("w", encoding="utf-8") as g:
+        for conv in read_jsonl(DATA_DIR / "en" / "threads.jsonl"):
+            for i in range(1, len(conv["messages"]) + 1):
+                msgs = conv["messages"][:i]
+                res = triage_thread(msgs)
+                g.write(json.dumps({
+                    "messages": msgs, "risk_score": res.risk_score, "risk_level": res.risk_level,
+                    "scam_type": str(res.scam_type), "reasons": res.reasons, "key_phrases": res.key_phrases,
+                    "asks": res.asks, "cautions": res.cautions, "thread_size": res.thread_size,
+                    "from_context": res.from_context, "summary": res.summary, "reply": format_reply(res),
+                }, ensure_ascii=False) + "\n")
+
+    # Splitting text copied from WhatsApp into messages.
+    split_cases = [
+        "[04/10/2026, 09:41:12] Mum: Hi it's me\n[04/10/2026, 09:42:03] Mum: new number\nsave it",
+        "[09:41, 04/10/2026] Mum: Hi it's me\n[09:42, 04/10/2026] Mum: new number",
+        "04/10/2026, 09:41 - Mum: Hi it's me\n04/10/2026, 09:42 - Mum: new number",
+        "[10/4/26, 9:41 PM] Lia Souza: oi!\n[10/4/26, 9:43 PM] Lia Souza: tudo bem?",
+        "Just one message\nwith two lines",
+        "[04/10/2026, 09:41] Mum: only one header",
+        "Intro line\n[04/10/2026, 09:41] A: one\n\n[04/10/2026, 09:42] B: two 😩",
+    ]
+    with (OUT / "golden" / "split.jsonl").open("w", encoding="utf-8") as g:
+        for text in split_cases:
+            g.write(json.dumps({"text": text, "messages": split_conversation(text)}, ensure_ascii=False) + "\n")
 
     size = sum(p.stat().st_size for p in model_dir.iterdir())
     print(f"wrote {model_dir.relative_to(ROOT)} ({size / 1024:.0f} KB) and golden.jsonl ({len(golden_texts())} cases)")

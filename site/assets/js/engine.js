@@ -51,6 +51,7 @@ export class Engine {
     this.riskyTlds = new Set(m.risky_tlds);
     this.stop = new Set(m.stop_words);
     this.context = new Set(m.context_signals);
+    this.headerRe = pyRegex(m.conversation_header);
     this.wordIndex = new Map(m.word.vocab.map((t, i) => [t, i]));
     this.charIndex = new Map(m.char.vocab.map((t, i) => [t, i]));
     this.nWord = m.word.vocab.length;
@@ -257,6 +258,8 @@ export class Engine {
     let phrases = [...byName].filter(([n, c]) => c > 0 && this.isReadablePhrase(n)).slice(0, this.m.max_phrases).map(([n]) => n);
 
     const tax = this.m.taxonomy;
+    const firedAll = new Set(allHits.map((h) => h.id));
+    const asks = this.m.ask_order.filter((a) => this.m.ask_signals[a].some((sid) => firedAll.has(sid)));
     let typeId = classes[best], typeConf = probs[best], summary;
     if (level === "low") {
       phrases = [];
@@ -277,6 +280,10 @@ export class Engine {
       reasons,
       key_phrases: phrases,
       next_steps: tax[typeId].next_steps,
+      asks,
+      cautions: level === "low" ? this.cautionsFor(asks) : [],
+      thread_size: 1,
+      from_context: false,
       // Extras for the site's explainability UI (not part of the Python result).
       extras: {
         signals: allHits,
@@ -290,6 +297,62 @@ export class Engine {
         ms: performance.now() - t0,
       },
     };
+  }
+
+  // ----- safety net + conversations (triage.py) -----
+  asksIn(text) {
+    const fired = new Set(this.detect(text).map((h) => h.id));
+    return this.m.ask_order.filter((a) => this.m.ask_signals[a].some((sid) => fired.has(sid)));
+  }
+
+  cautionsFor(asks) {
+    return asks.map((a) => this.m.cautions[a]);
+  }
+
+  threadWindow(messages) {
+    let msgs = messages.map((m) => (m || "").trim()).filter(Boolean).slice(-this.m.thread.max_messages);
+    while (msgs.length > 1 && cp(msgs.join("\n")).length > this.m.thread.max_chars) msgs = msgs.slice(1);
+    return msgs;
+  }
+
+  /** The latest message judged in the light of the conversation so far (oldest first). */
+  triageThread(messages) {
+    const msgs = this.threadWindow(messages);
+    if (!msgs.length) throw new Error("no messages");
+    const latest = this.triage(msgs[msgs.length - 1]);
+    if (msgs.length === 1) return latest;
+    const whole = this.triage(msgs.join("\n"));
+    const rank = { low: 0, medium: 1, high: 2 };
+    if (rank[whole.risk_level] > rank[latest.risk_level]) {
+      const st = this.m.taxonomy[whole.scam_type];
+      const lead = whole.risk_level === "high" ? "Taken together, these messages look like a scam" : "Taken together, these messages could be a scam";
+      return { ...whole, summary: `${lead}: ${st.label.toLowerCase()}. ${st.description}`, thread_size: msgs.length, from_context: true };
+    }
+    return { ...latest, thread_size: msgs.length, asks: whole.asks,
+      cautions: latest.risk_level === "low" ? this.cautionsFor(whole.asks) : [] };
+  }
+
+  /** Split text copied from a WhatsApp chat into messages (oldest first); otherwise [text]. */
+  splitConversation(text) {
+    const messages = [];
+    let headers = 0;
+    // Python's str.splitlines() boundaries; a trailing line break does not add an empty line.
+    const lines = text.split(/\r\n|[\n\r\v\f\x1c\x1d\x1e\x85\u2028\u2029]/u);
+    if (lines.length > 1 && lines[lines.length - 1] === "") lines.pop();
+    for (const line of lines) {
+      const m = this.headerRe.exec(line);
+      if (m && m.index === 0) { headers++; messages.push(line.slice(m[0].length)); }
+      else if (messages.length) messages[messages.length - 1] += "\n" + line;
+      else messages.push(line);
+    }
+    if (headers < 2) return [text];
+    return messages.map((m) => m.trim()).filter(Boolean);
+  }
+
+  /** One message, or a pasted conversation judged as a whole. */
+  triageText(text) {
+    const msgs = this.splitConversation(text);
+    return msgs.length > 1 ? this.triageThread(msgs) : this.triage(text);
   }
 }
 

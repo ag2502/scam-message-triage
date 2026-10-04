@@ -88,3 +88,36 @@ def test_signals_match_python(page):
     js = page.evaluate("ts => ts.map(t => window.__engine.detect(t).map(h => [h.id, h.evidence]))", texts)
     for text, j in zip(texts, js):
         assert [[h.id, h.evidence] for h in detect(text)] == j, text
+
+
+GOLDEN = ROOT / "mobile" / "shared" / "golden"
+
+
+def _jsonl(path):
+    import json
+    return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
+
+
+def test_js_safety_net_and_reply_text(page):
+    page.evaluate("async () => { const ui = await import('/assets/js/ui.js'); window.__fmt = ui.formatReply; }")
+    cases = _jsonl(GOLDEN / "golden.jsonl")
+    js = page.evaluate("ts => ts.map(t => { const r = window.__engine.triage(t); return [r.asks, r.cautions, window.__fmt(r)]; })",
+                       [c["text"] for c in cases])
+    bad = [c["text"][:50] for c, (asks, cautions, reply) in zip(cases, js)
+           if asks != c["asks"] or cautions != c["cautions"] or reply != c["reply"]]
+    assert not bad, f"{len(bad)}/{len(cases)} differ, e.g. {bad[:3]}"
+
+
+def test_js_conversations_match_python(page):
+    cases = _jsonl(GOLDEN / "threads.jsonl")
+    js = page.evaluate("cs => cs.map(m => { const r = window.__engine.triageThread(m); return [r.risk_level, r.scam_type, r.from_context, r.thread_size, r.summary, r.asks, r.cautions, window.__fmt(r)]; })",
+                       [c["messages"] for c in cases])
+    bad = [c["messages"][-1][:40] for c, got in zip(cases, js)
+           if got != [c["risk_level"], c["scam_type"], c["from_context"], c["thread_size"], c["summary"], c["asks"], c["cautions"], c["reply"]]]
+    assert not bad, f"{len(bad)}/{len(cases)} differ, e.g. {bad[:3]}"
+
+
+def test_js_split_conversation(page):
+    cases = _jsonl(GOLDEN / "split.jsonl")
+    js = page.evaluate("ts => ts.map(t => window.__engine.splitConversation(t))", [c["text"] for c in cases])
+    assert js == [c["messages"] for c in cases]

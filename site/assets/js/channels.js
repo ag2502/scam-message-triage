@@ -69,7 +69,7 @@ export function initChannels({ loadEngine }) {
   whenNear(document.getElementById("toolbox") || code, async () => {
     let engine;
     try { engine = await loadEngine(); } catch { return; }
-    const r = engine.triage(API_TEXT);
+    const r = engine.triageText(API_TEXT);
     const { extras, ...result } = r;
     texts = snippets(JSON.stringify({ ...result, reply_text: formatReply(r) }, null, 2));
     paint();
@@ -82,7 +82,7 @@ export function initChannels({ loadEngine }) {
       lastLevel = v.risk_level;
       verdictEl.className = `paysheet__verdict lvl-${v.risk_level}`;
       verdictEl.innerHTML = v.risk_level === "low"
-        ? `<strong><i class="${LEVEL_ICON.low}"></i>No scam patterns found</strong><p>Still, only pay people you've confirmed by phone.</p>`
+        ? `<strong><i class="${LEVEL_ICON.low}"></i>No scam patterns found</strong><p>${esc(v.cautions[0] || "Still, only pay people you've confirmed by phone.")}</p>`
         : `<strong><i class="${LEVEL_ICON[v.risk_level]}"></i>Stop. This looks like: ${esc(v.scam_type_label.toLowerCase())}</strong><p>${esc(v.next_steps[0])}</p>`;
       payBtn.textContent = v.risk_level === "low" ? "Confirm payment" : "Pay anyway";
       payBtn.classList.toggle("btn--ghost", v.risk_level !== "low");

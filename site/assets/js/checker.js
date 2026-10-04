@@ -1,5 +1,5 @@
 // The checker playground: paste a message, get an explained verdict.
-import { $, esc, copy, toast, formatReply, b64urlEncode, b64urlDecode, LEVEL_ICON, LEVEL_LABEL } from "./ui.js";
+import { $, esc, copy, toast, formatReply, pct0, b64urlEncode, b64urlDecode, LEVEL_ICON, LEVEL_LABEL } from "./ui.js";
 
 export const SAMPLES = [
   { label: "Hi Mum, new number", text: "Hi Mum, I dropped my phone so this is my new number. Can you send R$800 by Pix today? It's urgent and I can't talk right now" },
@@ -30,7 +30,7 @@ function gauge(score, level) {
       <path class="gauge__track" d="M10 86 A70 70 0 0 1 150 86" fill="none" stroke-width="12" stroke-linecap="round"/>
       <path class="gauge__value" d="M10 86 A70 70 0 0 1 150 86" fill="none" stroke="var(--lvl)" stroke-width="12" stroke-linecap="round"
         stroke-dasharray="${len}" stroke-dashoffset="${len}" data-target="${len * (1 - score)}"/>
-      <text class="gauge__num" x="80" y="74" text-anchor="middle">${Math.round(score * 100)}%</text>
+      <text class="gauge__num" x="80" y="74" text-anchor="middle">${pct0(score)}%</text>
       <text class="gauge__cap" x="80" y="92" text-anchor="middle">RISK SCORE</text>
     </svg></div>`;
 }
@@ -78,6 +78,8 @@ function renderResult(text, r, tax) {
         <p>${esc(lvl === "low" ? r.summary : tax[r.scam_type].description)}</p>
       </div>
     </div>
+    ${r.from_context ? `<p class="ctx-note"><i class="ph ph-stack"></i>Judged as a conversation: the last ${r.thread_size} messages together raised the risk.</p>` : ""}
+    ${r.cautions.length ? `<div class="caution"><i class="ph-fill ph-hand-palm"></i><div><h4>Before you act</h4>${r.cautions.map((c) => `<p>${esc(c)}</p>`).join("")}</div></div>` : ""}
     ${r.reasons.length ? `<div class="block lvl-${lvl}"><h4>Why</h4><ul class="reasons">${r.reasons.map((x) => `<li><i class="ph-fill ph-flag"></i><span>${esc(x)}</span></li>`).join("")}</ul></div>` : ""}
     <div class="block lvl-${lvl}"><h4>Your message, annotated</h4>
       <p class="marked">${markText(text, r)}</p>
@@ -142,7 +144,7 @@ export function initChecker({ state, loadEngine }) {
       return;
     }
     ready(engine);
-    const r = engine.triage(text);
+    const r = engine.triageText(text); // pasted WhatsApp conversations are judged as a whole
     views.result.innerHTML = renderResult(text, r, engine.m.taxonomy);
     show("result");
     if (window.innerWidth < 900) views.result.scrollIntoView({ behavior: "smooth", block: "nearest" });

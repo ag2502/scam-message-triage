@@ -77,6 +77,11 @@ def export_model(lang: str) -> dict:
         "stop_words": sorted(ENGLISH_STOP_WORDS),
         "context_signals": sorted(triage_mod.CONTEXT_SIGNALS),
         "max_reasons": triage_mod.MAX_REASONS,
+        "ask_order": list(triage_mod.ASK_SIGNALS),
+        "ask_signals": {k: list(v) for k, v in triage_mod.ASK_SIGNALS.items()},
+        "cautions": lex.CAUTIONS,
+        "thread": {"max_messages": triage_mod.THREAD_MAX_MESSAGES, "max_chars": triage_mod.THREAD_MAX_CHARS},
+        "conversation_header": triage_mod.CONVERSATION_HEADER,
         "max_phrases": triage_mod.MAX_PHRASES,
         "taxonomy": {
             lab: {"label": st.label, "description": st.description, "next_steps": st.next_steps}

@@ -7,8 +7,8 @@ const highlightJson = (s) => esc(s)
   .replace(/(:\s*)(&quot;.*?&quot;)/g, '$1<span class="s">$2</span>')
   .replace(/(:\s*)(-?\d+\.?\d*)/g, '$1<span class="n">$2</span>');
 
-function apiResponse(engine, text) {
-  const r = engine.triage(text);
+function apiResponse(engine, text, messages) {
+  const r = messages ? engine.triageThread(messages) : engine.triageText(text);
   const { extras, ...result } = r;
   return { r, json: { ...result, reply_text: formatReply(r) } };
 }
@@ -20,7 +20,11 @@ export function initApi({ loadEngine }) {
   const bodyIn = $("[data-api-body]", root);
   const status = $("[data-api-status]", root);
   const out = $("[data-api-out]", root);
-  bodyIn.value = JSON.stringify({ text: "Hi, I sent you R$500 by Pix by mistake, can you send it back?", lang: "en" }, null, 2);
+  bodyIn.value = JSON.stringify({ messages: [
+    "Hi, is this David? Oh sorry, wrong number!",
+    "My uncle taught me to trade gold futures with an AI system, I made 38% last month",
+    "You should try it, the platform is very safe. Start small with $300 and I will guide you",
+  ], lang: "en" }, null, 2);
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -30,13 +34,16 @@ export function initApi({ loadEngine }) {
     try { req = JSON.parse(bodyIn.value); } catch (err) {
       return fail(400, { detail: `Invalid JSON: ${err.message}` });
     }
-    if (typeof req.text !== "string" || !req.text.trim()) return fail(422, { detail: [{ loc: ["body", "text"], msg: "Field required (non-empty string)" }] });
-    if (req.text.length > 4000) return fail(422, { detail: [{ loc: ["body", "text"], msg: "String should have at most 4000 characters" }] });
+    const hasText = typeof req.text === "string", hasMsgs = Array.isArray(req.messages);
+    if (hasText === hasMsgs) return fail(422, { detail: [{ loc: ["body"], msg: "Value error, send exactly one of 'text' or 'messages'" }] });
+    if (hasText && (!req.text.trim() || req.text.length > 4000)) return fail(422, { detail: [{ loc: ["body", "text"], msg: "Must be 1-4000 characters" }] });
+    if (hasMsgs && (!req.messages.length || req.messages.length > 20 || req.messages.some((m) => typeof m !== "string" || !m.trim() || m.length > 4000)))
+      return fail(422, { detail: [{ loc: ["body", "messages"], msg: "1-20 non-empty strings of at most 4000 characters" }] });
     if (req.lang && req.lang !== "en") return fail(422, { detail: [{ loc: ["body", "lang"], msg: "Input should be 'en'" }] });
     let engine;
     try { engine = await loadEngine(); } catch { return fail(503, { detail: "Model not loaded" }); }
     const t0 = performance.now();
-    const { json } = apiResponse(engine, req.text);
+    const { json } = apiResponse(engine, req.text, hasMsgs ? req.messages : null);
     const ms = performance.now() - t0;
     status.innerHTML = `<b class="ok">200 OK</b> · ${ms.toFixed(1)} ms · application/json`;
     out.innerHTML = highlightJson(JSON.stringify(json, null, 2));
@@ -94,7 +101,7 @@ export function initTerminal({ loadEngine }) {
       try { engine = await loadEngine(); } catch { return print("error: model failed to load", "term__err"); }
       const text = m[3].replace(/\\"/g, '"');
       if (!text.trim()) return print("scam-triage: error: no message given", "term__err");
-      const r = engine.triage(text);
+      const r = engine.triageText(text);
       if (m[1]) { const { extras, ...res } = r; return print(JSON.stringify(res, null, 2)); }
       const el = document.createElement("pre");
       el.className = "term__l";

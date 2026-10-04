@@ -797,6 +797,35 @@
   "payment_rail"
  ],
  "max_reasons": 4,
+ "ask_order": [
+  "money",
+  "code",
+  "app"
+ ],
+ "ask_signals": {
+  "money": [
+   "money_request",
+   "fee_to_unlock",
+   "safe_account"
+  ],
+  "code": [
+   "code_request",
+   "credential_request"
+  ],
+  "app": [
+   "remote_access"
+  ]
+ },
+ "cautions": {
+  "money": "It asks you to send money. Even if it seems to come from someone you know, confirm by calling them on a number you already have before paying.",
+  "code": "It asks for a code or password. Never share these, even with friends: a code is how accounts get taken over.",
+  "app": "It asks you to install an app or share your screen. Don't, unless you started the conversation with a company you trust."
+ },
+ "thread": {
+  "max_messages": 8,
+  "max_chars": 2000
+ },
+ "conversation_header": "^\\s*(?:\\[(?:\\d{1,4}[/.-]\\d{1,2}[/.-]\\d{1,4},? \\d{1,2}:\\d{2}(?::\\d{2})?(?:\\s?[APap][Mm])?|\\d{1,2}:\\d{2}(?::\\d{2})?(?:\\s?[APap][Mm])?,? \\d{1,4}[/.-]\\d{1,2}[/.-]\\d{1,4})\\]|\\d{1,4}[/.-]\\d{1,2}[/.-]\\d{1,4},? \\d{1,2}:\\d{2}(?::\\d{2})?(?:\\s?[APap][Mm])? -)\\s*[^:\\n]{1,60}:\\s?",
  "max_phrases": 5,
  "taxonomy": {
   "legit": {
