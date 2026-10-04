@@ -1,0 +1,719 @@
+{
+  "single": {
+    "medium": {
+      "scam_threads_warned": 14,
+      "scam_threads": 16,
+      "legit_threads_warned": 0,
+      "legit_threads": 16,
+      "avg_messages_before_warning": 2.5
+    },
+    "high": {
+      "scam_threads_warned": 14,
+      "scam_threads": 16,
+      "legit_threads_warned": 0,
+      "legit_threads": 16,
+      "avg_messages_before_warning": 2.71
+    }
+  },
+  "thread": {
+    "medium": {
+      "scam_threads_warned": 16,
+      "scam_threads": 16,
+      "legit_threads_warned": 0,
+      "legit_threads": 16,
+      "avg_messages_before_warning": 2.62
+    },
+    "high": {
+      "scam_threads_warned": 15,
+      "scam_threads": 16,
+      "legit_threads_warned": 0,
+      "legit_threads": 16,
+      "avg_messages_before_warning": 2.67
+    }
+  },
+  "legit_threads_with_caution": 2,
+  "scam_threads_low_but_cautioned": 0,
+  "threads": [
+    {
+      "id": "en-thread-s00",
+      "label": "investment_crypto",
+      "is_scam": 1,
+      "n": 5,
+      "single": [
+        "low",
+        "low",
+        "low",
+        "low",
+        "low"
+      ],
+      "thread": [
+        "low",
+        "low",
+        "low",
+        "low",
+        "high"
+      ],
+      "caution": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "id": "en-thread-s01",
+      "label": "investment_crypto",
+      "is_scam": 1,
+      "n": 4,
+      "single": [
+        "low",
+        "low",
+        "high",
+        "low"
+      ],
+      "thread": [
+        "low",
+        "low",
+        "high",
+        "high"
+      ],
+      "caution": [
+        false,
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "id": "en-thread-s02",
+      "label": "job_task",
+      "is_scam": 1,
+      "n": 4,
+      "single": [
+        "low",
+        "low",
+        "high",
+        "high"
+      ],
+      "thread": [
+        "low",
+        "medium",
+        "high",
+        "high"
+      ],
+      "caution": [
+        false,
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "id": "en-thread-s03",
+      "label": "job_task",
+      "is_scam": 1,
+      "n": 3,
+      "single": [
+        "low",
+        "low",
+        "high"
+      ],
+      "thread": [
+        "low",
+        "low",
+        "high"
+      ],
+      "caution": [
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "id": "en-thread-s04",
+      "label": "family_impersonation",
+      "is_scam": 1,
+      "n": 4,
+      "single": [
+        "high",
+        "low",
+        "low",
+        "high"
+      ],
+      "thread": [
+        "high",
+        "high",
+        "high",
+        "high"
+      ],
+      "caution": [
+        false,
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "id": "en-thread-s05",
+      "label": "family_impersonation",
+      "is_scam": 1,
+      "n": 3,
+      "single": [
+        "medium",
+        "low",
+        "high"
+      ],
+      "thread": [
+        "medium",
+        "high",
+        "high"
+      ],
+      "caution": [
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "id": "en-thread-s06",
+      "label": "fake_payment_receipt",
+      "is_scam": 1,
+      "n": 3,
+      "single": [
+        "low",
+        "low",
+        "high"
+      ],
+      "thread": [
+        "low",
+        "low",
+        "high"
+      ],
+      "caution": [
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "id": "en-thread-s07",
+      "label": "fake_payment_receipt",
+      "is_scam": 1,
+      "n": 3,
+      "single": [
+        "low",
+        "high",
+        "low"
+      ],
+      "thread": [
+        "low",
+        "high",
+        "high"
+      ],
+      "caution": [
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "id": "en-thread-s08",
+      "label": "bank_impersonation",
+      "is_scam": 1,
+      "n": 3,
+      "single": [
+        "low",
+        "low",
+        "high"
+      ],
+      "thread": [
+        "low",
+        "high",
+        "high"
+      ],
+      "caution": [
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "id": "en-thread-s09",
+      "label": "bank_impersonation",
+      "is_scam": 1,
+      "n": 3,
+      "single": [
+        "low",
+        "low",
+        "high"
+      ],
+      "thread": [
+        "low",
+        "low",
+        "high"
+      ],
+      "caution": [
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "id": "en-thread-s10",
+      "label": "verification_code_theft",
+      "is_scam": 1,
+      "n": 3,
+      "single": [
+        "low",
+        "low",
+        "high"
+      ],
+      "thread": [
+        "low",
+        "low",
+        "high"
+      ],
+      "caution": [
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "id": "en-thread-s11",
+      "label": "verification_code_theft",
+      "is_scam": 1,
+      "n": 3,
+      "single": [
+        "low",
+        "low",
+        "high"
+      ],
+      "thread": [
+        "low",
+        "low",
+        "high"
+      ],
+      "caution": [
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "id": "en-thread-s12",
+      "label": "prize_lottery",
+      "is_scam": 1,
+      "n": 3,
+      "single": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "thread": [
+        "low",
+        "high",
+        "high"
+      ],
+      "caution": [
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "id": "en-thread-s13",
+      "label": "delivery_fee",
+      "is_scam": 1,
+      "n": 3,
+      "single": [
+        "low",
+        "low",
+        "high"
+      ],
+      "thread": [
+        "low",
+        "low",
+        "high"
+      ],
+      "caution": [
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "id": "en-thread-s14",
+      "label": "account_phishing",
+      "is_scam": 1,
+      "n": 3,
+      "single": [
+        "low",
+        "high",
+        "high"
+      ],
+      "thread": [
+        "low",
+        "high",
+        "high"
+      ],
+      "caution": [
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "id": "en-thread-s15",
+      "label": "investment_crypto",
+      "is_scam": 1,
+      "n": 4,
+      "single": [
+        "low",
+        "low",
+        "low",
+        "low"
+      ],
+      "thread": [
+        "low",
+        "low",
+        "low",
+        "medium"
+      ],
+      "caution": [
+        false,
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "id": "en-thread-l00",
+      "label": "legit",
+      "is_scam": 0,
+      "n": 3,
+      "single": [
+        "low",
+        "low",
+        "low"
+      ],
+      "thread": [
+        "low",
+        "low",
+        "low"
+      ],
+      "caution": [
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "id": "en-thread-l01",
+      "label": "legit",
+      "is_scam": 0,
+      "n": 3,
+      "single": [
+        "low",
+        "low",
+        "low"
+      ],
+      "thread": [
+        "low",
+        "low",
+        "low"
+      ],
+      "caution": [
+        false,
+        false,
+        true
+      ]
+    },
+    {
+      "id": "en-thread-l02",
+      "label": "legit",
+      "is_scam": 0,
+      "n": 3,
+      "single": [
+        "low",
+        "low",
+        "low"
+      ],
+      "thread": [
+        "low",
+        "low",
+        "low"
+      ],
+      "caution": [
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "id": "en-thread-l03",
+      "label": "legit",
+      "is_scam": 0,
+      "n": 2,
+      "single": [
+        "low",
+        "low"
+      ],
+      "thread": [
+        "low",
+        "low"
+      ],
+      "caution": [
+        false,
+        false
+      ]
+    },
+    {
+      "id": "en-thread-l04",
+      "label": "legit",
+      "is_scam": 0,
+      "n": 3,
+      "single": [
+        "low",
+        "low",
+        "low"
+      ],
+      "thread": [
+        "low",
+        "low",
+        "low"
+      ],
+      "caution": [
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "id": "en-thread-l05",
+      "label": "legit",
+      "is_scam": 0,
+      "n": 2,
+      "single": [
+        "low",
+        "low"
+      ],
+      "thread": [
+        "low",
+        "low"
+      ],
+      "caution": [
+        false,
+        false
+      ]
+    },
+    {
+      "id": "en-thread-l06",
+      "label": "legit",
+      "is_scam": 0,
+      "n": 3,
+      "single": [
+        "low",
+        "low",
+        "low"
+      ],
+      "thread": [
+        "low",
+        "low",
+        "low"
+      ],
+      "caution": [
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "id": "en-thread-l07",
+      "label": "legit",
+      "is_scam": 0,
+      "n": 3,
+      "single": [
+        "low",
+        "low",
+        "low"
+      ],
+      "thread": [
+        "low",
+        "low",
+        "low"
+      ],
+      "caution": [
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "id": "en-thread-l08",
+      "label": "legit",
+      "is_scam": 0,
+      "n": 2,
+      "single": [
+        "low",
+        "low"
+      ],
+      "thread": [
+        "low",
+        "low"
+      ],
+      "caution": [
+        false,
+        false
+      ]
+    },
+    {
+      "id": "en-thread-l09",
+      "label": "legit",
+      "is_scam": 0,
+      "n": 3,
+      "single": [
+        "low",
+        "low",
+        "low"
+      ],
+      "thread": [
+        "low",
+        "low",
+        "low"
+      ],
+      "caution": [
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "id": "en-thread-l10",
+      "label": "legit",
+      "is_scam": 0,
+      "n": 3,
+      "single": [
+        "low",
+        "low",
+        "low"
+      ],
+      "thread": [
+        "low",
+        "low",
+        "low"
+      ],
+      "caution": [
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "id": "en-thread-l11",
+      "label": "legit",
+      "is_scam": 0,
+      "n": 3,
+      "single": [
+        "low",
+        "low",
+        "low"
+      ],
+      "thread": [
+        "low",
+        "low",
+        "low"
+      ],
+      "caution": [
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "id": "en-thread-l12",
+      "label": "legit",
+      "is_scam": 0,
+      "n": 3,
+      "single": [
+        "low",
+        "low",
+        "low"
+      ],
+      "thread": [
+        "low",
+        "low",
+        "low"
+      ],
+      "caution": [
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "id": "en-thread-l13",
+      "label": "legit",
+      "is_scam": 0,
+      "n": 3,
+      "single": [
+        "low",
+        "low",
+        "low"
+      ],
+      "thread": [
+        "low",
+        "low",
+        "low"
+      ],
+      "caution": [
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "id": "en-thread-l14",
+      "label": "legit",
+      "is_scam": 0,
+      "n": 3,
+      "single": [
+        "low",
+        "low",
+        "low"
+      ],
+      "thread": [
+        "low",
+        "low",
+        "low"
+      ],
+      "caution": [
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "id": "en-thread-l15",
+      "label": "legit",
+      "is_scam": 0,
+      "n": 3,
+      "single": [
+        "low",
+        "low",
+        "low"
+      ],
+      "thread": [
+        "low",
+        "low",
+        "low"
+      ],
+      "caution": [
+        false,
+        false,
+        false
+      ]
+    }
+  ]
+}

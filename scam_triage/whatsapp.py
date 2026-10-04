@@ -27,7 +27,7 @@ from fastapi import APIRouter, BackgroundTasks, HTTPException, Query, Request
 from fastapi.responses import PlainTextResponse
 
 from scam_triage.reply import format_reply
-from scam_triage.triage import triage
+from scam_triage.triage import triage_text
 
 log = logging.getLogger(__name__)
 router = APIRouter(prefix="/webhooks/whatsapp", tags=["whatsapp"])
@@ -117,7 +117,7 @@ def reply_for(message: dict) -> str:
     text = (message.get("text") or {}).get("body", "").strip()
     if not text or text.lower().strip("!.? ") in GREETINGS:
         return WELCOME
-    return format_reply(triage(text[:MAX_CHARS]))
+    return format_reply(triage_text(text[:MAX_CHARS]))
 
 
 @router.get("", response_class=PlainTextResponse)

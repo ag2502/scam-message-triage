@@ -8,12 +8,12 @@ from __future__ import annotations
 from typing import Literal
 
 from fastapi import FastAPI
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, model_validator
 
 from scam_triage import __version__
 from scam_triage.lexicons import SUPPORTED_LANGS
 from scam_triage.reply import format_reply
-from scam_triage.triage import get_model, triage
+from scam_triage.triage import get_model, triage_text, triage_thread
 from scam_triage.whatsapp import router as whatsapp_router
 
 MAX_CHARS = 4000
@@ -27,8 +27,19 @@ app.include_router(whatsapp_router)
 
 
 class TriageRequest(BaseModel):
-    text: str = Field(min_length=1, max_length=MAX_CHARS, description="The message to check")
+    text: str | None = Field(None, min_length=1, max_length=MAX_CHARS,
+                             description="The message to check (a pasted WhatsApp conversation is split automatically)")
+    messages: list[str] | None = Field(None, min_length=1, max_length=20,
+                                       description="A conversation, oldest first; the last message is judged in its light")
     lang: Literal[SUPPORTED_LANGS] = "en"  # type: ignore[valid-type]
+
+    @model_validator(mode="after")
+    def one_input(self):
+        if (self.text is None) == (self.messages is None):
+            raise ValueError("send exactly one of 'text' or 'messages'")
+        if self.messages is not None and any(not m.strip() or len(m) > MAX_CHARS for m in self.messages):
+            raise ValueError(f"messages must be non-empty and at most {MAX_CHARS} characters each")
+        return self
 
 
 class TriageResponse(BaseModel):
@@ -43,6 +54,10 @@ class TriageResponse(BaseModel):
     next_steps: list[str]
     lang: str
     model_version: str
+    asks: list[str]
+    cautions: list[str]
+    thread_size: int
+    from_context: bool
     reply_text: str
 
 
@@ -54,5 +69,5 @@ def health() -> dict:
 
 @app.post("/v1/triage", response_model=TriageResponse)
 def triage_endpoint(req: TriageRequest) -> TriageResponse:
-    result = triage(req.text, lang=req.lang)
+    result = triage_thread(req.messages, lang=req.lang) if req.messages else triage_text(req.text, lang=req.lang)
     return TriageResponse(**result.to_dict(), reply_text=format_reply(result))

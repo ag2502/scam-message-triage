@@ -7,7 +7,7 @@ import json
 import sys
 
 from scam_triage.reply import format_reply
-from scam_triage.triage import triage
+from scam_triage.triage import triage_text
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -20,7 +20,7 @@ def main(argv: list[str] | None = None) -> int:
     text = args.text if args.text is not None else sys.stdin.read()
     if not text.strip():
         ap.error("no message given")
-    result = triage(text, lang=args.lang)
+    result = triage_text(text, lang=args.lang)
     print(json.dumps(result.to_dict(), indent=2, ensure_ascii=False) if args.json else format_reply(result))
     return 0
 

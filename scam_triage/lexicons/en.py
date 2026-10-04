@@ -166,3 +166,11 @@ LURE_WORDS: list[str] = [
     "delivery", "redelivery", "reschedule", "rebook", "customs", "toll", "tollbill", "center", "centre", "portal",
     "resolution", "appeal", "restore", "kyc", "gift", "prize", "bonus", "fees", "taxrefund", "rebate", "review",
 ]
+
+# Safety net: shown when a message scores low but still asks for something risky.
+# Even a real friend's account can be hijacked, so these requests always deserve a check.
+CAUTIONS: dict[str, str] = {
+    "money": "It asks you to send money. Even if it seems to come from someone you know, confirm by calling them on a number you already have before paying.",
+    "code": "It asks for a code or password. Never share these, even with friends: a code is how accounts get taken over.",
+    "app": "It asks you to install an app or share your screen. Don't, unless you started the conversation with a company you trust.",
+}

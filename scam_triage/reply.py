@@ -15,8 +15,12 @@ def format_reply(r: TriageResult) -> str:
     else:
         lines.append(f"*Likely scam type:* {r.scam_type_label}")
         lines.append(r.summary.split(". ", 1)[-1])
+    if r.from_context:
+        lines.append(f"_Based on the last {r.thread_size} messages together._")
     if r.reasons:
         lines += ["", "*Why:*", *(f"• {reason}" for reason in r.reasons)]
+    if r.cautions:
+        lines += ["", "*Before you act:*", *(f"• {c}" for c in r.cautions)]
     if r.next_steps:
         lines += ["", "*What to do:*", *(f"• {step}" for step in r.next_steps)]
     lines += ["", "_Automated check. It can be wrong. When in doubt, verify through a channel you already trust._"]

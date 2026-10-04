@@ -37,3 +37,15 @@ def test_validation_errors():
 def test_cli_json(capsys):
     assert main(["Your parcel is held, pay the £1.99 fee at royalmail-redelivery.top", "--json"]) == 0
     assert '"risk_level"' in capsys.readouterr().out
+
+
+def test_triage_messages_and_validation():
+    body = client.post("/v1/triage", json={"messages": [
+        "Hi, is this David? Oh sorry, wrong number!",
+        "My uncle taught me to trade gold futures with an AI system, I made 38% last month",
+        "You should try it, the platform is very safe. Start small with $300 and I will guide you"]}).json()
+    assert body["from_context"] is True and body["thread_size"] == 3
+    assert client.post("/v1/triage", json={"text": "hi", "messages": ["hi"]}).status_code == 422
+    assert client.post("/v1/triage", json={}).status_code == 422
+    low = client.post("/v1/triage", json={"text": "Can you lend me $20 till payday?"}).json()
+    assert low["asks"] == ["money"] and low["cautions"]
