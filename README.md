@@ -66,6 +66,12 @@ tuned on the evaluation data.
 | Held-out templates + real UCI ham (665 / 1,505) | 0.989 | 85.9% / 2.7% | 93.1% / 4.0% | 0.69 |
 | Template-grouped 5-fold CV | 0.985 ± 0.012 | recall @ 1% FPR: 89.6% ± 9.6% | | 0.73 ± 0.06 |
 
+**Conversations and the safety net.** Single messages miss slow-burn scams whose first messages are harmless.
+`triage_thread()` judges each new message together with the chat's recent messages, and every result lists what it
+*asks* for (money, a code, an app) with a "verify first" caution when the wording itself looks normal. On 32 blind
+hand-written conversations, scam chats warned went from 14/16 to **16/16** (medium) with **0/16** normal chats warned
+in either mode ([reports/en/THREADS.md](reports/en/THREADS.md)).
+
 **What these numbers mean:**
 - Precision depends on how many forwarded messages are actually scams. On the held-out test set, the *high* level
   gives 93% precision. Re-weighted to 10% scam prevalence it would be 78%, and at 1% prevalence 25%. A checker that
